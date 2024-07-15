@@ -135,7 +135,7 @@ const Order = () => {
             <IoIosArrowBack id="icons_back" />
             <p>Back</p>
           </Link> */}
-          <h2>Order</h2>
+          <h2>Orders</h2>
 
           {display_order.length === 0 ? (
             <p className="no-reviews-message">No order right now</p>
@@ -148,10 +148,8 @@ const Order = () => {
               >
                 <div className="box_item_order_text">
                   <p>ID: {item.id}</p>
-                  <p>Status: {item.status}</p>
-                </div>
-                <div className="txtheadeproductorder">
                   <p>Date Time: {new Date(item.created_at).toLocaleString()}</p>
+                  <p>Status: {item.status}</p>
                 </div>
               </Link>
             ))

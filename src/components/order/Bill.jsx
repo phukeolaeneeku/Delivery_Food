@@ -136,9 +136,9 @@ const Bill = () => {
               <IoIosArrowBack id="icons_back" />
               <p>Back</p>
             </Link>
-            <div className="bill-detial newspanBox">
+            <div className="bill-detial">
               <div className="guopoidHead">
-                <div className="idf">
+                <div className="box_containner_txt">
                   <p>Order ID: {order_list.id}</p>
                   <p>
                     Date: {new Date(order_list.created_at).toLocaleString()}
@@ -197,7 +197,7 @@ const Bill = () => {
               </div>
               <p>More dtails: {order_list.province}</p>
               <div className="titlePrice">
-                <p>Total:</p>
+                <h4>Total:</h4>
                 <p>
                   $
                   {parseFloat(totalPrice).toLocaleString("en-US", {

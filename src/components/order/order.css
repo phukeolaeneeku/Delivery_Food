@@ -40,9 +40,7 @@
     align-items: center;
     justify-content: space-between;
 }
-.txtheadeproductorder{
-    color: black;
-}
+
 .btn_show_more{
     text-align: end;
 }
@@ -67,7 +65,5 @@
         margin-top: 1rem;
         padding: 20px;
     }
-    .txtheadeproductorder{
-        margin-top: 10px;
-    }
+   
 }
