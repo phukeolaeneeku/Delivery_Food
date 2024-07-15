@@ -29,7 +29,7 @@ p {
   right: 5px;
   position: absolute;
   padding: 8px 10px;
-  border: 1px solid var(--gray);
+  border: 1px solid #ccc;
   border-radius: 15px;
   cursor: pointer;
   margin-bottom: 0.5rem;
@@ -41,7 +41,7 @@ p {
   height: 58px;
   padding: 1rem 1rem;
   border-radius: 14px;
-  border: 1px solid var(--gray);
+  border: 1px solid #ccc;
   font-size: 16px;
   margin-top: 0.3rem;
   margin-bottom: 1rem;
@@ -49,9 +49,9 @@ p {
 
 
 .container_form_user button {
-  background-color: var(--orange);
+  background-color: #ff4f16;
   cursor: pointer;
-  color: var(--white);
+  color: white;
   font-size: 1.2rem;
 }
 
