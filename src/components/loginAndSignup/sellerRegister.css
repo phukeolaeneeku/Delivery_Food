@@ -1,4 +1,4 @@
-
+/* 
 .box_forgot {
     width: 80%;
     margin: auto;
@@ -80,9 +80,6 @@
   outline: none;
 }
 
-
-
-/*============== Responsive =====================*/
 @media (max-width: 768px) {
     .box_forgot {
       width: 100%;
@@ -121,4 +118,4 @@
   
 
 
-  
+   */

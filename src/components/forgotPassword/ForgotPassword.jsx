@@ -10,9 +10,6 @@ import Menu from "../menuFooter/Menu";
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const [errorText, set_errorText] = useState("");
-  const goBack = () => {
-    window.history.back();
-  };
   const [data, set_data] = useState({
     email: "",
     code: "",
@@ -60,29 +57,29 @@ const ForgotPassword = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(!data.email){
-      alert("Please fill the email!")
-      return
+    if (!data.email) {
+      alert("Please fill the email!");
+      return;
     }
-    if(!data.code){
-      alert("Please fill the Verification number from your email!")
-      return
+    if (!data.code) {
+      alert("Please fill the Verification number from your email!");
+      return;
     }
-    if(!data.password){
-      alert("Please fill the password!")
-      return
+    if (!data.password) {
+      alert("Please fill the password!");
+      return;
     }
-    if(!data.password2){
-      alert("Please fill the confirm password!")
-      return
+    if (!data.password2) {
+      alert("Please fill the confirm password!");
+      return;
     }
-    if(data.password != data.password2){
-      alert("Password do not match!")
-      return
+    if (data.password != data.password2) {
+      alert("Password do not match!");
+      return;
     }
-    if(data.password.length <= 7 || data.password2.length <= 7){
-      alert("Password must be at least 8 characters!")
-      return
+    if (data.password.length <= 7 || data.password2.length <= 7) {
+      alert("Password must be at least 8 characters!");
+      return;
     }
 
     axios
@@ -94,38 +91,34 @@ const ForgotPassword = () => {
       })
       .catch((error) => {
         console.error(error.response.data.message);
-        
-        if(error.response.data.message == "Email does not exist."){
-          alert("Email does not exist. Please register first!")
-          navigate("/signup", { replace: true });
+
+        if (error.response.data.message == "Email does not exist.") {
+          alert("Email does not exist. Please register first!");
+          navigate("/signup2", { replace: true });
         } else {
-          alert(error.response.data.message)
+          alert(error.response.data.message);
         }
       });
   };
 
   return (
     <>
-    <Header/>
-      <div className="box_forgot">
-        <div className="box_back">
-          <div onClick={goBack} className="box_iconBack">
-          <MdArrowBack id="iconBack" />
-        </div>
-        </div>
-        
-        <h2>Find password</h2>
-        <div className="title">
-          Please change your password after verifying your email!
-        </div>
-        <form className="container_form_forgot">
-          <div className="box_infor">Enter basic information</div>
-
+      <Header />
+      <div className="container_form_forgot">
+        <form onSubmit={handleSubmit}>
+          <Link to="/loginuser">
+            <MdArrowBack id="iconBack" />
+          </Link>
+          <h2>Find password</h2>
+          <p>Please change your password after verifying your email!</p>
+          {/* <div className="box_infor">Enter basic information</div> */}
+          <label htmlFor="email">Email</label>
           <div className="container_form_forgot2">
             <input
               type="email"
               placeholder="Email"
               required
+              id="email"
               name="email"
               value={email}
               onChange={onChange}
@@ -170,17 +163,20 @@ const ForgotPassword = () => {
               </div>
             )}
           </div>
-
+          <label htmlFor="code">Verification number</label>
           <input
             type="text"
+            id="code"
             placeholder="Verification number"
             required
             name="code"
             value={code}
             onChange={onChange}
           />
+          <label htmlFor="password">New passwords</label>
           <input
             type="password"
+            id="password"
             autoComplete="new-password"
             placeholder="New passwords"
             required
@@ -188,8 +184,10 @@ const ForgotPassword = () => {
             onChange={onChange}
             name="password"
           />
+          <label htmlFor="password2">Confirm password</label>
           <input
             type="password"
+            id="password2"
             autoComplete="new-password"
             placeholder="Confirm password"
             required
@@ -197,9 +195,7 @@ const ForgotPassword = () => {
             onChange={onChange}
             name="password2"
           />
-          <button type="submit" onClick={handleSubmit}>
-            Confirmation
-          </button>
+          <button type="submit">Confirmation</button>
         </form>
         {errorText.length > 0 && (
           <div id="error_msg" className="error mt20">
@@ -207,7 +203,7 @@ const ForgotPassword = () => {
           </div>
         )}
       </div>
-      <Menu/>
+      <Menu />
     </>
   );
 };
