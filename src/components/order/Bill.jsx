@@ -17,7 +17,7 @@ const Bill = () => {
   const [showReview, setShowReview] = useState(false);
   const [product_id, set_product_id] = useState(null);
 
-  // console.log(order_list);
+  console.log(order_list);
 
   const navigate = useNavigate();
 
@@ -178,7 +178,7 @@ const Bill = () => {
                           {order_list.status === "Delivered" && (
                             <th>
                               <button
-                              className="Delivered_review"
+                                className="Delivered_review"
                                 onClick={() => {
                                   handleReview(item.product.id);
                                 }}
@@ -195,6 +195,7 @@ const Bill = () => {
                   </tbody>
                 </table>
               </div>
+              <p>More dtails: {order_list.province}</p>
               <div className="titlePrice">
                 <p>Total:</p>
                 <p>
@@ -212,7 +213,7 @@ const Bill = () => {
                   <p>Contact number: +85620{order_list.tel}</p>
                   <p>Address for delivery: {order_list.district}</p>
                   <p>Status: {order_list.status}</p>
-                  
+
                   {/* <div className="Box_China_Branch">
                     <p>Follow items (China to Laos): </p>
                     <Link to={order_list.china_url}>Click here</Link>
@@ -227,8 +228,6 @@ const Bill = () => {
                 </div> */}
               </div>
             </div>
-
-            
           </div>
           <Menu />
         </>

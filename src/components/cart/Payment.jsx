@@ -1,4 +1,4 @@
-import { FiPlus } from "react-icons/fi";
+import { FiPlus, FiCopy } from "react-icons/fi";
 import "./payment.css";
 import qrcode from "../../img/QRCODE.png";
 import wechat from "../../img/WeChat.png";
@@ -7,9 +7,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../header/Header";
 import { IoIosArrowBack } from "react-icons/io";
-import { FiCopy } from "react-icons/fi";
-import { FaAngleLeft } from "react-icons/fa6";
-import { FaUsers } from "react-icons/fa";
+import { FaAngleLeft, FaUsers } from "react-icons/fa";
 import { MdArrowBack } from "react-icons/md";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -24,26 +22,14 @@ const Payment = ({ orders, order_from, onPay }) => {
   const navigate = useNavigate();
   const [tel, set_tel] = useState("");
   const [account_name, set_account_name] = useState("");
-  const [more, set_more] = useState('');
-  const [province, set_province] = useState([]);
+  const [more, set_more] = useState([]);
+  const [province, set_province] = useState("");
   const [district, set_district] = useState("");
   const [shipping_company, set_shipping_company] = useState(0);
   const [branch, set_branch] = useState(0);
   const [copied, setCopied] = useState(false);
   const MySwal = withReactContent(Swal);
-
-
-  // For order by cart
-  if (order_from === "cart") {
-    const [cart, setCart] = useState(() => {
-      const localCart = localStorage.getItem("cart");
-      return localCart ? JSON.parse(localCart) : [];
-    });
-    useEffect(() => {
-      set_store_name(orders[0]?.items[0]?.store_name || ""); // Moved set_store_name inside useEffect
-      localStorage.setItem("cart", JSON.stringify(cart));
-    }, [cart, orders]);
-  }
+  const [paymentMethod, setPaymentMethod] = useState("");
 
   var user_id = null;
   if (localStorage.getItem("user")) {
@@ -55,9 +41,13 @@ const Payment = ({ orders, order_from, onPay }) => {
     // Extract store_id from each product and update state
     const id = orders.flatMap((order) => order.store);
     set_store_id(id);
+    set_more(
+      orders.flatMap((order) =>
+        order.items.map((item) => ({ itemName: item.name, description: "" }))
+      )
+    );
   }, [orders]); // Update state whenever orders change
 
-  // console.log("store: ", store_id);
   useEffect(() => {
     let data = JSON.stringify({
       token: token,
@@ -77,129 +67,119 @@ const Payment = ({ orders, order_from, onPay }) => {
     axios
       .request(config)
       .then((response) => {
-        if (response.data.result != "success") {
+        if (response.data.result !== "success") {
           localStorage.clear();
           navigate("/loginuser");
-          return;
         }
       })
       .catch((error) => {
         localStorage.clear();
         console.log(error);
         navigate("/loginuser");
-        return;
       });
-  }, [token]);
+  }, [token, navigate]);
 
-  // For get bacnk account by store
   useEffect(() => {
-    let data = "";
+    if (store_id.length > 0) {
+      let config = {
+        method: "get",
+        maxBodyLength: Infinity,
+        url: `${
+          import.meta.env.VITE_API
+        }/store/bank-accounts/detail/?store_id=${store_id}`,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
 
-    let config = {
-      method: "get",
-      maxBodyLength: Infinity,
-      url:
-        import.meta.env.VITE_API +
-        `/store/bank-accounts/detail/?store_id=${store_id}`,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        // console.log(response);
-        set_store_account_number(response.data[0].account_number);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      axios
+        .request(config)
+        .then((response) => {
+          set_store_account_number(response.data[0].account_number);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }, [store_id]);
+
+  useEffect(() => {
+    if (order_from === "cart") {
+      const localCart = localStorage.getItem("cart");
+      const cart = localCart ? JSON.parse(localCart) : [];
+      set_store_name(orders[0]?.items[0]?.store_name || "");
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+  }, [order_from, orders]);
 
   const handleTel = (e) => {
     const value = e.target.value;
     set_tel(value);
   };
-  const handleImage = (e) => {
-    set_statement_image(e.target.files[0]);
-  };
-  const handleProvince = (e) => {
+
+  const handleProvince = (e, index) => {
     const value = e.target.value;
-    set_more(value);
+    set_more((prevMore) =>
+      prevMore.map((item, i) =>
+        i === index ? { ...item, description: value } : item
+      )
+    );
+
+    // Concatenate names and descriptions into province
+    const newProvince = more
+      .map((item) => `${item.itemName}: ${item.description}`)
+      .join(", ");
+    set_province(newProvince);
   };
+
   const handleDistrict = (e) => {
     const value = e.target.value;
     set_district(value);
   };
-  // const handlePaymentMethod = (e) => {
-  //   const value = e.target.value;
-  //   set_payment_method(value);
-  // };
-  const handleBranch = (e) => {
-    const value = e.target.value;
-    set_branch(value);
-  };
+
   const handleAccountName = (e) => {
     const value = e.target.value;
     set_account_name(value);
   };
 
-  // const copyToClipboard = () => {
-  //   navigator.clipboard.writeText(store_account_number);
-  //   setCopied(true);
-  //   setTimeout(() => {
-  //     setCopied(false);
-  //   }, 3600000); // Reset the copied state after 1 hour
-  // };
+  const handlePaymentMethod = (event) => {
+    const value = event.target.value;
+    setPaymentMethod(value);
+    if (value === "Cash") {
+      set_account_name(value);
+    } else {
+      set_account_name("");
+    }
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(store_account_number);
+    alert("Account number copied to clipboard!");
+  };
 
   const handlePay = () => {
     if (!tel) {
       MySwal.fire({
-        text: "Please add the contact number or kakaotalkID!",
+        text: "Please add the contact number or KakaotalkID!",
         icon: "question",
       });
-      return; // Abort the function if tel is null
+      return;
     }
     if (!district) {
       MySwal.fire({
         text: "Please add the address!",
         icon: "question",
       });
-      return; // Abort the function if district is null
+      return;
     }
     if (!account_name) {
       MySwal.fire({
         text: "Please add the account name!",
         icon: "question",
       });
-      return; // Abort the function if statement_image is null
+      return;
     }
-    // if (!payment_method) {
-    //   MySwal.fire({
-    //     text: "Please choose payment cash or transfer!",
-    //     icon: "question",
-    //   });
-    //   return; // Abort the function if district is null
-    // }
 
-    // if (!shipping_company) {
-    //   MySwal.fire({
-    //     text: "Please add the money shipping company name!",
-    //     icon: "question",
-    //   });
-    //   return; // Abort the function if shipping_company is null
-    // }
-    // if (!branch) {
-    //   MySwal.fire({
-    //     text: "Please add the branch!",
-    //     icon: "question",
-    //   });
-    //   return; // Abort the function if branch is null
-    // }
-
-    // Extract product information from each order
     const products = orders.flatMap((order) =>
       order.items.map((item) => ({
         product: item.id,
@@ -209,8 +189,6 @@ const Payment = ({ orders, order_from, onPay }) => {
         size: item.size,
       }))
     );
-
-    // alert(orders[0].store)
 
     let data = JSON.stringify({
       user: user_id,
@@ -223,16 +201,8 @@ const Payment = ({ orders, order_from, onPay }) => {
       shipping_company: shipping_company,
       branch: branch,
       account_name: account_name,
-      items: products.map((product) => ({
-        product: product.product,
-        quantity: product.quantity,
-        price: product.price,
-        color: product.color,
-        size: product.size,
-      })),
+      items: products,
     });
-
-    console.log("Dataaaaaa......", data);
 
     let config = {
       method: "post",
@@ -248,55 +218,26 @@ const Payment = ({ orders, order_from, onPay }) => {
       .request(config)
       .then((response) => {
         MySwal.fire({
-          text: "The order has been complated.",
+          text: "The order has been completed.",
           icon: "success",
         });
         if (order_from === "buy_now") {
           navigate("/");
-          return;
         } else {
-          // Retrieve the current cart data from localStorage
           const storedCartJsonString = localStorage.getItem("cart");
           if (storedCartJsonString) {
-            // Parse the JSON string to get the cart array
             const storedCart = JSON.parse(storedCartJsonString);
-
-            // Filter out the paid items based on the store_name
             const updatedCart = storedCart.filter(
               (item) => item.store_name !== store_name
             );
-
-            // Convert the updated cart array to a JSON string
-            const updatedCartJsonString = JSON.stringify(updatedCart);
-
-            // Update localStorage with the filtered cart data
-            localStorage.setItem("cart", updatedCartJsonString);
+            localStorage.setItem("cart", JSON.stringify(updatedCart));
           }
-
           navigate("/");
-          return;
         }
       })
       .catch((error) => {
         console.log(error);
       });
-  };
-  // console.log(orders);
-
-  const [paymentMethod, setPaymentMethod] = useState("");
-
-  const handlePaymentMethod = (event) => {
-    if (event.target.value == "Cash") {
-      set_account_name(event.target.value);
-    } else {
-      set_account_name("");
-    }
-    setPaymentMethod(event.target.value);
-  };
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(store_account_number);
-    alert("Account number copied to clipboard!");
   };
 
   return (
@@ -309,14 +250,12 @@ const Payment = ({ orders, order_from, onPay }) => {
 
           {orders.map((product, index) => (
             <div key={index}>
-              {product.items.map((item) => (
+              {product.items.map((item, itemIndex) => (
                 <div className="box_item_gourp" key={item.id}>
                   <div className="box_item_image">
                     <img src={item.images} alt="" />
                     <div className="box_item_text">
                       <p>Name: {item.name}</p>
-                      {/* <p>Color: {item.color}</p>
-                      <p>Size: {item.size}</p> */}
                       <p>
                         Price: $
                         {parseFloat(item.price).toLocaleString("en-US", {
@@ -337,8 +276,16 @@ const Payment = ({ orders, order_from, onPay }) => {
                         type="text"
                         placeholder="Description..."
                         className="txt_textarea_description"
-                        value={more.id}
-                        onChange={handleProvince}
+                        value={
+                          more[index * product.items.length + itemIndex]
+                            ?.description || ""
+                        }
+                        onChange={(e) =>
+                          handleProvince(
+                            e,
+                            index * product.items.length + itemIndex
+                          )
+                        }
                       />
                       <p hidden>{(totalPrice += item.price * item.quantity)}</p>
                     </div>

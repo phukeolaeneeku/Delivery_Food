@@ -170,28 +170,24 @@ const Signup2 = () => {
   return (
     <>
       <Header />
-      <div className="box_forgot">
-        <div className="box_back">
-          <Link to="/signup1" className="box_iconBack">
+      <div className="container_form_user">
+        <form>
+          <Link to="/loginuser">
             <MdArrowBack id="iconBack" />
           </Link>
-        </div>
 
-        {user_tyep == "1" ? (
-          <h2>User registration</h2>
-        ) : (
-          <h2>Seller registration</h2>
-        )}
-
-        <div className="title">
-          You are in the process of signing up as a user!
-        </div>
-        <form className="container_form_user">
-          <div className="box_title">Enter basic information</div>
+          {user_tyep == "1" ? (
+            <h2>User registration</h2>
+          ) : (
+            <h2>Seller registration</h2>
+          )}
+          <p>You are in the process of signing up as a user!</p>
+          <label htmlFor="email">Email</label>
           <div className="container_form_user2">
             <input
               type="email"
               name="email"
+              id="email"
               onChange={onChange}
               value={data.email}
               placeholder="Email"
@@ -236,9 +232,11 @@ const Signup2 = () => {
               </div>
             )}
           </div>
+          <label htmlFor="code">Certication Number</label>
           <input
             type="text"
             name="code"
+            id="code"
             onChange={onChange}
             value={data.code}
             placeholder="Certication Number"
@@ -254,18 +252,20 @@ const Signup2 = () => {
               required
             />
           )} */}
-
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             name="password"
             onChange={onChange}
             value={data.password}
-            placeholder="passwords"
+            placeholder="password"
             required
           />
+          <label htmlFor="password2">Confirm password</label>
           <input
             type="password"
             name="password2"
+            id="password2"
             onChange={onChange}
             value={data.password2}
             placeholder="Confirm password"
@@ -337,6 +337,10 @@ const Signup2 = () => {
           <button type="button" onClick={SignUp}>
             Register
           </button>
+          <div className="forgot_password">
+            Already have an acount?{" "}
+            <Link to="/loginuser">Login</Link>
+          </div>
         </form>
         {/* {errorText.length > 0 && <div>{errorText}</div>} */}
       </div>

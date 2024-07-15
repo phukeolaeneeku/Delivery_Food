@@ -12,66 +12,73 @@ const Header = ({ set_category_name }) => {
   const location = useLocation();
   const token = localStorage.getItem("token");
   const user = localStorage.getItem("user");
-  const [logo, setLogo] = useState(null); // Use camelCase for variable names
+  const [logo, set_logo] = useState(null);
   const storage = JSON.parse(window.localStorage.getItem("user"));
   const navigate = useNavigate();
-  const [search, setSearch] = useState(new URLSearchParams(window.location.search).get("search"));
-
-  let store_id = false;
-  let is_admin = false;
-  if (storage) {
-    store_id = storage.store_id;
-    is_admin = storage.is_admin;
+  const [search, setSearch] = useState(
+    new URLSearchParams(window.location.search).get("search")
+  );
+  var store_id = false;
+  var is_admin = false;
+  if (localStorage.getItem("user")) {
+    store_id = JSON.parse(window.localStorage.getItem("user")).store_id;
+  }
+  if (localStorage.getItem("user")) {
+    is_admin = JSON.parse(window.localStorage.getItem("user")).is_admin;
   }
 
   useEffect(() => {
-    const data = JSON.stringify({ token });
+    let data = JSON.stringify({
+      token: token,
+    });
 
-    const config = {
+    let config = {
       method: "post",
       maxBodyLength: Infinity,
-      url: `${import.meta.env.VITE_API}/user/check-token`,
+      url: import.meta.env.VITE_API + "/user/check-token",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: "Bearer " + token,
       },
-      data,
+      data: data,
     };
 
     axios
       .request(config)
       .then((response) => {
-        if (response.data.result !== "success") {
+        if (response.data.result != "success") {
           localStorage.removeItem("token");
           localStorage.removeItem("user");
           navigate("/");
+          return;
         }
       })
       .catch((error) => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         console.log(error);
-        navigate("/");
       });
-  }, [token, navigate]);
+  }, [token]);
 
   useEffect(() => {
-    const config = {
+    let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: `${import.meta.env.VITE_API}/store/web-info`,
+      url: import.meta.env.VITE_API + "/store/web-info",
       headers: {},
     };
 
     axios
       .request(config)
       .then((response) => {
-        setLogo(response.data[0].logo);
+        console.log(JSON.stringify(response.data));
+        set_logo(response.data[0].logo);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [logo]);
+
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -94,13 +101,25 @@ const Header = ({ set_category_name }) => {
             </div>
             <div className="boxLiMenu">
               <div className="linkLi">
-                <Link to="/" onClick={handleProductsAll} className={location.pathname === "/" ? "link active" : "link"}>
+                <Link
+                  to="/"
+                  onClick={handleProductsAll}
+                  className={location.pathname === "/" ? "link active" : "link"}
+                >
                   Home
                 </Link>
-                <Link to="https://www.kakaocorp.com/page/service/service/KakaoTalk?lang=en" className="link">
+                <Link
+                  to="https://www.kakaocorp.com/page/service/service/KakaoTalk?lang=en"
+                  className="link"
+                >
                   Chat
                 </Link>
-                <Link to="/order" className={location.pathname === "/order" ? "link active" : "link"}>
+                <Link
+                  to="/order"
+                  className={
+                    location.pathname === "/order" ? "link active" : "link"
+                  }
+                >
                   Orders
                 </Link>
               </div>
@@ -127,12 +146,22 @@ const Header = ({ set_category_name }) => {
             {user ? (
               <div className="right_ofHeadBox">
                 <div className="linkLi">
-                  <Link to="/cart" className={location.pathname === "/cart" ? "link active" : "link"}>
+                  <Link
+                    to="/cart"
+                    className={
+                      location.pathname === "/cart" ? "link active" : "link"
+                    }
+                  >
                     <FaCartShopping className="head_colorr" />
                   </Link>
                 </div>
                 <div className="linkLi">
-                  <Link to="/more" className={location.pathname === "/more" ? "link active" : "link"}>
+                  <Link
+                    to="/more"
+                    className={
+                      location.pathname === "/more" ? "link active" : "link"
+                    }
+                  >
                     <FaRegUser className="head_colorr" />
                   </Link>
                 </div>
