@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./app.css";
 
 //------ Login-SignUp Page ------//
 import LoginUser from "./components/loginAndSignup/LoginUser";

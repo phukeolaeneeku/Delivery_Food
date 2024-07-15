@@ -1,4 +1,4 @@
-/* .signup_page {
+.signup_page {
   width: 80%;
   margin: auto;
   text-align: center;
@@ -62,7 +62,10 @@
 .box_back {
   padding: 10px 0;
   display: none;
-  text-align: left;
+}
+
+.box_iconBack_user {
+  margin-right: 32rem;
 }
 
 #iconBack {
@@ -82,10 +85,16 @@
   font-size: 18px;
 }
 
+
+/*============== Responsive =====================*/
 @media (max-width: 768px) {
   .signup_page {
     width: 90%;
 
+  }
+
+  .box_iconBack_user {
+    padding: 0 10px;
   }
 
   .box_form_register {
@@ -124,4 +133,4 @@
     display: flex;
     gap: 0.5rem;
   }
-} */
+}

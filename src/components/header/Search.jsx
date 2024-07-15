@@ -1,3 +1,4 @@
+import "../products/ProductHome.css";
 import productImage from "../../img/productImage.png";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate, Link } from "react-router-dom";
