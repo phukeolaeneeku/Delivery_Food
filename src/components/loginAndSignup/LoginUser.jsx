@@ -128,34 +128,36 @@ const LoginUser = () => {
     <>
       <Header />
       <div className="login_footer">
-        <div className="box_container_login2">
-          <form onSubmit={Login}>
-            <Link to="/">
-              <MdArrowBack id="iconBack" />
-            </Link>
-            <h2>{login_en}</h2>
-            <p>Please Log in to use the service!</p>
+        <form className="box_container_login2">
+          <div className="cover">
+            {/* <div className="box_back">
+              <Link to="/" className="box_iconBack">
+                <MdArrowBack id="iconBack" />
+              </Link>
+            </div> */}
 
-            <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              className="input_form"
-              type="email"
-              placeholder="Enter your email"
-              required
-              value={email}
-              onChange={handleEmail}
-            />
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              className="input_form"
-              type="password"
-              placeholder="Enter your password"
-              required
-              value={pass}
-              onChange={handlePass}
-            />
+            <h2 className="box_container_login_text">{login_en}</h2>
+            <p className="box_pleaselogin">Please Log in to use the service!</p>
+            <div className="input">
+              <label>Email</label>
+              <input
+                className="input_form"
+                type="email"
+                placeholder="Enter your email"
+                required
+                value={email}
+                onChange={handleEmail}
+              />
+              <label>Password</label>
+              <input
+                className="input_form"
+                type="password"
+                placeholder="Enter your password"
+                required
+                value={pass}
+                onChange={handlePass}
+              />
+            </div>
 
             {/* {errorText.length > 0 && (
             <div id="error_msg" className="error mt20">
@@ -165,21 +167,27 @@ const LoginUser = () => {
 
             <div className="forgot_password">
               Forgot your password?{" "}
-              <Link to="/forgotPassword">Find password</Link>
-            </div>
-
-            <button type="submit" className="login_btn">
-              Login
-            </button>
-
-            <div className="googlebtn_btn">
-              Is this your first time?{" "}
-              <Link to="/signup2" className="loginmoreLink">
-                Join the membership
+              <Link to={"/forgotPassword"} className="findpassword">
+                Find password
               </Link>
             </div>
-          </form>
-        </div>
+
+            <div className="loginbtn_login">
+              <Link type="submit" className="login_btn" onClick={Login}>
+                Login
+              </Link>
+            </div>
+            <div className="googlebtn_btn">
+              <p className="box_dont">
+                Is this your first time?
+                <Link to={"/signup2"} className="loginmoreLink">
+                  Join the membership
+                </Link>
+              </p>
+              
+            </div>
+          </div>
+        </form>
 
         <Menu />
       </div>
