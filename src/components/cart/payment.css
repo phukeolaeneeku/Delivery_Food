@@ -25,9 +25,25 @@
 }
 .box_containner_total{
     font-size: 18px;
+    margin-top: 2.5rem;
 }
 .box_containner_total span{
     color: #64b06c;
+}
+.box_containner_totals{
+    font-size: 18px;
+    padding: 0;
+}
+.box_containner_totals span{
+    color: #64b06c;
+}
+
+.box_item_text_payment {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin-left: 2rem;
+    font-size: 17px;
 }
 
 .address {
@@ -72,6 +88,7 @@
 }
 .box_transfer{
     padding: 0;
+    margin-top: -3rem;
 }
 
 .disable_input{

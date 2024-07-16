@@ -49,7 +49,6 @@
 .box_item_image {
     padding: 20px;
     display: flex;
-    /* border-bottom: 1px solid #DDDD; */
 }
 
 .box_item_image img {
@@ -74,7 +73,6 @@
     font-size: 22px;
 }
 
-/* Amount */
 .box_item_icon span {
     width: 10%;
 }

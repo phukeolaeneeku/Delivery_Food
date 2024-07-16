@@ -246,7 +246,7 @@ const Payment = ({ orders, order_from, onPay }) => {
       <div className="guopBoxPayment_container">
         <h2 className="h2_boxPayment">Payment</h2>
         <div className="adress_payment_content">
-          <h2>Details:</h2>
+          <h4>Details:</h4>
 
           {orders.map((product, index) => (
             <div key={index}>
@@ -254,7 +254,7 @@ const Payment = ({ orders, order_from, onPay }) => {
                 <div className="box_item_gourp" key={item.id}>
                   <div className="box_item_image">
                     <img src={item.images} alt="" />
-                    <div className="box_item_text">
+                    <div className="box_item_text_payment">
                       <p>Name: {item.name}</p>
                       <p>
                         Price: $
@@ -295,7 +295,7 @@ const Payment = ({ orders, order_from, onPay }) => {
             </div>
           ))}
 
-          <h2>Address:</h2>
+          <h4>Address:</h4>
           <div className="box_address">
             <form className="box_address_input">
               <div className="box">
@@ -333,14 +333,15 @@ const Payment = ({ orders, order_from, onPay }) => {
                 >
                   <option value="">Select cash or transfer</option>
                   <option value="Cash">Cash</option>
-                  <option value="Transfer">Transfer</option>
+                  <option value="TransferUSD">Transfer USD</option>
+                  <option value="TransferKRW">Transfer KRW</option>
                 </select>
               </div>
             </form>
           </div>
 
-          <div className="box_transfer">
-            {paymentMethod === "Transfer" ? (
+          {/* <div className="box_transfer">
+            {paymentMethod === "TransferUSD" ? (
               <div className="box_address_input">
                 <div className="box">
                   <label htmlFor="name">Account name:</label>
@@ -352,6 +353,7 @@ const Payment = ({ orders, order_from, onPay }) => {
                     placeholder="Account name"
                   />
                 </div>
+
                 <p className="box_transfer_p_line">
                   Please transfer money to this account
                 </p>
@@ -365,6 +367,70 @@ const Payment = ({ orders, order_from, onPay }) => {
                     onClick={copyToClipboard}
                   />
                 </div>
+
+                <p className="box_containner_total">
+                  Total price:
+                  <span>
+                    {" "}
+                    $ {" "}
+                    {parseFloat(totalPrice).toLocaleString("en-US", {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                      useGrouping: true,
+                    })}
+                  </span>
+                </p>
+              </div>
+            ) : (
+              <input
+                className="disable_input"
+                type="text"
+                id="name"
+                value={account_name}
+                onChange={handleAccountName}
+                placeholder="Account name"
+              />
+            )}
+
+            {paymentMethod === "TransferKRW" ? (
+              <div className="box_address_input">
+                <div className="box">
+                  <label htmlFor="name">Account name:</label>
+                  <input
+                    type="text"
+                    id="name"
+                    value={account_name}
+                    onChange={handleAccountName}
+                    placeholder="Account name"
+                  />
+                </div>
+
+                <p className="box_transfer_p_line">
+                  Please transfer money to this account
+                </p>
+                <div className="boxaccount_number">
+                  <div className="boxaccount_number_p">
+                    <p>Account number</p>
+                    <p>{store_account_number}</p>
+                  </div>
+                  <FiCopy
+                    className="iconnn_copy_account"
+                    onClick={copyToClipboard}
+                  />
+                </div>
+
+                <p className="box_containner_total">
+                  Total price:
+                  <span>
+                    {" "}
+                    ₩ {" "}
+                      {parseFloat(totalPrice).toLocaleString("en-US", {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                      useGrouping: true,
+                    })}
+                  </span>
+                </p>
               </div>
             ) : (
               <input
@@ -380,7 +446,7 @@ const Payment = ({ orders, order_from, onPay }) => {
               Total price:
               <span>
                 {" "}
-                $
+                $ {" "}
                 {parseFloat(totalPrice).toLocaleString("en-US", {
                   minimumFractionDigits: 0,
                   maximumFractionDigits: 0,
@@ -388,7 +454,114 @@ const Payment = ({ orders, order_from, onPay }) => {
                 })}
               </span>
             </p>
+          </div> */}
+
+          <div className="box_transfer">
+            {paymentMethod === "TransferUSD" ? (
+              <div className="box_address_input">
+                <div className="box">
+                  <label htmlFor="name">Account name:</label>
+                  <input
+                    type="text"
+                    id="name"
+                    value={account_name}
+                    onChange={handleAccountName}
+                    placeholder="Account name"
+                  />
+                </div>
+
+                <p className="box_transfer_p_line">
+                  Please transfer money to this account
+                </p>
+                <div className="boxaccount_number">
+                  <div className="boxaccount_number_p">
+                    <p>Account number</p>
+                    <p>{store_account_number}</p>
+                  </div>
+                  <FiCopy
+                    className="iconnn_copy_account"
+                    onClick={copyToClipboard}
+                  />
+                </div>
+
+                <p className="box_containner_totals">
+                  Total price:
+                  <span>{" "}
+                    ${" "}
+                    {parseFloat(totalPrice).toLocaleString("en-US", {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                      useGrouping: true,
+                    })}
+                  </span>
+                </p>
+              </div>
+            ) : paymentMethod === "TransferKRW" ? (
+              <div className="box_address_input">
+                <div className="box">
+                  <label htmlFor="name">Account name:</label>
+                  <input
+                    type="text"
+                    id="name"
+                    value={account_name}
+                    onChange={handleAccountName}
+                    placeholder="Account name"
+                  />
+                </div>
+
+                <p className="box_transfer_p_line">
+                  Please transfer money to this account
+                </p>
+                <div className="boxaccount_number">
+                  <div className="boxaccount_number_p">
+                    <p>Account number</p>
+                    <p>{store_account_number}</p>
+                  </div>
+                  <FiCopy
+                    className="iconnn_copy_account"
+                    onClick={copyToClipboard}
+                  />
+                </div>
+
+                <p className="box_containner_totals">
+                  Total price:
+                  <span>{" "}
+                    ₩{" "}
+                    {parseFloat(totalPrice).toLocaleString("en-US", {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                      useGrouping: true,
+                    })}
+                  </span>
+                </p>
+              </div>
+            ) : (
+              <input
+                className="disable_input"
+                type="text"
+                id="name"
+                value={account_name}
+                onChange={handleAccountName}
+                placeholder="Account name"
+              />
+            )}
+
+            {paymentMethod !== "TransferUSD" &&
+              paymentMethod !== "TransferKRW" && (
+                <p className="box_containner_total">
+                  Total price:
+                  <span>{" "}
+                    ${" "}
+                    {parseFloat(totalPrice).toLocaleString("en-US", {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                      useGrouping: true,
+                    })}
+                  </span>
+                </p>
+              )}
           </div>
+
           <Link onClick={handlePay} className="save">
             Confirm
           </Link>
