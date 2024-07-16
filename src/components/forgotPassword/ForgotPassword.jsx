@@ -106,10 +106,8 @@ const ForgotPassword = () => {
       <Header />
       <div className="container_form_forgot">
         <form onSubmit={handleSubmit}>
-          <Link to="/loginuser">
-            <MdArrowBack id="iconBack" />
-          </Link>
-          <h2>Find password</h2>
+          
+          <h2 className="box_container_login_text">Find password</h2>
           <p>Please change your password after verifying your email!</p>
           {/* <div className="box_infor">Enter basic information</div> */}
           <label htmlFor="email">Email</label>

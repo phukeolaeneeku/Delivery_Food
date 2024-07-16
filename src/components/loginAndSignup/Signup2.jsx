@@ -172,12 +172,9 @@ const Signup2 = () => {
       <Header />
       <div className="container_form_user">
         <form>
-          <Link to="/loginuser">
-            <MdArrowBack id="iconBack" />
-          </Link>
 
           {user_tyep == "1" ? (
-            <h2>User registration</h2>
+            <h2 className="box_container_login_text">User registration</h2>
           ) : (
             <h2>Seller registration</h2>
           )}
