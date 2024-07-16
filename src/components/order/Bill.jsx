@@ -195,7 +195,7 @@ const Bill = () => {
                   </tbody>
                 </table>
               </div>
-              <p>More dtails: {order_list.province}</p>
+              <p className="box_more_details">More dtails: {order_list.province}</p>
               <div className="titlePrice">
                 <h4>Total:</h4>
                 <p>
