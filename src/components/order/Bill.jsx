@@ -83,46 +83,46 @@ const Bill = () => {
     setShowReview(true);
   };
 
-  // const handleRatingChange = (value) => {
-  //   setRating(value);
-  // };
+  const handleRatingChange = (value) => {
+    setRating(value);
+  };
 
-  // const handleCommentChange = (event) => {
-  //   setComment(event.target.value);
-  // };
+  const handleCommentChange = (event) => {
+    setComment(event.target.value);
+  };
 
-  // const handleSubmitReview = (event) => {
-  //   event.preventDefault();
-  //   let data = JSON.stringify({
-  //     product: product_id,
-  //     user: user_id,
-  //     rating: rating,
-  //     comment: comment,
-  //   });
+  const handleSubmitReview = (event) => {
+    event.preventDefault();
+    let data = JSON.stringify({
+      product: product_id,
+      user: user_id,
+      rating: rating,
+      comment: comment,
+    });
 
-  //   let config = {
-  //     method: "post",
-  //     maxBodyLength: Infinity,
-  //     url: import.meta.env.VITE_API + "/store/review/create",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     data: data,
-  //   };
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: import.meta.env.VITE_API + "/store/review/create",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
 
-  //   axios
-  //     .request(config)
-  //     .then((response) => {
-  //       console.log(JSON.stringify(response.data));
-  //       alert("Successful review.");
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        alert("Successful review.");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-  //   setRating(0);
-  //   setComment("");
-  // };
+    setRating(0);
+    setComment("");
+  };
 
   return (
     <>
@@ -198,8 +198,8 @@ const Bill = () => {
               <p className="box_more_details">More dtails: {order_list.province}</p>
               <div className="titlePrice">
                 <h4>Total:</h4>
-                <p>
-                  $
+                <p>{" "}
+                  ${" "}
                   {parseFloat(totalPrice).toLocaleString("en-US", {
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0,
@@ -213,19 +213,7 @@ const Bill = () => {
                   <p>Contact number: +85620{order_list.tel}</p>
                   <p>Address for delivery: {order_list.district}</p>
                   <p>Status: {order_list.status}</p>
-
-                  {/* <div className="Box_China_Branch">
-                    <p>Follow items (China to Laos): </p>
-                    <Link to={order_list.china_url}>Click here</Link>
-                  </div>
-                  <div className="Box_China_Branch">
-                    <p>Follow items (Branch to Branch): </p>
-                    <Link to={order_list.lao_url}>Click here</Link>
-                  </div> */}
                 </div>
-                {/* <div className="Box_btn_bill">
-                  <img src={productImage} alt="img" />
-                </div> */}
               </div>
             </div>
           </div>
