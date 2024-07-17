@@ -25,6 +25,9 @@
     grid-template-columns: 1fr 1fr 1fr;
     margin-top: 2rem;
 }
+.box_container_total_txt{
+    margin-top: -5rem;
+}
 
 .aiconnboxx {
     text-align: center;
@@ -76,9 +79,10 @@
     text-align: center;
 }
 
-.atitlePrice {
-    padding: 2rem 4rem;
+.atitlePriceUSD {
     display: flex;
+    padding: 0 30px;
+    align-items: center;
     justify-content: space-between;
 }
 .container_aplace{

@@ -332,14 +332,11 @@ const OrderBill = () => {
           </div>
           <hr />
           <div className="box_container_total_txt">
-            <div className="atitlePrice">
+            <div className="atitlePriceUSD">
               <h3>Total:</h3>
               <h3>${order_list.total_prices}</h3>
             </div>
-            <div className="atitlePrice">
-              <h3>Total:</h3>
-              <h3>${order_list.total_prices}</h3>
-            </div>
+
             <div className="aplace-on">
               <div className="container_aplace">
                 <div className="box_places">
@@ -348,6 +345,7 @@ const OrderBill = () => {
                     {new Date(order_list.created_at).toLocaleString()}
                   </p>
                   <p>Payment method: {order_list.account_name}</p>
+                  <p>Contact number: +856 {order_list.tel}</p>
                   <p>Address for delivery: {order_list.district}</p>
                   <p>Status: {order_list.status}</p>
                 </div>

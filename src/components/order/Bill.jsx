@@ -227,7 +227,7 @@ const Bill = ({ totalPrice, currency }) => {
               <div className="box_place">
                 <div className="place-on">
                   <p>Payment method: {order_list.account_name}</p>
-                  <p>Contact number: +85620{order_list.tel}</p>
+                  <p>Contact number: +856{order_list.tel}</p>
                   <p>Address for delivery: {order_list.district}</p>
                   <p>Status: {order_list.status}</p>
                 </div>
