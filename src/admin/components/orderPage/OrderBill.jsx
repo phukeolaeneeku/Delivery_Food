@@ -288,7 +288,7 @@ const OrderBill = () => {
           <div className="container_Order_Bill">
             <Link to={goBack} className="back_Order_Bill">
               <FaAngleLeft id="box_icon_Back" />
-              <p>Back</p>
+              {/* <p>Back</p> */}
             </Link>
             <h2>Orders</h2>
             <div></div>
@@ -331,7 +331,11 @@ const OrderBill = () => {
             </table>
           </div>
           <hr />
-          <div className="box_container_total">
+          <div className="box_container_total_txt">
+            <div className="atitlePrice">
+              <h3>Total:</h3>
+              <h3>${order_list.total_prices}</h3>
+            </div>
             <div className="atitlePrice">
               <h3>Total:</h3>
               <h3>${order_list.total_prices}</h3>

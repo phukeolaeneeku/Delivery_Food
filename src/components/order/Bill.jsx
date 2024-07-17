@@ -134,10 +134,10 @@ const Bill = ({ totalPrice, currency }) => {
         <>
           <Header></Header>
           <div className="bill">
-            <Link to="/order" className="box_container_back_icons_backs">
+            {/* <Link to="/order" className="box_container_back_icons_backs">
               <IoIosArrowBack id="icons_back" />
               <p>Back</p>
-            </Link>
+            </Link> */}
             <div className="bill-detial">
               <div className="guopoidHead">
                 <div className="box_containner_txt">

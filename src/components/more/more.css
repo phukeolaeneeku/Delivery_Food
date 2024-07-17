@@ -72,8 +72,7 @@ h3{
 
 .menu_icon {
     display: flex;
-    gap: 1rem;
-    align-items: center;
+    gap: 1px;
     padding: 20px 0;
     cursor: pointer;
     color: black;
