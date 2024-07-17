@@ -9,7 +9,7 @@ import axios from "axios";
 import ReviewProduct from "./ReviewProduct";
 import productImage from "../../img/productImage.png";
 
-const Bill = () => {
+const Bill = ({ totalPrice, currency }) => {
   const token = localStorage.getItem("token");
   const order_id = useParams().bill_id;
   const [order_list, setOrderList] = useState("");
@@ -124,6 +124,8 @@ const Bill = () => {
     setComment("");
   };
 
+  const usdToKrw = 15.00;
+
   return (
     <>
       {showReview ? (
@@ -195,9 +197,11 @@ const Bill = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="box_more_details">More dtails: {order_list.province}</p>
+              <p className="box_more_details">
+                More dtails: {order_list.province}
+              </p>
               <div className="titlePrice">
-                <h4>Total:</h4>
+                <h4>TotalUSD:</h4>
                 <p>{" "}
                   ${" "}
                   {parseFloat(totalPrice).toLocaleString("en-US", {
@@ -207,6 +211,19 @@ const Bill = () => {
                   })}{" "}
                 </p>
               </div>
+              <div className="titlePrice">
+                <h4>TotalKRW:</h4>
+                <p>{" "}
+                  ₩{" "}
+                  {parseFloat(totalPrice * usdToKrw).toLocaleString("en-US", {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                    useGrouping: true,
+                  })}{" "}
+                </p>
+              </div>
+
+              
               <div className="box_place">
                 <div className="place-on">
                   <p>Payment method: {order_list.account_name}</p>

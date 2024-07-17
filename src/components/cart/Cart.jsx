@@ -166,6 +166,24 @@ const Cart = () => {
     );
   };
 
+
+  const usdToKrw = 15.00;
+  const getTotalPriceForStoreKRW = (store_name) => {
+    const storeItems = cart.filter((item) => item.store_name === store_name);
+    return storeItems.reduce(
+      (total, item) => total + item.price * (item.quantity || 0) * (usdToKrw),
+      0
+    );
+  };
+  const usdToLAK = 25000;
+  const getTotalPriceForStoreLAK = (store_name) => {
+    const storeItems = cart.filter((item) => item.store_name === store_name);
+    return storeItems.reduce(
+      (total, item) => total + item.price * (item.quantity || 0) * (usdToLAK),
+      0
+    );
+  };
+
   var user_id = null;
   if (localStorage.getItem("user")) {
     user_id = JSON.parse(window.localStorage.getItem("user")).user_id;
@@ -321,7 +339,11 @@ const Cart = () => {
                         <hr />
                         <div className="box_item_total_text">
                           <p className="txt_Total">Total: </p>
-                          <p>${getTotalPriceForStore(store).toFixed(2)}</p>
+                          <p>${" "}{getTotalPriceForStore(store).toFixed(2)}</p>
+                        </div>
+                        <div className="box_item_total_text">
+                          <p className="txt_Total">Total: </p>
+                          <p>₩{" "}{getTotalPriceForStoreKRW(store).toFixed(2)}</p>
                         </div>
                         <div className="btn">
                           <button

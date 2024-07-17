@@ -154,7 +154,10 @@ const Payment = ({ orders, order_from, onPay }) => {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(store_account_number);
-    alert("Account number copied to clipboard!");
+    MySwal.fire({
+      text: "Account number copied to clipboard!",
+      icon: "success",
+    });
   };
 
   const handlePay = () => {
@@ -239,6 +242,10 @@ const Payment = ({ orders, order_from, onPay }) => {
         console.log(error);
       });
   };
+
+
+  const usdToKrw = 15.00;
+
 
   return (
     <>
@@ -486,7 +493,8 @@ const Payment = ({ orders, order_from, onPay }) => {
 
                 <p className="box_containner_totals">
                   Total price:
-                  <span>{" "}
+                  <span>
+                    {" "}
                     ${" "}
                     {parseFloat(totalPrice).toLocaleString("en-US", {
                       minimumFractionDigits: 0,
@@ -525,9 +533,10 @@ const Payment = ({ orders, order_from, onPay }) => {
 
                 <p className="box_containner_totals">
                   Total price:
-                  <span>{" "}
+                  <span>
+                    {" "}
                     ₩{" "}
-                    {parseFloat(totalPrice).toLocaleString("en-US", {
+                    {parseFloat(totalPrice * usdToKrw).toLocaleString("en-US", {
                       minimumFractionDigits: 0,
                       maximumFractionDigits: 0,
                       useGrouping: true,
@@ -548,17 +557,32 @@ const Payment = ({ orders, order_from, onPay }) => {
 
             {paymentMethod !== "TransferUSD" &&
               paymentMethod !== "TransferKRW" && (
-                <p className="box_containner_total">
-                  Total price:
-                  <span>{" "}
-                    ${" "}
-                    {parseFloat(totalPrice).toLocaleString("en-US", {
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 0,
-                      useGrouping: true,
-                    })}
-                  </span>
-                </p>
+                <>
+                  <p className="box_containner_total">
+                    Total price:
+                    <span>
+                      {" "}
+                      ${" "}
+                      {parseFloat(totalPrice).toLocaleString("en-US", {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                        useGrouping: true,
+                      })}
+                    </span>
+                  </p>
+                  <p className="box_containner_total">
+                    Total price:
+                    <span>
+                      {" "}
+                      ₩{" "}
+                      {parseFloat(totalPrice * usdToKrw).toLocaleString("en-US", {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                        useGrouping: true,
+                      })}
+                    </span>
+                  </p>
+                </>
               )}
           </div>
 
