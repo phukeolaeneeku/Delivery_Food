@@ -259,7 +259,7 @@ const Payment = ({ orders, order_from, onPay }) => {
             <div key={index}>
               {product.items.map((item, itemIndex) => (
                 <div className="box_item_gourp" key={item.id}>
-                  <div className="box_item_image">
+                  <div className="box_item_images">
                     <img src={item.images} alt="" />
                     <div className="box_item_text_payment">
                       <p>Name: {item.name}</p>

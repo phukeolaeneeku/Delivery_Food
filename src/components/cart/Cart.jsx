@@ -242,10 +242,7 @@ const Cart = () => {
         <>
           <Header />
           <div className="box_cart_container">
-            {/* <Link to="/" className="box_container_back_icons_back">
-              <IoIosArrowBack id="icons_back" />
-              <p>Back</p>
-            </Link> */}
+           
 
             {stores.length === 0 ? (
               <p className="no-reviews-message">Your cart is emty</p>
@@ -331,7 +328,7 @@ const Cart = () => {
                     </div>
                     <div className="box_item_total">
                       <div className="cart_Total_box">
-                        <h3>Cart Total</h3>
+                        <h2>Cart Total</h2>
                         <div className="box_item_total_text">
                           <p>Quantity:</p>
                           <p>{getTotalItemForStore(store)} Items</p>

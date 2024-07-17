@@ -18,6 +18,20 @@
     border-radius: 5px;
 }
 
+.box_item_images {
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    display: flex;
+}
+
+.box_item_images img {
+    width: 25%;
+    height: 140px;
+    overflow: hidden;
+    object-fit: cover;
+}
+
 
 .iconnn_copy_account {
     cursor: pointer;
@@ -138,11 +152,37 @@
     .product_category{
         width: 100%;
     }
+    .box_item_image {
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        border-bottom: 1px solid #ddd;
+        align-items: center;
+    }
+
+    .box_item_image img {
+        width: 60%;
+        height: 110px;
+        object-fit: cover;
+    }
 }
 
 @media screen and (max-width: 376px) {
     .guopBoxPayment_container{
         width: 90%;
         margin-left: -1rem;
+    }
+    .box_item_image {
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        border-bottom: 1px solid #ddd;
+        align-items: center;
+    }
+
+    .box_item_image img {
+        width: 60%;
+        height: 110px;
+        object-fit: cover;
     }
 }
