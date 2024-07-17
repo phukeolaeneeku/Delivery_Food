@@ -149,7 +149,7 @@ h3{
 
 
 /* ============ popup logout ===========*/
-.background_addproductpopup_box {
+.background_addproductpopup_logoutAndDelete {
     position: fixed;
     top: 0;
     left: 0;
@@ -159,7 +159,7 @@ h3{
     z-index: 999;
 }
 
-.hover_addproductpopup_box {
+.hover_addproductpopup_logoutAndDelete {
     width: 30%;
     margin: 0;
     position: absolute;
@@ -240,7 +240,7 @@ h3{
     .left_box img {
         width: 16%;
     }
-    .background_addproductpopup_box{
+    .background_addproductpopup_logoutAndDelete{
         width: 100%;
     }
 
@@ -250,7 +250,7 @@ h3{
         top: 50%;
         left: 50%;
     }
-    .hover_addproductpopup_box{
+    .hover_addproductpopup_logoutAndDelete{
         width: 100%;
     }
     .box_logout{
@@ -260,11 +260,10 @@ h3{
 
 }
 @media screen and (max-width: 431px) {
-    .hover_addproductpopup_box{
-        width: 100%;
+    .hover_addproductpopup_logoutAndDelete{
+        width: 90%;
     }
     .box_logout{
         width: 100%;
-        display: none;
     }
 }

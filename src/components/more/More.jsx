@@ -112,8 +112,8 @@ export const More = () => {
           </div>
 
           {showConfirmation && (
-            <div className="background_addproductpopup_box">
-              <div className="hover_addproductpopup_box">
+            <div className="background_addproductpopup_logoutAndDelete">
+              <div className="hover_addproductpopup_logoutAndDelete">
                 <div className="box_logout">
                   <p>Are you sure you want to log out?</p>
                 </div>
@@ -145,8 +145,8 @@ export const More = () => {
           </div>
 
           {showConfirmationDelete && (
-            <div className="background_addproductpopup_box">
-              <div className="hover_addproductpopup_box">
+            <div className="background_addproductpopup_logoutAndDelete">
+              <div className="hover_addproductpopup_logoutAndDelete">
                 <div className="box_logout">
                   <p>Are you sure you want to Delete?</p>
                 </div>
