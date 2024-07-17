@@ -19,7 +19,9 @@
 .back_Order_Bill{
     gap: 10px;
 }
-/* bill no: id: name: */
+.box_container_sudToKrw{
+    display: grid;
+}
 .aguopoidHead {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -82,6 +84,13 @@
 .atitlePriceUSD {
     display: flex;
     padding: 0 30px;
+    align-items: center;
+    justify-content: space-between;
+}
+.atitlePriceKRW {
+    display: flex;
+    padding: 0 30px;
+    margin-top: -7rem;
     align-items: center;
     justify-content: space-between;
 }
