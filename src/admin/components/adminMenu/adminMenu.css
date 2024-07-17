@@ -24,7 +24,7 @@ body {
 #dashboard .left .menu .link {
     display: flex;
     gap: 1rem;
-    padding: 10px 45px;
+    padding: 4px 38px;
     font-size: 1.2rem;
     border-radius: 7px;
     cursor: pointer;

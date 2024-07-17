@@ -148,6 +148,83 @@ h3{
 }
 
 
+/* ============ popup logout ===========*/
+.background_addproductpopup_box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #00000036;
+    z-index: 999;
+}
+
+.hover_addproductpopup_box {
+    width: 30%;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.box_logout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    width: 100%;
+    height: 15vh;
+    background-color: #FFF;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.box_logout p{
+    font-size: 18px;
+    color: #000;
+}
+
+.btn_cancel {
+    background-color: #F2F3F7;
+    color: #000;
+    font-size: 18px;
+}
+
+.btn_confirm {
+    background-color: #347FFF;
+    color: #FFF;
+    font-size: 18px;
+}
+
+.btn_cancel:hover {
+    background-color: #e7e8ee;
+}
+
+.btn_confirm:hover {
+    background-color: #3076f0;
+}
+
+.btn_addproducttxt_popup {
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    padding: 20px;
+
+}
+
+.input_of_txtAddproduct {
+    width: 80%;
+    border-radius: 30px;
+    padding: 20px;
+    border: 1px solid #DDDCE1;
+}
+
+.btn_foasdf {
+    display: flex;
+}
+
+
 
 /*============== Responsive =====================*/
 @media (max-width: 768px) {
@@ -163,6 +240,9 @@ h3{
     .left_box img {
         width: 16%;
     }
+    .background_addproductpopup_box{
+        width: 100%;
+    }
 
     .confirmation-popup {
         width: 80%;
@@ -170,5 +250,21 @@ h3{
         top: 50%;
         left: 50%;
     }
+    .hover_addproductpopup_box{
+        width: 100%;
+    }
+    .box_logout{
+        width: 100%;
+        display: none;
+    }
 
+}
+@media screen and (max-width: 431px) {
+    .hover_addproductpopup_box{
+        width: 100%;
+    }
+    .box_logout{
+        width: 100%;
+        display: none;
+    }
 }

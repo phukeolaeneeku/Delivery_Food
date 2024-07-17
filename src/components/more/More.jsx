@@ -105,22 +105,32 @@ export const More = () => {
         </div>
 
         <div className="more-menu-list">
-
           <hr className="hr" />
           <div onClick={() => setShowConfirmation(true)} className="menu_icon">
             <IoLogOutOutline id="icon_more" />
             <p>Log out </p>
           </div>
+
           {showConfirmation && (
-            <div className="confirmation-popup">
-              <p>Are you sure you want to logout?</p>
-              <div className="btn_ok_on">
-                <button onClick={handleCancelLogout} className="btn_on">
-                  No
-                </button>
-                <button onClick={handleConfirmLogout} className="btn_yes">
-                  Yes
-                </button>
+            <div className="background_addproductpopup_box">
+              <div className="hover_addproductpopup_box">
+                <div className="box_logout">
+                  <p>Are you sure you want to log out?</p>
+                </div>
+                <div className="btn_foasdf">
+                  <button
+                    className="btn_cancel btn_addproducttxt_popup"
+                    onClick={handleCancelLogout}
+                  >
+                    No
+                  </button>
+                  <button
+                    className="btn_confirm btn_addproducttxt_popup"
+                    onClick={handleConfirmLogout}
+                  >
+                    Yes
+                  </button>
+                </div>
               </div>
             </div>
           )}
@@ -135,15 +145,25 @@ export const More = () => {
           </div>
 
           {showConfirmationDelete && (
-            <div className="confirmation-popup">
-              <p>Are you sure you want to Delete?</p>
-              <div className="btn_ok_on">
-                <button onClick={handleCancelDelete} className="btn_on">
-                  No
-                </button>
-                <button onClick={handleConfirmDelete} className="btn_yes">
-                  Yes
-                </button>
+            <div className="background_addproductpopup_box">
+              <div className="hover_addproductpopup_box">
+                <div className="box_logout">
+                  <p>Are you sure you want to Delete?</p>
+                </div>
+                <div className="btn_foasdf">
+                  <button
+                    className="btn_cancel btn_addproducttxt_popup"
+                    onClick={handleCancelDelete}
+                  >
+                    No
+                  </button>
+                  <button
+                    className="btn_confirm btn_addproducttxt_popup"
+                    onClick={handleConfirmDelete}
+                  >
+                    Yes
+                  </button>
+                </div>
               </div>
             </div>
           )}

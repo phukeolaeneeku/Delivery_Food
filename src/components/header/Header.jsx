@@ -152,7 +152,7 @@ const Header = ({ set_category_name }) => {
                       location.pathname === "/cart" ? "link active" : "link"
                     }
                   >
-                    <FaCartShopping className="head_colorr" />
+                    <FaCartShopping className="head_colorrCart" />
                   </Link>
                 </div>
                 <div className="linkLi">
