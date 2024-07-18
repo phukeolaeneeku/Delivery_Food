@@ -310,7 +310,7 @@ const OrderBill = () => {
                   <th>Product Name</th>
                   <th>Price</th>
                   <th>Amount</th>
-                  <th>Description</th>
+                  <th>Type of water</th>
                 </tr>
               </thead>
               {order_list.items &&
@@ -327,7 +327,8 @@ const OrderBill = () => {
                         })}
                       </td>
                       <td>{item.quantity}</td>
-                      <td>{item.province}</td>
+                      {/* <td>{item.province}</td> */}
+                      <td>{item.size}</td>
                     </tr>
                   </tbody>
                 ))}
