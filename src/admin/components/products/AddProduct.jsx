@@ -31,7 +31,7 @@ const AddProduct = () => {
       description: "0",
       price: "",
       category: "",
-      sizes: [0],
+      sizes: [],
       colors: [0],
       images: [],
       imagePreview: "",
@@ -151,7 +151,7 @@ const AddProduct = () => {
         description: "0",
         price: "",
         category: "",
-        sizes: [0],
+        sizes: [],
         colors: [0],
         images: [],
         imagePreview: "",
@@ -363,7 +363,7 @@ const AddProduct = () => {
                         />
                       </div> */}
 
-                      {/* <div className="box_size_product_container">
+                      <div className="box_size_product_container">
                         <div className="box_size_add">
                           {product.sizes.map((size, sizeIndex) => (
                             <div key={sizeIndex} className="box_size_add_item">
@@ -382,7 +382,7 @@ const AddProduct = () => {
                         <div className="box_size_content">
                           <input
                             type="text"
-                            placeholder="Add Sizes..."
+                            placeholder="Add Type of water..."
                             value={product.currentsizes || ""}
                             onChange={(e) => handleSizeInputChange(e, index)}
                           />
@@ -393,7 +393,7 @@ const AddProduct = () => {
                             Add
                           </div>
                         </div>
-                      </div> */}
+                      </div>
 
                       {/* <div className="box_size_product_container">
                         <div className="box_size_add">

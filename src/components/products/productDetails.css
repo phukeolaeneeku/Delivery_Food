@@ -1,6 +1,7 @@
 /* ----------- Header ---------------- */
 body {
     background-color: #FFF;
+    font-family: Poppins;
 }
 .box_RotatingLines{
     text-align: center;
@@ -32,13 +33,16 @@ body {
 }
 
 .product-page-img {
+    width: 100px;
+    height: auto;
     display: flex;
     justify-content: center;
+    object-fit: cover;
 }
 
 .product-page-img img {
-    width: 70%;
-    height: 250px;
+    width: 100%;
+    height: 390px;
     margin: auto;
     object-fit: cover;
 }
@@ -92,7 +96,7 @@ body {
 }
 
 .txt_nameP {
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .money_txt {
@@ -115,7 +119,7 @@ body {
 .startBox,
 .txt_description,
 .color_product,
-.size_product {
+.size_product_type_water {
     padding: 0.7rem 0;
 
 }
@@ -136,16 +140,11 @@ body {
     font-size: 16px;
 }
 
-.size_product {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
 
-.size_product .size {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
+
+.txt_choose_typeOFwater{
+    font-size: 16px;
+    font-weight: 600;
 }
 
 /* Checked radio color */
@@ -175,19 +174,32 @@ body {
     border: 3px solid black;
 
 }
+.size_product_type_water {
+    display: contents;
+    gap: 1rem;
+    align-items: center;
+    
+}
+.size{
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: 1fr 1fr 1fr 1fr ;
+}
 
-.echSize {
+.echSize_type {
+
     cursor: pointer;
-    padding: 5px 15px;
-    border: 2px solid rgba(0, 0, 0, 0.30);
+    padding: 4px 20px;
+    border: 1px solid rgba(0, 0, 0, 0.30);
     border-radius: 5px;
+    font-size: 12px;
 }
 
 /* Acctive sizes */
-.echSize.active {
+.echSize_type.active {
     cursor: pointer;
-    padding: 7px 17px;
-    border: 2px solid #FF4F16;
+    padding: 4px 20px;
+    border: 1px solid #FF4F16;
     border-radius: 5px;
     background-color: #FF4F16;
     color: #FFF;
@@ -479,17 +491,20 @@ body {
     .contentBody {
         width: 100%;
         overflow: hidden;
-        padding: 10px;
+        /* padding: 10px; */
     }
 
     .product-page-img {
         display: block;
+        padding: 0;
     }
 
     .product-page-img img {
         width: 100%;
+        height: 280px;
         margin: 0;
         margin-bottom: 7.5rem;
+        margin-left: -1rem;
     }
 
     .boxProduct_deteils {

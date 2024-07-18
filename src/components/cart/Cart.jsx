@@ -261,8 +261,7 @@ const Cart = () => {
                                 <img src={item.images} alt="" />
                                 <div className="box_item_text">
                                   <p>name: {item.name}</p>
-                                  {/* <p>color: {item.color}</p>
-                                  <p>size: {item.size}</p> */}
+                                  {/* <p>color: {item.color}</p> */}
                                   <p>
                                     price{": "} $
                                     {parseFloat(item.price).toLocaleString(
@@ -274,6 +273,7 @@ const Cart = () => {
                                       }
                                     )}
                                   </p>
+                                  <p>Type of water: {item.size}</p>
                                 </div>
                                 <div className="box_icon_order">
                                   <div className="btnicon_delete_order">

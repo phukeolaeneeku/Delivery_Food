@@ -26,8 +26,9 @@
 }
 
 .box_item_images img {
-    width: 25%;
-    height: 140px;
+    width: 28%;
+    height: 180px;
+    border-radius: 5px;
     overflow: hidden;
     object-fit: cover;
 }

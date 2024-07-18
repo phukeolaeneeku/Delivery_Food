@@ -279,6 +279,7 @@ const Payment = ({ orders, order_from, onPay }) => {
                           useGrouping: true,
                         })}
                       </p>
+                      <p>Type of water: {item.size}</p>
                       <textarea
                         type="text"
                         placeholder="Description..."

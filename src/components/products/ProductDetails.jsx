@@ -355,10 +355,11 @@ function ProductDetails() {
                             ))}
                           </div>
                         )}
-                      </div>
+                      </div> */}
 
-                      <div className="size_product">
-                        <p>Size:</p>
+                      <div className="size_product_type_water">
+                        
+                        <p className="txt_choose_typeOFwater">Type of water:</p>
                         {product.sizes && (
                           <div className="size">
                             {sizes.map((size, index) => (
@@ -366,8 +367,8 @@ function ProductDetails() {
                                 key={index}
                                 className={
                                   index === activeIndex
-                                    ? "active echSize"
-                                    : "echSize"
+                                    ? "active echSize_type"
+                                    : "echSize_type"
                                 }
                                 onClick={() => handleSizeClick(index)}
                               >
@@ -376,7 +377,7 @@ function ProductDetails() {
                             ))}
                           </div>
                         )}
-                      </div> */}
+                      </div>
 
                       <div className="container_item_icon">
                         <div

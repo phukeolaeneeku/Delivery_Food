@@ -37,7 +37,7 @@ const Product_Admin = () => {
 
   const MySwal = withReactContent(Swal);
 
-  console.log("goods_list...", goods_list)
+  console.log("goods_list...", goods_list);
 
   useEffect(() => {
     const extractedNames = data_array.map((item) => item.name);
@@ -421,7 +421,10 @@ const Product_Admin = () => {
       redirect: "follow",
     };
 
-    fetch(import.meta.env.VITE_API + `/store/web-info/create_update`, requestOptions)
+    fetch(
+      import.meta.env.VITE_API + `/store/web-info/create_update`,
+      requestOptions
+    )
       .then((response) => response.text())
       .then((result) => {
         console.log(result);
@@ -1104,6 +1107,78 @@ const Product_Admin = () => {
                               className="btn_confirm btn_addproducttxt_popup"
                               onClick={() => {
                                 ChangeProductPrice();
+                              }}
+                            >
+                              Update
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    <div
+                      className="box_icon_MdOutlineEdit"
+                      onClick={() =>
+                        openConfirmationSize(product.id, product.sizes)
+                      }
+                    >
+                      {/* <li>Size: {product.size}</li> */}
+                      <li>
+                        Size: {product.sizes.map((size) => size.name + " ")}
+                      </li>
+                      <MdOutlineEdit id="icon_edit" />
+                    </div>
+                    {isConfirmationSize && (
+                      <div className="background_addproductpopup_box">
+                        <div className="addproductpopup_box">
+                          <div className="box_size_input">
+                            <p>Edit product type of water</p>
+                            <div className="box_size_container">
+                              <div className="box_size_add">
+                                {sizes.map((size, sizeIndex) => (
+                                  <div
+                                    key={sizeIndex}
+                                    className="box_size_add_item"
+                                  >
+                                    <p>{size}</p>
+                                    <span
+                                      onClick={() => removeSizeInput(sizeIndex)}
+                                    >
+                                      <MdClose id="icon_MdClose" />
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+
+                              <div className="box_size_content">
+                                <input
+                                  type="text"
+                                  placeholder="Add type of water..."
+                                  value={currentSize}
+                                  onChange={(e) =>
+                                    setCurrentSize(e.target.value)
+                                  }
+                                />
+                                <div
+                                  className="btn_addsize"
+                                  onClick={() => addSizeInput()}
+                                >
+                                  Add
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="btn_foasdf">
+                            <button
+                              className="btn_cancel btn_addproducttxt_popup"
+                              onClick={closeConfirmationSize}
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              className="btn_confirm btn_addproducttxt_popup"
+                              onClick={() => {
+                                ChangeProductSizes();
                               }}
                             >
                               Update
