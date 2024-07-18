@@ -177,13 +177,13 @@ const Header = ({ set_category_name }) => {
               <div className="right_ofHeadBox">
                 <div className="linkLi">
                   <Link to="/cart">
-                    <FaCartShopping className="head_colorr" />
+                    <FaCartShopping className="head_colorrCart"/>
                   </Link>
                 </div>
                 <div className="linkLi">
                   <Link to="/loginuser" className="Box_icon_login_BiLogIn">
                     Login
-                    <BiLogIn id="icon_BiLogIn" />
+                    <BiLogIn id="icon_BiLogIn"/>
                   </Link>
                 </div>
               </div>

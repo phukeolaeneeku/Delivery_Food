@@ -108,14 +108,15 @@
 
 @media screen and (max-width: 420px) {
     .slider_banner {
-        height: 230px;
+        height: 210px;
+        margin-top: 3rem;
     }
     .but1_banner {
-        top: 120px;
+        top: 60px;
     }
     
     .but2_banner {
-        top: 120px;
+        top: 60px;
     }
    
 }
