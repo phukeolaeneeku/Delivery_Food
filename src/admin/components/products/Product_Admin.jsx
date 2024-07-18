@@ -1124,7 +1124,7 @@ const Product_Admin = () => {
                     >
                       {/* <li>Size: {product.size}</li> */}
                       <li>
-                        Size: {product.sizes.map((size) => size.name + " ")}
+                        Type of water: {product.sizes.map((size) => size.name + " ")}
                       </li>
                       <MdOutlineEdit id="icon_edit" />
                     </div>

@@ -441,9 +441,9 @@ function ProductDetails() {
                   <ul className="reviews">
                     {displayedReviews.map((review) => (
                       <li key={review.id} className="review-item">
-                        <h3 className="rating">
+                        <h2 className="rating">
                           {review.user.nickname || "null"}:
-                        </h3>
+                        </h2>
                         <p className="comment">{review.comment || "null"}</p>
                         {/* Display other review details as needed */}
                       </li>
