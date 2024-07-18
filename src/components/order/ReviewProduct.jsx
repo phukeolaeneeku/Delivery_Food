@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import "./review.css";
 import { useLocation, useNavigate, Link, useParams } from "react-router-dom";
 import "../products/productBuy.css";
 import Menu from "../menuFooter/Menu";
@@ -179,24 +180,20 @@ function ReviewProduct(id) {
       <Header />
 
       <div className="contentBody">
-        <Link to="/" className="box_container_back_icons_back">
-          <IoIosArrowBack id="icons_back" />
+        <Link to="/order" className="box_back_icons_back">
+          <IoIosArrowBack id="icons_IoIosArrowBack" />
           <p>Back</p>
         </Link>
         {product ? (
           <div key={product.id}>
             <div className="boxProduct_deteils">
-              <div className="slider">
-                <React.Fragment>
-                  <section className="product_details">
-                    <div className="product-page-img">
-                      <div className="myslides">
-                        <img src={product.image_set[0]} alt="" />
-                      </div>
-                    </div>
-                  </section>
-                </React.Fragment>
-              </div>
+              <React.Fragment>
+                <section className="product_details">
+                  <div className="product-page-img">
+                    <img src={product.image_set[0]} alt="img" />
+                  </div>
+                </section>
+              </React.Fragment>
 
               <div className="txtContentproduct">
                 <h1 className="txt_nameP">Name: {product.name}</h1>
@@ -215,24 +212,23 @@ function ReviewProduct(id) {
                 <br />
 
                 {review.length != "" ? (
-                  <div>
-                    <h3>Already commented.</h3> <br />
-                    <p>Comment: {review.comment}</p>
-                    <p>Rating: {review.rating}</p>
-                    <p>Date: {new Date(review.created_at).toLocaleString()}</p>
+                  <div className="box_comments">
+                    <h2>Already commented.</h2> <br />
+                    <div className="txt_review">
+                      <p>Comment: {review.comment}</p>
+                      <p>Rating: {review.rating}</p>
+                      <p>
+                        Date: {new Date(review.created_at).toLocaleString()}
+                      </p>
+                    </div>
                   </div>
                 ) : (
-                  <div
-                    style={{
-                      textAlign: "center",
-                      width: "60%",
-                      margin: "0 auto",
-                    }}
-                  >
+                  <div className="box_leave_review">
                     <h2>Leave a Review</h2>
-                    <div style={{ marginBottom: "20px" }}>
+                    <div className="box_container_start">
                       {[...Array(5)].map((_, index) => (
                         <span
+                          className="icon_start_review"
                           key={index}
                           style={{
                             fontSize: "30px",
@@ -255,22 +251,10 @@ function ReviewProduct(id) {
                         value={comment}
                         onChange={handleCommentChange}
                         placeholder="Write your review here..."
-                        style={{ fontSize: "20px", padding: "10px" }}
+                        className="container_textarea"
                       />
                       <br />
-                      <button
-                        type="submit"
-                        style={{
-                          fontSize: "20px",
-                          padding: "8px 25px",
-                          border: "none",
-                          borderRadius: "5px",
-                          color: "white",
-                          background: "#FF4F16",
-                          cursor: "pointer",
-                          marginTop: "3rem"
-                        }}
-                      >
+                      <button type="submit" className="btn_review">
                         Submit
                       </button>
                     </form>

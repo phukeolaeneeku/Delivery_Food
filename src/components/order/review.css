@@ -1,0 +1,89 @@
+.box_container_back {
+    display: flex;
+    align-items: center;
+    color: black;
+    padding: 0 100px;
+}
+
+.box_comments {
+    margin-top: 2rem;
+}
+
+.box_comments h2 {
+    margin-top: 10px;
+}
+
+.box_comments p {
+    margin-top: 10px;
+}
+#icons_IoIosArrowBack{
+    font-size: 18px;
+    color: #444;
+}
+.box_back_icons_back{
+    display: flex;
+    gap: 2px;
+    color: black;
+}
+
+.box_leave_review {
+    width: 100%;
+    margin: auto;
+    margin-top: 1rem;
+}
+
+.box_container_start {
+    margin-bottom: 15px;
+}
+.container_textarea{
+    width: 400px;
+    padding: 10px;
+}
+
+.container_textarea textarea {
+    width: 100%;
+    font-size: 16px;
+    padding: 10px;
+    margin-bottom: 1rem;
+
+}
+
+.btn_review {
+    width: 400px;
+    height: 40px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FF5331;
+    color: white;
+    cursor: pointer;
+}
+
+.btn_review:hover {
+    background-color: #f44100;
+    transition: 0.5s;
+    box-shadow: rgba(0, 0, 0, 0.10);
+}
+
+/* Responsive */
+@media screen and (max-width: 431px) {
+    .box_container_back {
+        padding: 0;
+    }
+
+    .box_leave_review {
+        width: 97%;
+    }
+
+    .container_textarea textarea {
+        width: 100%;
+    }
+
+    .btn_review {
+        width: 100%;
+        height: 50px;
+    }
+    .box_comments {
+        padding: 0;
+    }
+}
