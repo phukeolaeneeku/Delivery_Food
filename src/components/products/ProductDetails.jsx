@@ -299,8 +299,8 @@ function ProductDetails() {
             images: product.images,
             quantity: quantity,
             price: price,
-            // color: color,
-            // size: size,
+            color: color,
+            size: size,
           },
         ],
       },
@@ -336,8 +336,14 @@ function ProductDetails() {
                         ></div>
                       </div> */}
 
-                      {/* <div className="size_product">
-                        <p>Color:</p>
+                      <div className="size_product_type_water">
+                        {product.colors != 0 ? (
+                          <p className="txt_choose_typeOFwater">
+                            Can you choose type of menu:
+                          </p>
+                        ) : (
+                          <p></p>
+                        )}
                         {product.colors && (
                           <div className="size">
                             {colors.map((color, index) => (
@@ -345,8 +351,8 @@ function ProductDetails() {
                                 key={index}
                                 className={
                                   index === activeColorIndex
-                                    ? "active echSize"
-                                    : "echSize"
+                                    ? "active echSize_type"
+                                    : "echSize_type"
                                 }
                                 onClick={() => handleColorClick(index)}
                               >
@@ -355,12 +361,12 @@ function ProductDetails() {
                             ))}
                           </div>
                         )}
-                      </div> */}
+                      </div>
 
                       <div className="size_product_type_water">
                         {product.sizes != 0 ? (
                           <p className="txt_choose_typeOFwater">
-                            Type of water:
+                            Can you choose type of water:
                           </p>
                         ) : (
                           <p></p>

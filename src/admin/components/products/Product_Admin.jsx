@@ -1116,6 +1116,79 @@ const Product_Admin = () => {
                       </div>
                     )}
 
+<div
+                      className="box_icon_MdOutlineEdit"
+                      onClick={() =>
+                        openConfirmationColor(product.id, product.colors)
+                      }
+                    >
+                      <li>
+                        Color: {product.colors.map((color) => color.name + " ")}
+                      </li>
+                      <MdOutlineEdit id="icon_edit" />
+                    </div>
+                    {isConfirmationColor && (
+                      <div className="background_addproductpopup_box">
+                        <div className="addproductpopup_box">
+                          <div className="box_size_input">
+                            <p>Edit product color</p>
+                            <div className="box_size_container">
+                              <div className="box_size_add">
+                                {colors.map((color, colorIndex) => (
+                                  <div
+                                    key={colorIndex}
+                                    className="box_size_add_item"
+                                  >
+                                    <p>{color}</p>
+                                    <span
+                                      onClick={() =>
+                                        removeColorInput(colorIndex)
+                                      }
+                                    >
+                                      <MdClose id="icon_MdClose" />
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+
+                              <div className="box_size_content">
+                                <input
+                                  type="text"
+                                  placeholder="Add Type of menu..."
+                                  value={currentColor}
+                                  onChange={(e) =>
+                                    setCurrentColor(e.target.value)
+                                  }
+                                />
+                                <div
+                                  className="btn_addsize"
+                                  onClick={() => addColorInput()}
+                                >
+                                  Add
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="btn_foasdf">
+                            <button
+                              className="btn_cancel btn_addproducttxt_popup"
+                              onClick={closeConfirmationColor}
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              className="btn_confirm btn_addproducttxt_popup"
+                              onClick={() => {
+                                ChangeProductColors();
+                              }}
+                            >
+                              Update
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
                     <div
                       className="box_icon_MdOutlineEdit"
                       onClick={() =>

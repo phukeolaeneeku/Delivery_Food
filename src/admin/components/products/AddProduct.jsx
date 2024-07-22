@@ -32,7 +32,7 @@ const AddProduct = () => {
       price: "",
       category: "",
       sizes: [],
-      colors: [0],
+      colors: [],
       images: [],
       imagePreview: "",
     },
@@ -365,6 +365,38 @@ const AddProduct = () => {
 
                       <div className="box_size_product_container">
                         <div className="box_size_add">
+                          {product.colors.map((color, colorIndex) => (
+                            <div key={colorIndex} className="box_size_add_item">
+                              <p>{color}</p>
+                              <span
+                                onClick={() =>
+                                  removeColorInput(index, colorIndex)
+                                }
+                              >
+                                <MdClose id="icon_MdClose" />
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="box_size_content">
+                          <input
+                            type="text"
+                            placeholder="Add Type of menu..."
+                            value={product.currentcolors || ""}
+                            onChange={(e) => handleColorInputChange(e, index)}
+                          />
+                          <div
+                            className="btn_addsize"
+                            onClick={() => addColorInput(index)}
+                          >
+                            Add
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="box_size_product_container">
+                        <div className="box_size_add">
                           {product.sizes.map((size, sizeIndex) => (
                             <div key={sizeIndex} className="box_size_add_item">
                               <p>{size}</p>
@@ -394,39 +426,6 @@ const AddProduct = () => {
                           </div>
                         </div>
                       </div>
-
-                      {/* <div className="box_size_product_container">
-                        <div className="box_size_add">
-                          {product.colors.map((color, colorIndex) => (
-                            <div key={colorIndex} className="box_size_add_item">
-                              <p>{color}</p>
-                              <span
-                                onClick={() =>
-                                  removeColorInput(index, colorIndex)
-                                }
-                              >
-                                <MdClose id="icon_MdClose" />
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-
-                        <div className="box_size_content">
-                          <input
-                            type="text"
-                            placeholder="Add Colors..."
-                            value={product.currentcolors || ""}
-                            onChange={(e) => handleColorInputChange(e, index)}
-                          />
-                          <div
-                            className="btn_addsize"
-                            onClick={() => addColorInput(index)}
-                          >
-                            Add
-                          </div>
-                        </div>
-                      </div> */}
-
                     </div>
                   </div>
                 </div>
