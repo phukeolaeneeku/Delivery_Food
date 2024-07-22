@@ -72,7 +72,7 @@ const Header = ({ set_category_name }) => {
     axios
       .request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
         set_logo(response.data[0].logo);
       })
       .catch((error) => {

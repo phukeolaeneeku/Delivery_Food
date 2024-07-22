@@ -40,8 +40,8 @@
 }
 
 .box_item_image img {
-    width: 25%;
-    height: 140px;
+    width: 30%;
+    height: 180px;
     overflow: hidden;
     object-fit: cover;
 }
@@ -62,6 +62,11 @@
     gap: 0.8rem;
     margin-top: 7rem;
     font-size: 22px;
+}
+.box_item_icon {
+    margin-top: 6rem;
+    margin-left: 1rem;
+    font-size: 1.3rem;
 }
 
 /* Amount */
@@ -144,11 +149,7 @@
 
 
 /* btnicon_delete */
-.box_item_icon {
-    margin-top: 6rem;
-    margin-left: 1rem;
-    font-size: 1.3rem;
-}
+
 
 #btnicon_delete {
     font-size: 22px;
@@ -157,6 +158,9 @@
 
 .box_icon_order {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: end;
 
 }
 
@@ -209,14 +213,15 @@
     .box_item_image {
         width: 100%;
         height: auto;
+        display: block;
         overflow: hidden;
         border-bottom: 1px solid #ddd;
         align-items: center;
     }
 
     .box_item_image img {
-        width: 60%;
-        height: 110px;
+        width: 100%;
+        height: 320px;
         object-fit: cover;
     }
 
@@ -238,6 +243,15 @@
     }
     .box_item_total{
         width: 90%;
+    }
+
+    .box_item_icon{
+        display: 0;
+    }
+
+    .box_item_text{
+        margin-left: 0;
+        margin-top: 1rem;
     }
 }
 

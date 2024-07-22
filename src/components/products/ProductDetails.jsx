@@ -28,17 +28,40 @@ function ProductDetails() {
 
   //Active sizes
   const [sizes, setSizes] = useState([]);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndices, setActiveIndices] = useState([0]);
+
+  console.log("sizes....", activeIndices)
+
+
+  useEffect(() => {
+    if (product && product.sizes) {
+      // Ensure sizes are strings or numbers
+      const sizesArray = product.sizes.map((item) => {
+        if (typeof item === "object" && item.name) {
+          return item.name; // Use the property you need from the object
+        }
+        return item;
+      });
+      setSizes(sizesArray);
+    }
+  }, [product]);
+
+  const handleSizeClick = (index) => {
+    const isActive = activeIndices.includes(index);
+    if (isActive) {
+      // Remove from active indices
+      setActiveIndices(activeIndices.filter((i) => i !== index));
+    } else {
+      // Add to active indices
+      setActiveIndices([...activeIndices, index]);
+    }
+  };
 
   const extractSizeNames = (data) => {
     if (data && data.sizes) {
       const sizeNames = data.sizes.map((size) => size.name);
       setSizes(sizeNames);
     }
-  };
-  const handleSizeClick = (index) => {
-    setActiveIndex(index);
-    set_size(sizes[index]);
   };
 
   //Active color
@@ -364,21 +387,20 @@ function ProductDetails() {
                       </div>
 
                       <div className="size_product_type_water">
-                        {product.sizes != 0 ? (
+                        {product.colors != 0 ? (
                           <p className="txt_choose_typeOFwater">
-                            Can you choose type of water:
+                            You can choose 2 types of water:
                           </p>
                         ) : (
                           <p></p>
                         )}
-
                         {product.sizes && (
                           <div className="size">
                             {sizes.map((size, index) => (
                               <p
                                 key={index}
                                 className={
-                                  index === activeIndex
+                                  activeIndices.includes(index)
                                     ? "active echSize_type"
                                     : "echSize_type"
                                 }

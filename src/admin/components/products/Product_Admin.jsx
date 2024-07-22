@@ -37,7 +37,7 @@ const Product_Admin = () => {
 
   const MySwal = withReactContent(Swal);
 
-  console.log("goods_list...", goods_list);
+  // console.log("goods_list...", goods_list);
 
   useEffect(() => {
     const extractedNames = data_array.map((item) => item.name);
@@ -179,7 +179,7 @@ const Product_Admin = () => {
     axios
       .request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
         set_background_image(response.data[0].banner1);
       })
       .catch((error) => {
@@ -207,7 +207,7 @@ const Product_Admin = () => {
       });
   }, [categories]);
 
-  console.log(background_image);
+  // console.log(background_image);
 
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -1116,14 +1116,15 @@ const Product_Admin = () => {
                       </div>
                     )}
 
-<div
+                    <div
                       className="box_icon_MdOutlineEdit"
                       onClick={() =>
                         openConfirmationColor(product.id, product.colors)
                       }
                     >
                       <li>
-                        Color: {product.colors.map((color) => color.name + " ")}
+                        Type of menu:{" "}
+                        {product.colors.map((color) => color.name + " ")}
                       </li>
                       <MdOutlineEdit id="icon_edit" />
                     </div>
@@ -1197,7 +1198,8 @@ const Product_Admin = () => {
                     >
                       {/* <li>Size: {product.size}</li> */}
                       <li>
-                        Type of water: {product.sizes.map((size) => size.name + " ")}
+                        Type of water:{" "}
+                        {product.sizes.map((size) => size.name + " ")}
                       </li>
                       <MdOutlineEdit id="icon_edit" />
                     </div>
