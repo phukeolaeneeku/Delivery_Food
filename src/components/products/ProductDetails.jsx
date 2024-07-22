@@ -326,7 +326,7 @@ function ProductDetails() {
                     <div className="txtContentproduct">
                       <h1 className="txt_nameP">{product.name}</h1>
                       <p className="money_txt">$ {product.format_price}</p>
-                      
+
                       {/* <p className="txt_description">{product.description}</p>
 
                       <div className="star">
@@ -358,8 +358,14 @@ function ProductDetails() {
                       </div> */}
 
                       <div className="size_product_type_water">
-                        
-                        <p className="txt_choose_typeOFwater">Type of water:</p>
+                        {product.sizes != 0 ? (
+                          <p className="txt_choose_typeOFwater">
+                            Type of water:
+                          </p>
+                        ) : (
+                          <p></p>
+                        )}
+
                         {product.sizes && (
                           <div className="size">
                             {sizes.map((size, index) => (

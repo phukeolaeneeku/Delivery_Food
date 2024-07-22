@@ -7,6 +7,7 @@ import Logo1 from "../../img/Logo1.png";
 import axios from "axios";
 import { AiOutlineDashboard } from "react-icons/ai";
 import { BiLogIn } from "react-icons/bi";
+import { RotatingLines } from "react-loader-spinner";
 
 const Header = ({ set_category_name }) => {
   const location = useLocation();
@@ -79,7 +80,6 @@ const Header = ({ set_category_name }) => {
       });
   }, [logo]);
 
-
   const handleSearch = (e) => {
     e.preventDefault();
     navigate(`/search/?search=${search}`);
@@ -89,14 +89,44 @@ const Header = ({ set_category_name }) => {
     set_category_name("");
   };
 
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleImageLoad = () => {
+    setIsLoading(false);
+  };
+
   return (
     <section id="header">
       <div className="navbar">
         <div className="headWithBox">
           <div className="headMenu">
             <div className="logo1">
-              <Link to="/">
+              {/* <Link to="/">
                 <img src={logo} alt="Logo" onClick={handleProductsAll} />
+              </Link> */}
+
+              <Link to="/">
+                {isLoading && <div>
+                  <RotatingLines
+                    visible={true}
+                    height="35"
+                    width="35"
+                    color="Gray"
+                    strokeWidth="5"
+                    animationDuration="0.75"
+                    ariaLabel="rotating-lines-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                  />  
+                </div>}
+                <img
+                  src={logo}
+                  alt="Logo"
+                  onClick={handleProductsAll}
+                  onLoad={handleImageLoad}
+                  style={{ display: isLoading ? "none" : "block" }}
+                />
               </Link>
             </div>
             <div className="boxLiMenu">
@@ -177,13 +207,13 @@ const Header = ({ set_category_name }) => {
               <div className="right_ofHeadBox">
                 <div className="linkLi">
                   <Link to="/cart">
-                    <FaCartShopping className="head_colorrCart"/>
+                    <FaCartShopping className="head_colorrCart" />
                   </Link>
                 </div>
                 <div className="linkLi">
                   <Link to="/loginuser" className="Box_icon_login_BiLogIn">
                     Login
-                    <BiLogIn id="icon_BiLogIn"/>
+                    <BiLogIn id="icon_BiLogIn" />
                   </Link>
                 </div>
               </div>
