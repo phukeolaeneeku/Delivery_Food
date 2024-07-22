@@ -30,7 +30,7 @@ function ProductDetails() {
   const [sizes, setSizes] = useState([]);
   const [activeIndices, setActiveIndices] = useState([0]);
 
-  console.log("sizes...", sizes)
+  console.log("activeIndices...", activeIndices)
 
   useEffect(() => {
     if (product && product.sizes) {
@@ -51,10 +51,12 @@ function ProductDetails() {
     if (isActive) {
       // Remove from active indices
       setActiveIndices(activeIndices.filter((i) => i !== index));
+      set_size(sizes[index]);
     } else {
       // Add to active indices, but only if there are less than 2 active indices already
       if (activeIndices.length < 2) {
         setActiveIndices([...activeIndices, index]);
+        set_size(sizes[index]);
       }
     }
   };
@@ -389,7 +391,7 @@ function ProductDetails() {
                       </div>
 
                       <div className="size_product_type_water">
-                        {product.colors != 0 ? (
+                        {product.sizes != 0 ? (
                           <p className="txt_choose_typeOFwater">
                             You can choose 2 types of water:
                           </p>
@@ -453,7 +455,6 @@ function ProductDetails() {
                   </form>
                 </div>
               ) : (
-                // <p>Loading...</p>
                 <div className="box_RotatingLines">
                   <RotatingLines
                     visible={true}

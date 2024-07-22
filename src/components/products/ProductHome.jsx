@@ -8,13 +8,14 @@ import { FaMagnifyingGlass, FaCartShopping, FaRegUser } from "react-icons/fa6";
 import { AiOutlineDashboard } from "react-icons/ai";
 import { BiLogIn } from "react-icons/bi";
 import Header from "../header/Header";
+import { RotatingLines } from "react-loader-spinner";
 
 const ProductHome = () => {
   const token = localStorage.getItem("token");
   const user = localStorage.getItem("user");
   const [logo, set_logo] = useState(null);
   const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
   const { category } = location.state || {};
   const [ShowFilter, setShowFilter] = useState(false);
   const [goods_list, set_goods_list] = useState([]);
@@ -68,7 +69,6 @@ const ProductHome = () => {
         console.log(error);
       });
   }, [logo]);
-
 
   const handleCategoryClick = (categoryName) => {
     set_category_name(categoryName);
@@ -168,31 +168,47 @@ const ProductHome = () => {
             </form>
           </div> */}
         </div>
+        {currentGoods.length > 0 ? (
+          <div className="product-area">
+            {currentGoods.map(
+              (i, index) =>
+                i.category && (
+                  <div className="box-product" key={index}>
+                    <Link to={`/goods/${i.id}`}>
+                      <div className="img">
+                        <img src={i.images} alt={i.name} />
+                      </div>
+                      <div className="star">
+                        <div
+                          className="on"
+                          style={{ width: `${StarAVG(i.star_avg)}%` }}
+                        ></div>
+                      </div>
+                      <ul className="txtOFproduct2">
+                        <li className="name">{i.name}</li>
+                        <li className="price">$ {i.format_price}</li>
+                      </ul>
+                    </Link>
+                  </div>
+                )
+            )}
+          </div>
+        ) : (
+          <div className="box_RotatingLines">
+            <RotatingLines
+              visible={true}
+              height="45"
+              width="45"
+              color="grey"
+              strokeWidth="5"
+              animationDuration="0.75"
+              ariaLabel="rotating-lines-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+            />
+          </div>
+        )}
 
-        <div className="product-area">
-          {currentGoods.map(
-            (i, index) =>
-              i.category && (
-                <div className="box-product" key={index}>
-                  <Link to={`/goods/${i.id}`}>
-                    <div className="img">
-                      <img src={i.images} alt="" />
-                    </div>
-                    <div className="star">
-                      <div
-                        className="on"
-                        style={{ width: `${StarAVG(i.star_avg)}%` }}
-                      ></div>
-                    </div>
-                    <ul className="txtOFproduct2">
-                      <li className="name">{i.name}</li>
-                      <li className="price">$ {i.format_price}</li>
-                    </ul>
-                  </Link>
-                </div>
-              )
-          )}
-        </div>
         <br />
 
         {/* Render pagination */}

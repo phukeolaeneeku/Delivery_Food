@@ -398,7 +398,7 @@ const Cart = () => {
                         <ul className="txtOFproduct2">
                           <li className="name">{i.name}</li>
                           <li className="price">$ {i.format_price}</li>
-                          <li className="desc">{i.description}</li>
+                          {/* <li className="desc">{i.description}</li> */}
                         </ul>
                       </Link>
                     </div>
