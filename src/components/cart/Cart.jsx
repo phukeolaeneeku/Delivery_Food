@@ -166,12 +166,11 @@ const Cart = () => {
     );
   };
 
-
-  const usdToKrw = 15.00;
+  const usdToKrw = 15.0;
   const getTotalPriceForStoreKRW = (store_name) => {
     const storeItems = cart.filter((item) => item.store_name === store_name);
     return storeItems.reduce(
-      (total, item) => total + item.price * (item.quantity || 0) * (usdToKrw),
+      (total, item) => total + item.price * (item.quantity || 0) * usdToKrw,
       0
     );
   };
@@ -179,7 +178,7 @@ const Cart = () => {
   const getTotalPriceForStoreLAK = (store_name) => {
     const storeItems = cart.filter((item) => item.store_name === store_name);
     return storeItems.reduce(
-      (total, item) => total + item.price * (item.quantity || 0) * (usdToLAK),
+      (total, item) => total + item.price * (item.quantity || 0) * usdToLAK,
       0
     );
   };
@@ -242,8 +241,6 @@ const Cart = () => {
         <>
           <Header />
           <div className="box_cart_container">
-           
-
             {stores.length === 0 ? (
               <p className="no-reviews-message">Your cart is emty</p>
             ) : (
@@ -272,9 +269,23 @@ const Cart = () => {
                                       }
                                     )}
                                   </p>
-                                  <p>Type of menu: {item.color}</p>
+                                  {/* {item.color != 0 ? (
+                                    <p>Type of menu: {item.color}</p>
+                                  ) : (
+                                    <p></p>
+                                  )}
+                                  {item.size != 0 ? (
+                                    <p>Type of water: {item.size}</p>
+                                  ) : (
+                                    <p></p>
+                                  )} */}
 
-                                  <p>Type of water: {item.size}</p>
+                                  {item.color !== 0 && (
+                                    <p>Type of menu: {item.color}</p>
+                                  )}
+                                  {item.size !== 0 && (
+                                    <p>Type of water: {item.size}</p>
+                                  )}
                                 </div>
                                 <div className="box_icon_order">
                                   <div className="btnicon_delete_order">
@@ -337,11 +348,11 @@ const Cart = () => {
                         <hr />
                         <div className="box_item_total_text">
                           <p className="txt_Total">Total: </p>
-                          <p>${" "}{getTotalPriceForStore(store).toFixed(2)}</p>
+                          <p>$ {getTotalPriceForStore(store).toFixed(2)}</p>
                         </div>
                         <div className="box_item_total_text">
                           <p className="txt_Total">Total: </p>
-                          <p>₩{" "}{getTotalPriceForStoreKRW(store).toFixed(2)}</p>
+                          <p>₩ {getTotalPriceForStoreKRW(store).toFixed(2)}</p>
                         </div>
                         <div className="btn">
                           <button
@@ -366,7 +377,7 @@ const Cart = () => {
             <br />
             <br />
             <h2 className="box_betavinOfob asd2">
-              <span className="spennofStyle"/>
+              <span className="spennofStyle" />
               Shopping
             </h2>
             <div className="product-area">

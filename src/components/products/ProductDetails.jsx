@@ -30,8 +30,7 @@ function ProductDetails() {
   const [sizes, setSizes] = useState([]);
   const [activeIndices, setActiveIndices] = useState([0]);
 
-  console.log("sizes....", activeIndices)
-
+  console.log("sizes...", sizes)
 
   useEffect(() => {
     if (product && product.sizes) {
@@ -48,12 +47,15 @@ function ProductDetails() {
 
   const handleSizeClick = (index) => {
     const isActive = activeIndices.includes(index);
+    
     if (isActive) {
       // Remove from active indices
       setActiveIndices(activeIndices.filter((i) => i !== index));
     } else {
-      // Add to active indices
-      setActiveIndices([...activeIndices, index]);
+      // Add to active indices, but only if there are less than 2 active indices already
+      if (activeIndices.length < 2) {
+        setActiveIndices([...activeIndices, index]);
+      }
     }
   };
 
