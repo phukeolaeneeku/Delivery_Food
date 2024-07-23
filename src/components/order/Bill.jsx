@@ -155,7 +155,7 @@ const Bill = ({ totalPrice, currency }) => {
                       <th>Product</th>
                       <th>Price</th>
                       <th>Amount</th>
-                      <th>Type of menu</th>
+                      {/* <th>Type of menu</th> */}
                       <th>Type of water</th>
                       {order_list.status === "Delivered" && <th>Review</th>}
                     </tr>
@@ -175,7 +175,7 @@ const Bill = ({ totalPrice, currency }) => {
                             })}
                           </td>
                           <td>{item.quantity}</td>
-                          <td>{item.color}</td>
+                          {/* <td>{item.color}</td> */}
                           <td>{item.size}</td>
                           {order_list.status === "Delivered" && (
                             <th>

@@ -20,6 +20,7 @@ const Cart = () => {
   const [category, set_category] = useState(1);
   const [products_list, set_products_list] = useState([]);
 
+
   useEffect(() => {
     let config = {
       method: "get",
@@ -233,6 +234,7 @@ const Cart = () => {
   //   set_show_payment(true);
   // };
 
+
   return (
     <>
       {show_payment ? (
@@ -280,9 +282,9 @@ const Cart = () => {
                                     <p></p>
                                   )} */}
 
-                                  {item.color !== 0 && (
+                                  {/* {item.color !== 0 && (
                                     <p>Type of menu: {item.color}</p>
-                                  )}
+                                  )} */}
                                   {item.size !== 0 && (
                                     <p>Type of water: {item.size}</p>
                                   )}

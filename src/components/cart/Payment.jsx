@@ -263,11 +263,11 @@ const Payment = ({ orders, order_from, onPay }) => {
                     <img src={item.images} alt="" />
                     <div className="box_item_text_payment">
                       <p>Name: {item.name}</p>
-                      {item.color != 0 ?(
+                      {/* {item.color != 0 ?(
                         <p>Type of menu: {item.color}</p>
                       ):(
                         <p></p>
-                      )}
+                      )} */}
                       
                       <p>
                         Price: $

@@ -363,7 +363,7 @@ const AddProduct = () => {
                         />
                       </div> */}
 
-                      <div className="box_size_product_container">
+                      {/* <div className="box_size_product_container">
                         <div className="box_size_add">
                           {product.colors.map((color, colorIndex) => (
                             <div key={colorIndex} className="box_size_add_item">
@@ -393,7 +393,7 @@ const AddProduct = () => {
                             Add
                           </div>
                         </div>
-                      </div>
+                      </div> */}
 
                       <div className="box_size_product_container">
                         <div className="box_size_add">

@@ -281,8 +281,8 @@ const OrderBill = () => {
 
 
 
-  console.log("order bill: ", order_bill);
-  console.log("mainImageBill: ", mainImageBill);
+  // console.log("order bill: ", order_bill);
+  // console.log("mainImageBill: ", mainImageBill);
   return (
     <>
       <AdminMenu />
@@ -310,7 +310,7 @@ const OrderBill = () => {
                   <th>Product Name</th>
                   <th>Price</th>
                   <th>Amount</th>
-                  <th>Type of menu</th>
+                  {/* <th>Type of menu</th> */}
                   <th>Type of water</th>
                 </tr>
               </thead>
@@ -328,7 +328,7 @@ const OrderBill = () => {
                         })}
                       </td>
                       <td>{item.quantity}</td>
-                      <td>{item.color}</td>
+                      {/* <td>{item.color}</td> */}
                       <td>{item.size}</td>
                     </tr>
                   </tbody>

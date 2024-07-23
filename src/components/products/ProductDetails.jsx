@@ -29,6 +29,7 @@ function ProductDetails() {
   //Active sizes
   const [sizes, setSizes] = useState([]);
   const [activeIndices, setActiveIndices] = useState([0]);
+  const [size, set_size] = useState(null);
 
   console.log("activeIndices...", activeIndices)
 
@@ -51,12 +52,12 @@ function ProductDetails() {
     if (isActive) {
       // Remove from active indices
       setActiveIndices(activeIndices.filter((i) => i !== index));
-      set_size(sizes[index]);
+      setSelectedSizes(selectedSizes.filter((_, i) => i !== activeIndices.indexOf(index)));
     } else {
       // Add to active indices, but only if there are less than 2 active indices already
       if (activeIndices.length < 2) {
         setActiveIndices([...activeIndices, index]);
-        set_size(sizes[index]);
+        setSelectedSizes([...selectedSizes, sizes[index]]);
       }
     }
   };
@@ -85,7 +86,6 @@ function ProductDetails() {
 
   // console.log(sizes);
 
-  const [size, set_size] = useState(null);
   const [color, set_color] = useState(null);
   const [quantity, set_quantity] = useState(1);
 
@@ -217,14 +217,14 @@ function ProductDetails() {
   }, [cart]);
 
   const addToCart = (product, color, size, quantity) => {
-    // if (color == null) {
-    //   alert("Please select the color");
-    //   return; // Abort the function if color is null
-    // }
-    // if (size == null) {
-    //   alert("Please select the size");
-    //   return; // Abort the function if color is null
-    // }
+    if (color == null) {
+      alert("Please select the color");
+      return; // Abort the function if color is null
+    }
+    if (size == null) {
+      alert("Please select the size");
+      return; // Abort the function if color is null
+    }
 
     const existingProduct = cart.find(
       (item) =>
@@ -307,14 +307,14 @@ function ProductDetails() {
   }
 
   const handlePay = (product, color, size, quantity) => {
-    // if (!color) {
-    //   alert("Please select the color");
-    //   return; // Abort the function if color is null
-    // }
-    // if (!size) {
-    //   alert("Please select the size");
-    //   return; // Abort the function if color is null
-    // }
+    if (!color) {
+      alert("Please select the color");
+      return; // Abort the function if color is null
+    }
+    if (!size) {
+      alert("Please select the size");
+      return; // Abort the function if color is null
+    }
     setOrder([
       {
         user: user_id,
@@ -363,7 +363,7 @@ function ProductDetails() {
                         ></div>
                       </div> */}
 
-                      <div className="size_product_type_water">
+                      {/* <div className="size_product_type_water">
                         {product.colors != 0 ? (
                           <p className="txt_choose_typeOFwater">
                             Can you choose type of menu:
@@ -388,10 +388,10 @@ function ProductDetails() {
                             ))}
                           </div>
                         )}
-                      </div>
+                      </div> */}
 
                       <div className="size_product_type_water">
-                        {product.sizes != 0 ? (
+                        {product.sizes && product.sizes.length !== 0 ? (
                           <p className="txt_choose_typeOFwater">
                             You can choose 2 types of water:
                           </p>

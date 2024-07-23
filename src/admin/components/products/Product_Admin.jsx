@@ -1116,7 +1116,7 @@ const Product_Admin = () => {
                       </div>
                     )}
 
-                    <div
+                    {/* <div
                       className="box_icon_MdOutlineEdit"
                       onClick={() =>
                         openConfirmationColor(product.id, product.colors)
@@ -1188,7 +1188,7 @@ const Product_Admin = () => {
                           </div>
                         </div>
                       </div>
-                    )}
+                    )} */}
 
                     <div
                       className="box_icon_MdOutlineEdit"
