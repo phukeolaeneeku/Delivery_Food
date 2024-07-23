@@ -63,30 +63,30 @@ const Cart = () => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  const addToCart = (product, color, size, quantity) => {
-    const existingProduct = cart.find(
-      (item) =>
-        item.id === product.id &&
-        item.store_name === product.store_name &&
-        item.color === color &&
-        item.size === size
-    );
+  // const addToCart = (product, color, size, quantity) => {
+  //   const existingProduct = cart.find(
+  //     (item) =>
+  //       item.id === product.id &&
+  //       item.store_name === product.store_name &&
+  //       item.color === color &&
+  //       item.size === size
+  //   );
 
-    if (existingProduct) {
-      setCart(
-        cart.map((item) =>
-          item.id === product.id &&
-          item.store_name === product.store_name &&
-          item.color === color &&
-          item.size === size
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
-        )
-      );
-    } else {
-      setCart([...cart, { ...product, quantity, color, size }]);
-    }
-  };
+  //   if (existingProduct) {
+  //     setCart(
+  //       cart.map((item) =>
+  //         item.id === product.id &&
+  //         item.store_name === product.store_name &&
+  //         item.color === color &&
+  //         item.size === size
+  //           ? { ...item, quantity: item.quantity + quantity }
+  //           : item
+  //       )
+  //     );
+  //   } else {
+  //     setCart([...cart, { ...product, quantity, color, size }]);
+  //   }
+  // };
 
   const removeFromCart = (id, store_name, color, size) => {
     setCart(

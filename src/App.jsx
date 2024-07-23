@@ -6,6 +6,8 @@ import LoginUser from "./components/loginAndSignup/LoginUser";
 import ForgotPassword from "./components/forgotPassword/ForgotPassword";
 import Signup2 from "./components/loginAndSignup/Signup2";
 
+import QRCode from "../QRCode";
+
 
 //------ Home Page ------//
 import Home from "./components/homePage/HomePage";
@@ -69,6 +71,7 @@ function App() {
           {/* --------- Login-Signup page---------- */}
           <Route path="/loginuser" Component={LoginUser} />
           <Route path="/forgotpassword" Component={ForgotPassword} />
+          <Route path="/qrcode" Component={QRCode} />
 
           {/* <Route path="/signup1" Component={Signup1} />
           <Route path="/signup" Component={Signup1} /> */}

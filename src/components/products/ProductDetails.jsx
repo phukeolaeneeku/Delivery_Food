@@ -28,39 +28,8 @@ function ProductDetails() {
 
   //Active sizes
   const [sizes, setSizes] = useState([]);
-  const [activeIndices, setActiveIndices] = useState([0]);
-  const [size, set_size] = useState(null);
-
-  console.log("activeIndices...", activeIndices)
-
-  useEffect(() => {
-    if (product && product.sizes) {
-      // Ensure sizes are strings or numbers
-      const sizesArray = product.sizes.map((item) => {
-        if (typeof item === "object" && item.name) {
-          return item.name; // Use the property you need from the object
-        }
-        return item;
-      });
-      setSizes(sizesArray);
-    }
-  }, [product]);
-
-  const handleSizeClick = (index) => {
-    const isActive = activeIndices.includes(index);
-    
-    if (isActive) {
-      // Remove from active indices
-      setActiveIndices(activeIndices.filter((i) => i !== index));
-      setSelectedSizes(selectedSizes.filter((_, i) => i !== activeIndices.indexOf(index)));
-    } else {
-      // Add to active indices, but only if there are less than 2 active indices already
-      if (activeIndices.length < 2) {
-        setActiveIndices([...activeIndices, index]);
-        setSelectedSizes([...selectedSizes, sizes[index]]);
-      }
-    }
-  };
+  const [activeIndices, setActiveIndices] = useState([]);
+  const [selectedSizes, setSelectedSizes] = useState([]);
 
   const extractSizeNames = (data) => {
     if (data && data.sizes) {
@@ -68,6 +37,10 @@ function ProductDetails() {
       setSizes(sizeNames);
     }
   };
+  // const handleSizeClick = (index) => {
+  //   setActiveIndex(index);
+  //   set_size(sizes[index]);
+  // };
 
   //Active color
   const [colors, setColors] = useState([]);
@@ -86,6 +59,7 @@ function ProductDetails() {
 
   // console.log(sizes);
 
+  const [size, set_size] = useState(null);
   const [color, set_color] = useState(null);
   const [quantity, set_quantity] = useState(1);
 
@@ -94,6 +68,33 @@ function ProductDetails() {
   const [reviews, setReviews] = useState([]);
   const [displayedReviews, setDisplayedReviews] = useState([]);
   const [showAllReviews, setShowAllReviews] = useState(false);
+  console.log("size..", size);
+
+  const handleSizeClick = (index) => {
+    // Enforce a selection limit (optional, adjust limit as needed)
+    const maxSelections = 2;
+
+    // Update active indices and selected sizes
+    if (selectedSizes.length < maxSelections) {
+      setActiveIndices([...activeIndices, index]);
+      setSelectedSizes([...selectedSizes, sizes[index]]);
+    } else {
+      // Handle selection overflow (optional, adjust logic as needed)
+      const newActiveIndices = [...activeIndices.slice(1), index];
+      const newSelectedSizes = [...selectedSizes.slice(1), sizes[index]];
+      setActiveIndices(newActiveIndices);
+      setSelectedSizes(newSelectedSizes);
+    }
+
+    // Update size state based on selected sizes (optional)
+    set_size(selectedSizes.length > 0 ? String(selectedSizes) : null);
+  };
+
+  useEffect(() => {
+    if (selectedSizes.length > 0) {
+      set_size(String(selectedSizes));
+    }
+  }, [selectedSizes]);
 
   var user_id = null;
   if (localStorage.getItem("user")) {
@@ -154,9 +155,9 @@ function ProductDetails() {
         set_price(response.data.price);
         set_store_id(response.data.store_id);
 
-        if (response.data.sizes && response.data.sizes.length > 0) {
-          set_size(response.data.sizes[0].name);
-        }
+        // if (response.data.sizes && response.data.sizes.length > 0) {
+        //   set_size(response.data.sizes[0].name);
+        // }
         if (response.data.colors && response.data.colors.length > 0) {
           set_color(response.data.colors[0].name);
         }
@@ -217,14 +218,14 @@ function ProductDetails() {
   }, [cart]);
 
   const addToCart = (product, color, size, quantity) => {
-    if (color == null) {
-      alert("Please select the color");
-      return; // Abort the function if color is null
-    }
-    if (size == null) {
-      alert("Please select the size");
-      return; // Abort the function if color is null
-    }
+    // if (color == null) {
+    //   alert("Please select the color");
+    //   return; // Abort the function if color is null
+    // }
+    // if (size == null) {
+    //   alert("Please select the size");
+    //   return; // Abort the function if color is null
+    // }
 
     const existingProduct = cart.find(
       (item) =>
@@ -249,16 +250,10 @@ function ProductDetails() {
       setCart([...cart, { ...product, quantity, color, size }]);
     }
 
-    // alert("This product has been added to cart.");
-
     MySwal.fire({
       text: "This product has been added to cart.",
       icon: "success",
     });
-
-    // set_color(null);
-    // set_size(null);
-    // set_quantity(1);
   };
 
   useEffect(() => {
@@ -307,14 +302,14 @@ function ProductDetails() {
   }
 
   const handlePay = (product, color, size, quantity) => {
-    if (!color) {
-      alert("Please select the color");
-      return; // Abort the function if color is null
-    }
-    if (!size) {
-      alert("Please select the size");
-      return; // Abort the function if color is null
-    }
+    // if (!color) {
+    //   alert("Please select the color");
+    //   return; // Abort the function if color is null
+    // }
+    // if (!size) {
+    //   alert("Please select the size");
+    //   return; // Abort the function if color is null
+    // }
     setOrder([
       {
         user: user_id,
@@ -326,8 +321,8 @@ function ProductDetails() {
             images: product.images,
             quantity: quantity,
             price: price,
-            color: color,
-            size: size,
+            // color: color,
+            // size: size,
           },
         ],
       },
@@ -363,14 +358,8 @@ function ProductDetails() {
                         ></div>
                       </div> */}
 
-                      {/* <div className="size_product_type_water">
-                        {product.colors != 0 ? (
-                          <p className="txt_choose_typeOFwater">
-                            Can you choose type of menu:
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
+                      {/* <div className="size_product">
+                        <p>Color:</p>
                         {product.colors && (
                           <div className="size">
                             {colors.map((color, index) => (
@@ -378,8 +367,8 @@ function ProductDetails() {
                                 key={index}
                                 className={
                                   index === activeColorIndex
-                                    ? "active echSize_type"
-                                    : "echSize_type"
+                                    ? "active echSize"
+                                    : "echSize"
                                 }
                                 onClick={() => handleColorClick(index)}
                               >
@@ -391,7 +380,7 @@ function ProductDetails() {
                       </div> */}
 
                       <div className="size_product_type_water">
-                        {product.sizes && product.sizes.length !== 0 ? (
+                        {product.sizes != 0 ? (
                           <p className="txt_choose_typeOFwater">
                             You can choose 2 types of water:
                           </p>
@@ -455,6 +444,7 @@ function ProductDetails() {
                   </form>
                 </div>
               ) : (
+                // <p>Loading...</p>
                 <div className="box_RotatingLines">
                   <RotatingLines
                     visible={true}

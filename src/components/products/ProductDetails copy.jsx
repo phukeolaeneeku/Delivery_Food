@@ -4,17 +4,10 @@ import "./productDetails.css";
 import Header from "../header/Header";
 import Menu from "../menuFooter/Menu";
 import Payment from "../cart/Payment";
-
-import { IoIosArrowBack } from "react-icons/io";
-import { BiStore } from "react-icons/bi";
-import icon_star from "../../img/icon_star.png";
-import icon_star2 from "../../img/icon_star2.png";
-import user from "../../img/user.png";
-import productImage from "../../img/productImage.png";
-import detailproduct from "../../img/detailproduct.jpg";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { RotatingLines } from "react-loader-spinner";
 import axios from "axios";
-import { ToggleButtonGroup, ToggleButton } from "@mui/material";
-import { FaLocationDot } from "react-icons/fa6";
 
 function ProductDetails() {
   const token = localStorage.getItem("token");
@@ -31,10 +24,78 @@ function ProductDetails() {
   const [showPayment, setShowPayment] = useState(false);
   const [product, setProduct] = useState(null);
   const [price, set_price] = useState(null);
+  const MySwal = withReactContent(Swal);
 
-  const [size, set_size] = useState(null);
+  //Active sizes
+  const [sizes, setSizes] = useState([]);
+  const [activeIndices, setActiveIndices] = useState([0]);
+  const [getSize, setgetSize] = useState("");
+
+
+  useEffect(() => {
+    if (product && product.sizes) {
+      // Ensure sizes are strings or numbers
+      const sizesArray = product.sizes.map((item) => {
+        if (typeof item === "object" && item.name) {
+          return item.name; // Use the property you need from the object
+        }
+        return item;
+      });
+      setSizes(sizesArray);
+    }
+  }, [product]);
+
+  useEffect(() => {
+    // Log the names corresponding to active indices
+    const activeSizes = activeIndices.map((index) => sizes[index]);
+    // console.log("Active sizes:", activeSizes);
+    setgetSize(activeSizes);
+  }, [activeIndices, sizes]);
+
+  const handleSizeClick = (index) => {
+    const isActive = activeIndices.includes(index);
+
+    if (isActive) {
+      // Remove from active indices
+      setActiveIndices(activeIndices.filter((i) => i !== index));
+    } else {
+      // Add to active indices, but only if there are less than 2 active indices already
+      if (activeIndices.length < 2) {
+        setActiveIndices([...activeIndices, index]);
+      }
+    }
+    // Log the name of the size being clicked
+    console.log("Clicked size:", sizes[index]);
+  };
+  
+
+  const extractSizeNames = (data) => {
+    if (data && data.sizes) {
+      const sizeNames = data.sizes.map((size) => size.name);
+      setSizes(sizeNames);
+    }
+  };
+
+  //Active color
+  const [colors, setColors] = useState([]);
+  const [activeColorIndex, setActiveColorIndex] = useState(0);
+
+  const extractColorNames = (data) => {
+    if (data && data.colors) {
+      const colorNames = data.colors.map((color) => color.name);
+      setColors(colorNames);
+    }
+  };
+  const handleColorClick = (index) => {
+    setActiveColorIndex(index);
+    set_color(colors[index]);
+  };
+
+  // console.log(sizes);
+
+  const [size, set_size] = useState(getSize);
   const [color, set_color] = useState(null);
-  const [count, set_count] = useState(1);
+  const [quantity, set_quantity] = useState(1);
 
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
@@ -42,36 +103,14 @@ function ProductDetails() {
   const [displayedReviews, setDisplayedReviews] = useState([]);
   const [showAllReviews, setShowAllReviews] = useState(false);
 
-  const [cartItems, setCartItems] = useState([]);
-
-  console.log(size);
-  console.log(color);
-  console.log(count);
-  console.log(product);
-  console.log(reviews)
-  console.log(displayedReviews.length)
+  console.log("size.......", size)
 
   var user_id = null;
   if (localStorage.getItem("user")) {
     user_id = JSON.parse(window.localStorage.getItem("user")).user_id;
   }
 
-  const orderitems = [
-    {
-      user: user_id,
-      items: [
-        {
-          product: product,
-          quantity: count,
-          price: price,
-          color: color,
-          size: size,
-        },
-      ],
-    },
-  ];
-
-  console.log(orderitems);
+  const [order, setOrder] = useState([]);
 
   useEffect(() => {
     let data = JSON.stringify({
@@ -106,6 +145,8 @@ function ProductDetails() {
       });
   }, [token]);
 
+  const [AllSize, set_Allsize] = useState(activeIndices);
+
   useEffect(() => {
     const config = {
       method: "get",
@@ -120,9 +161,17 @@ function ProductDetails() {
       .request(config)
       .then((response) => {
         setProduct(response.data);
+        extractSizeNames(response.data);
+        extractColorNames(response.data);
         set_price(response.data.price);
         set_store_id(response.data.store_id);
-        // console.log(JSON.stringify(response.data));
+
+        if (response.data.sizes && response.data.sizes.length > 0) {
+          set_size(response.data.sizes[0].name);
+        }
+        if (response.data.colors && response.data.colors.length > 0) {
+          set_color(response.data.colors[0].name);
+        }
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
@@ -149,102 +198,86 @@ function ProductDetails() {
       });
   }, [category]);
 
-  const handleSizeClick = (sizeName) => {
-    set_size(size === sizeName ? null : sizeName);
-  };
+  // const handleSizeClick = (sizeName) => {
+  //   // set_size(size === sizeName ? null : sizeName);
+  //   set_size(sizeName);
+  // };
 
-  const handleColorClick = (sizeName) => {
-    set_color(size === sizeName ? null : sizeName);
-  };
+  // const handleColorClick = (colorName) => {
+  //   // set_color(color === colorName ? null : colorName);
+  //   set_color(colorName);
+  // };
 
   const decrease = () => {
-    if (count > 1) {
-      set_count(count - 1);
+    if (quantity > 1) {
+      set_quantity(quantity - 1);
     }
   };
 
   const increase = () => {
-    set_count(count + 1);
+    set_quantity(quantity + 1);
   };
 
-  const addToCart = (product, count, price, color, size) => {
-    if (!color) {
-      alert("Please select the color");
-      return; // Abort the function if color is null
-    }
-    if (!size) {
-      alert("Please select the size");
-      return; // Abort the function if color is null
-    }
+  // ============= Cart management ================
+  const [cart, setCart] = useState(() => {
+    const localCart = localStorage.getItem("cart");
+    return localCart ? JSON.parse(localCart) : [];
+  });
 
-    const newItem = {
-      product,
-      quantity: count,
-      price,
-      color,
-      size,
-    };
+  // console.log("cart....", cart)
 
-    const updatedCart = [...cartItems, newItem];
-    setCartItems(updatedCart);
-    // Update localStorage with the new cart items
-    localStorage.setItem("cartItems", JSON.stringify(updatedCart));
-    alert("This product has been added to cart.");
-    set_color(null);
-    set_size(null);
-    set_count(1);
-  };
-
-  // Function to load cart items from LocalStorage
   useEffect(() => {
-    const storedCartItems = JSON.parse(localStorage.getItem("cartItems"));
-    if (storedCartItems) {
-      setCartItems(storedCartItems);
-      console.log("My cart: ", cartItems);
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
+  const addToCart = (product, color, getSize, quantity) => {
+    // if (color == null) {
+    //   alert("Please select the color");
+    //   return; // Abort the function if color is null
+    // }
+    // if (size == null) {
+    //   alert("Please select the size");
+    //   return; // Abort the function if color is null
+    // }
+
+    const existingProduct = cart.find(
+      (item) =>
+        item.id === product.id &&
+        item.store_name === product.store_name &&
+        item.color === color &&
+        item.size === String(getSize)
+    );
+
+    if (existingProduct) {
+      setCart(
+        cart.map((item) =>
+          item.id === product.id &&
+          item.store_name === product.store_name &&
+          item.color === color &&
+          item.size === String(getSize)
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        )
+      );
+    } else {
+      setCart([...cart, { ...product, quantity, color, getSize }]);
     }
-  }, []);
 
-  const handleRatingChange = (value) => {
-    setRating(value);
-  };
 
-  const handleCommentChange = (event) => {
-    setComment(event.target.value);
-  };
+    // alert("This product has been added to cart.");
 
-  const handleSubmitReview = (event) => {
-    event.preventDefault();
-    let data = JSON.stringify({
-      product: product_id,
-      user: user_id,
-      rating: rating,
-      comment: comment,
+    MySwal.fire({
+      text: "This product has been added to cart.",
+      icon: "success",
     });
 
-    let config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: import.meta.env.VITE_API + "/store/review/create",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
-        window.location.reload(false);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    setRating(0);
-    setComment("");
+    // set_color(null);
+    // set_size(null);
+    // set_quantity(1);
   };
-  
+
+    console.log("getSize..", getSize)
+
 
   useEffect(() => {
     let data = "";
@@ -262,14 +295,13 @@ function ProductDetails() {
     axios
       .request(config)
       .then((response) => {
-        // console.log(JSON.stringify(response.data));
         const sortedReviews = response.data.sort((a, b) => b.id - a.id);
         setReviews(sortedReviews);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [product_id]); // Fetch reviews when product_id changes
+  }, [product_id]);
 
   // Update displayed reviews when the reviews or showAllReviews state changes
   useEffect(() => {
@@ -292,7 +324,7 @@ function ProductDetails() {
     return star_avg;
   }
 
-  const handlePay = () => {
+  const handlePay = (product, color, size, quantity) => {
     if (!color) {
       alert("Please select the color");
       return; // Abort the function if color is null
@@ -301,74 +333,108 @@ function ProductDetails() {
       alert("Please select the size");
       return; // Abort the function if color is null
     }
+    setOrder([
+      {
+        user: user_id,
+        store: store_id,
+        items: [
+          {
+            id: product.id,
+            name: product.name,
+            images: product.images,
+            quantity: quantity,
+            price: price,
+            color: color,
+            size: size,
+          },
+        ],
+      },
+    ]);
     setShowPayment(true);
   };
 
   return (
     <>
       {showPayment ? (
-        // product_id, user_id, size, color,price, count
-        <Payment orders={orderitems} order_from="buy_now" onPay={handlePay} />
+        <Payment orders={order} order_from="buy_now" onPay={handlePay} />
       ) : (
         <>
           <Header />
           <div className="contentBody">
-            {/* <Link to="/" className="box_container_back_icons_back">
-          <IoIosArrowBack id="icons_back" />
-          <p>Back</p>
-        </Link> */}
-
             <div className="box_betavinOfob">
               {product ? (
                 <div>
                   <form className="boxProduct_deteils">
                     <div className="product-page-img">
-                      <img src={product.images} alt="" />
+                      <img src={product.images} alt="image" />
                     </div>
                     <div className="txtContentproduct">
                       <h1 className="txt_nameP">{product.name}</h1>
-                      <p className="money_txt">{product.format_price} Kip</p>
-                      <p className="txt_description">{product.description}</p>
+                      <p className="money_txt">$ {product.format_price}</p>
+
+                      {/* <p className="txt_description">{product.description}</p>
 
                       <div className="star">
                         <div
                           className="on"
                           style={{ width: `${StarAVG(product.star_avg)}%` }}
                         ></div>
-                      </div>
+                      </div> */}
 
-                      <div className="size_product">
-                        <p>Color:</p>
+                      {/* <div className="size_product_type_water">
+                        {product.colors != 0 ? (
+                          <p className="txt_choose_typeOFwater">
+                            Can you choose type of menu:
+                          </p>
+                        ) : (
+                          <p></p>
+                        )}
                         {product.colors && (
                           <div className="size">
-                            {product.colors.map((color, index) => (
+                            {colors.map((color, index) => (
                               <p
-                                className="echSize "
                                 key={index}
-                                onClick={() => handleColorClick(color.name)}
+                                className={
+                                  index === activeColorIndex
+                                    ? "active echSize_type"
+                                    : "echSize_type"
+                                }
+                                onClick={() => handleColorClick(index)}
                               >
-                                {color.name}
+                                {color}
                               </p>
                             ))}
                           </div>
                         )}
-                      </div>
-                      <div className="size_product">
-                        <p>Size:</p>
+                      </div> */}
+
+                      <div className="size_product_type_water">
+                        {product.sizes != 0 ? (
+                          <p className="txt_choose_typeOFwater">
+                            You can choose 2 types of water:
+                          </p>
+                        ) : (
+                          <p></p>
+                        )}
                         {product.sizes && (
                           <div className="size">
-                            {product.sizes.map((size, index) => (
+                            {sizes.map((size, index) => (
                               <p
-                                className="echSize"
                                 key={index}
-                                onClick={() => handleSizeClick(size.name)}
+                                className={
+                                  activeIndices.includes(index)
+                                    ? "active echSize_type"
+                                    : "echSize_type"
+                                }
+                                onClick={() => handleSizeClick(index)}
                               >
-                                {size.name}
+                                {size}
                               </p>
                             ))}
                           </div>
                         )}
                       </div>
+
                       <div className="container_item_icon">
                         <div
                           className="container_minus_plus"
@@ -376,7 +442,7 @@ function ProductDetails() {
                         >
                           -
                         </div>
-                        <span>{count}</span>
+                        <span>{quantity}</span>
                         <div
                           className="container_minus_plus"
                           onClick={increase}
@@ -385,14 +451,19 @@ function ProductDetails() {
                         </div>
                       </div>
                       <div className="Count_product">
-                        <Link className="echbtn btnBut" onClick={handlePay}>
+                        <Link
+                          className="echbtn btnBut"
+                          onClick={() => {
+                            handlePay(product, color, size, quantity);
+                          }}
+                        >
                           {/* <Link className="echbtn btnBut" to={"/payment"}> */}
                           Buy Now
                         </Link>
                         <Link
                           className="echbtn btnAdd"
                           onClick={() =>
-                            addToCart(product, count, price, color, size)
+                            addToCart(product, color, size, quantity)
                           }
                         >
                           Add To Cart
@@ -402,45 +473,21 @@ function ProductDetails() {
                   </form>
                 </div>
               ) : (
-                <p>Loading...</p>
-              )}
-              {/* <div
-                style={{ textAlign: "center", width: "60%", margin: "0 auto" }}
-              >
-                <h1>Leave a Review</h1>
-                <div style={{ marginBottom: "20px" }}>
-                  {[...Array(5)].map((_, index) => (
-                    <span
-                      key={index}
-                      style={{
-                        fontSize: "30px",
-                        cursor: "pointer",
-                        color: index < rating ? "#FFD700" : "#DDDDDD",
-                      }}
-                      onClick={() => handleRatingChange(index + 1)}
-                    >
-                      ★
-                    </span>
-                  ))}
-                </div>
-                <form
-                  onSubmit={handleSubmitReview}
-                  style={{ marginBottom: "20px" }}
-                >
-                  <textarea
-                    rows="4"
-                    cols="50"
-                    value={comment}
-                    onChange={handleCommentChange}
-                    placeholder="Write your review here..."
-                    style={{ fontSize: "20px" }}
+                <div className="box_RotatingLines">
+                  <RotatingLines
+                    visible={true}
+                    height="45"
+                    width="45"
+                    color="grey"
+                    strokeWidth="5"
+                    animationDuration="0.75"
+                    ariaLabel="rotating-lines-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
                   />
-                  <br />
-                  <button type="submit" style={{ fontSize: "20px" }}>
-                    Submit Review
-                  </button>
-                </form>
-              </div> */}
+                </div>
+              )}
+
               <div className="review-list">
                 <h2 className="review-list-title">All Reviews</h2>
                 {displayedReviews.length === 0 ? (
@@ -449,7 +496,9 @@ function ProductDetails() {
                   <ul className="reviews">
                     {displayedReviews.map((review) => (
                       <li key={review.id} className="review-item">
-                        <h3 className="rating">{review.user.nickname || "null"}:</h3>
+                        <h2 className="rating">
+                          {review.user.nickname || "null"}:
+                        </h2>
                         <p className="comment">{review.comment || "null"}</p>
                         {/* Display other review details as needed */}
                       </li>
@@ -466,36 +515,37 @@ function ProductDetails() {
                 )}
               </div>
             </div>
+            <h2 className="box_betavinOfob asd2">
+              <span className="spennofStyle"> </span>
+              More products
+            </h2>
+            <div className="product-area">
+              {products_list.map(
+                (i, index) =>
+                  i.category !== "Food" && (
+                    <div className="box-product" key={index}>
+                      <Link to={"/goods/" + i.id}>
+                        <div className="img">
+                          <img src={i.images} alt="image" />
+                        </div>
+                        <div className="star">
+                          <div
+                            className="on"
+                            style={{ width: `${StarAVG(i.star_avg)}%` }}
+                          ></div>
+                        </div>
+                        <ul className="txtOFproduct2">
+                          <li className="name">{i.name}</li>
+                          <li className="price">$ {i.format_price}</li>
+                          {/* <li className="desc">{i.description}</li> */}
+                        </ul>
+                      </Link>
+                    </div>
+                  )
+              )}
+            </div>
           </div>
-          <h2 className="box_betavinOfob asd2">
-            <span className="spennofStyle"> </span>
-            More products
-          </h2>
-          <div className="product-area">
-            {products_list.map(
-              (i, index) =>
-                i.category !== "Food" && (
-                  <div className="box-product" key={index}>
-                    <Link to={"/goods/" + i.id}>
-                      <div className="img">
-                        <img src={i.images} alt="image" />
-                      </div>
-                      <div className="star">
-                        <div
-                          className="on"
-                          style={{ width: `${StarAVG(i.star_avg)}%` }}
-                        ></div>
-                      </div>
-                      <ul className="txtOFproduct2">
-                        <li className="name">{i.name}</li>
-                        <li className="price">{i.format_price} Kip</li>
-                        <li className="desc">{i.description}</li>
-                      </ul>
-                    </Link>
-                  </div>
-                )
-            )}
-          </div>
+
           <Menu />
         </>
       )}
