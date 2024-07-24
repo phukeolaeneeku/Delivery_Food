@@ -79,6 +79,9 @@ function ProductDetails() {
   const [showAllReviews, setShowAllReviews] = useState(false);
   console.log("size..", size);
 
+
+
+
   const handleSizeClick = (index) => {
     setActiveIndices(prevIndices => {
       let newIndices;
@@ -99,6 +102,7 @@ function ProductDetails() {
 
       // Update the state with the comma-separated sizes
       set_size(formattedSizes);
+      
 
       return newIndices;
     });
@@ -436,8 +440,9 @@ function ProductDetails() {
                                 }
                                 onClick={() => handleSizeClick(index)}
                                 style={{
-                                  backgroundColor: activeIndices.includes(index) ? '#ff8000' : 'white',
+                                  backgroundColor: activeIndices.includes(index) ? '#FF4F16' : 'white',
                                   color: activeIndices.includes(index) ? 'white' : 'black',
+                                  
                                 }}
                               >
                                 {size}

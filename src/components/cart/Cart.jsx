@@ -285,7 +285,7 @@ const Cart = () => {
                                   {/* {item.color !== 0 && (
                                     <p>Type of menu: {item.color}</p>
                                   )} */}
-                                  {item.size !== 0 && (
+                                  {item.size != 0 && (
                                     <p>Type of water: {item.size}</p>
                                   )}
                                 </div>
