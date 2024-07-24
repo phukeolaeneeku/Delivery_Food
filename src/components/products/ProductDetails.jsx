@@ -28,8 +28,10 @@ function ProductDetails() {
 
   //Active sizes
   const [sizes, setSizes] = useState([]);
+  const [activeIndex, setActiveIndex] = useState([]);
   const [activeIndices, setActiveIndices] = useState([]);
-  const [selectedSizes, setSelectedSizes] = useState([]);
+
+
 
   const extractSizeNames = (data) => {
     if (data && data.sizes) {
@@ -37,6 +39,13 @@ function ProductDetails() {
       setSizes(sizeNames);
     }
   };
+
+  // const extractSizeNames = (data) => {
+  //   if (data && data.sizes) {
+  //     const sizeNames = data.sizes.map((size) => size.name);
+  //     setSizes(sizeNames);
+  //   }
+  // };
   // const handleSizeClick = (index) => {
   //   setActiveIndex(index);
   //   set_size(sizes[index]);
@@ -59,7 +68,7 @@ function ProductDetails() {
 
   // console.log(sizes);
 
-  const [size, set_size] = useState(null);
+  const [size, set_size] = useState('');
   const [color, set_color] = useState(null);
   const [quantity, set_quantity] = useState(1);
 
@@ -71,30 +80,32 @@ function ProductDetails() {
   console.log("size..", size);
 
   const handleSizeClick = (index) => {
-    // Enforce a selection limit (optional, adjust limit as needed)
-    const maxSelections = 2;
+    setActiveIndices(prevIndices => {
+      let newIndices;
 
-    // Update active indices and selected sizes
-    if (selectedSizes.length < maxSelections) {
-      setActiveIndices([...activeIndices, index]);
-      setSelectedSizes([...selectedSizes, sizes[index]]);
-    } else {
-      // Handle selection overflow (optional, adjust logic as needed)
-      const newActiveIndices = [...activeIndices.slice(1), index];
-      const newSelectedSizes = [...selectedSizes.slice(1), sizes[index]];
-      setActiveIndices(newActiveIndices);
-      setSelectedSizes(newSelectedSizes);
-    }
+      if (prevIndices.includes(index)) {
+        // If the index is already selected, remove it
+        newIndices = prevIndices.filter(i => i !== index);
+      } else if (prevIndices.length < 2) {
+        // If fewer than 2 indices are active, add the new index
+        newIndices = [...prevIndices, index];
+      } else {
+        // If 2 indices are already active, replace the first one with the new index
+        newIndices = [prevIndices[1], index];
+      }
 
-    // Update size state based on selected sizes (optional)
-    set_size(selectedSizes.length > 0 ? String(selectedSizes) : null);
+      // Format the sizes as a comma-separated string
+      const formattedSizes = newIndices.map(i => sizes[i]).join(', ');
+
+      // Update the state with the comma-separated sizes
+      set_size(formattedSizes);
+
+      return newIndices;
+    });
   };
+  
 
-  useEffect(() => {
-    if (selectedSizes.length > 0) {
-      set_size(String(selectedSizes));
-    }
-  }, [selectedSizes]);
+
 
   var user_id = null;
   if (localStorage.getItem("user")) {
@@ -155,9 +166,9 @@ function ProductDetails() {
         set_price(response.data.price);
         set_store_id(response.data.store_id);
 
-        // if (response.data.sizes && response.data.sizes.length > 0) {
-        //   set_size(response.data.sizes[0].name);
-        // }
+        if (response.data.sizes && response.data.sizes.length > 0) {
+          set_size(response.data.sizes[0].name);
+        }
         if (response.data.colors && response.data.colors.length > 0) {
           set_color(response.data.colors[0].name);
         }
@@ -379,7 +390,7 @@ function ProductDetails() {
                         )}
                       </div> */}
 
-                      <div className="size_product_type_water">
+                      {/* <div className="size_product_type_water">
                         {product.sizes != 0 ? (
                           <p className="txt_choose_typeOFwater">
                             You can choose 2 types of water:
@@ -398,6 +409,36 @@ function ProductDetails() {
                                     : "echSize_type"
                                 }
                                 onClick={() => handleSizeClick(index)}
+                              >
+                                {size}
+                              </p>
+                            ))}
+                          </div>
+                        )}
+                      </div> */}
+                      <div className="size_product_type_water">
+                        {product.sizes.length !== 0 ? (
+                          <p className="txt_choose_typeOFwater">
+                            You can choose 2 types of water:
+                          </p>
+                        ) : (
+                          <p></p>
+                        )}
+                        {product.sizes && (
+                          <div className="size">
+                            {sizes.map((size, index) => (
+                              <p
+                                key={index}
+                                className={
+                                  index === activeIndex
+                                    ? "active echSize_type"
+                                    : "echSize_type"
+                                }
+                                onClick={() => handleSizeClick(index)}
+                                style={{
+                                  backgroundColor: activeIndices.includes(index) ? '#ff8000' : 'white',
+                                  color: activeIndices.includes(index) ? 'white' : 'black',
+                                }}
                               >
                                 {size}
                               </p>
