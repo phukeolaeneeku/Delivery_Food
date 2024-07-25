@@ -175,13 +175,13 @@ const Payment = ({ orders, order_from, onPay }) => {
       });
       return;
     }
-    if (!account_name) {
-      MySwal.fire({
-        text: "Please add the account name!",
-        icon: "question",
-      });
-      return;
-    }
+    // if (!account_name) {
+    //   MySwal.fire({
+    //     text: "Please add the account name!",
+    //     icon: "question",
+    //   });
+    //   return;
+    // }
 
     const products = orders.flatMap((order) =>
       order.items.map((item) => ({
