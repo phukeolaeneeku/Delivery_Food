@@ -189,7 +189,7 @@ const Payment = ({ orders, order_from, onPay }) => {
         quantity: item.quantity,
         price: item.price,
         color: item.color,
-        size: item.size,
+        size: item.size || '0',
       }))
     );
 
@@ -286,14 +286,14 @@ const Payment = ({ orders, order_from, onPay }) => {
                         })}
                       </p>
                       {item.size != 0 ? (
-                        <p>Type of water: {item.size}</p>
+                        <p className="box_txtFor_PC">Type of water: {item.size}</p>
                       ):(
                         <p></p>
                       )}
                       <textarea
                         type="text"
                         placeholder="Description..."
-                        className="txt_textarea_description"
+                        className="txt_textarea_descriptionPC"
                         value={
                           more[index * product.items.length + itemIndex]
                             ?.description || ""
@@ -308,6 +308,27 @@ const Payment = ({ orders, order_from, onPay }) => {
                       <p hidden>{(totalPrice += item.price * item.quantity)}</p>
                     </div>
                   </div>
+                  {item.size != 0 ? (
+                        <p className="box_txtFor_Mobile">Type of water: {item.size}</p>
+                      ):(
+                        <p></p>
+                      )}
+                      <textarea
+                        type="text"
+                        placeholder="Description..."
+                        className="txt_textarea_description_Mobile"
+                        value={
+                          more[index * product.items.length + itemIndex]
+                            ?.description || ""
+                        }
+                        onChange={(e) =>
+                          handleProvince(
+                            e,
+                            index * product.items.length + itemIndex
+                          )
+                        }
+                      />
+                      <hr className="Line"/>
                 </div>
               ))}
             </div>

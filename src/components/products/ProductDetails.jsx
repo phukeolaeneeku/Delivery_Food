@@ -69,7 +69,7 @@ function ProductDetails() {
   // console.log(sizes);
 
   const [size, set_size] = useState('');
-  const [color, set_color] = useState(null);
+  const [color, set_color] = useState(0);
   const [quantity, set_quantity] = useState(1);
 
   const [rating, setRating] = useState(0);
@@ -77,10 +77,10 @@ function ProductDetails() {
   const [reviews, setReviews] = useState([]);
   const [displayedReviews, setDisplayedReviews] = useState([]);
   const [showAllReviews, setShowAllReviews] = useState(false);
-  console.log("size..", size);
 
-
-
+  useEffect(() => {
+    set_size('');
+  }, [product_id]);
 
   const handleSizeClick = (index) => {
     setActiveIndices(prevIndices => {
