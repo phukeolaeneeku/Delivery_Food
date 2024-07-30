@@ -717,10 +717,10 @@ const Product_Admin = () => {
             <h1 className="htxthead">
               <span className="spennofStyleadmin"></span>Product
             </h1>
-            <div className="categoryBoxfiler">
-              <Link to="/addproduct-admin" className="box_add_product">
+            <div className="categoryBoxfilers">
+              <Link to="/addproduct-admin" className="box_add_products">
                 <BiPlus id="icon_add_product" />
-                <p>Add Product</p>
+                <div>Add Product</div>
               </Link>
             </div>
           </div>

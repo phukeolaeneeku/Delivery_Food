@@ -258,7 +258,7 @@ const AddProduct = () => {
         <div className="boxcontainerSpan_Box"></div>
         <div className="box_container_product">
           <div className="Box_btn_haed">
-            <h3>Add Product</h3>
+            <h2>Add Product</h2>
             <div className="btn_submit">
               <button type="submit" onClick={handleSubmit}>
                 Post Product

@@ -168,11 +168,11 @@ const AdminMenu = () => {
           <div className="menu">
             <NavLink to="/dashboard" className="link">
               <RxDashboard />
-              <p>Dashboard</p>
+              <div>Dashboard</div>
             </NavLink>
             <NavLink to="/product-admin" className="link">
               <IoDocumentText />
-              <p>Products</p>
+              <div>Products</div>
             </NavLink>
             {is_admin === true && (
               <>
@@ -182,7 +182,7 @@ const AdminMenu = () => {
                 </NavLink> */}
                 <NavLink to="/users" className="link">
                   <BiUser />
-                  <p>Users</p>
+                  <div>Users</div>
                 </NavLink>
                 {/* <NavLink to="/admins" className="link">
                   <LiaUserCogSolid />
@@ -192,12 +192,12 @@ const AdminMenu = () => {
             )}
             <NavLink to="/payment-store" className="link">
               <CiBank />
-              <p>Bank</p>
+              <div>Bank</div>
             </NavLink>
 
             <div onClick={() => setShowConfirmation(true)} className="link">
               <IoLogOutOutline />
-              <p>Log Out</p>
+              <div>Log Out</div>
             </div>
             {showConfirmation && (
               <div className="background_addproductpopup_box">
@@ -284,7 +284,7 @@ const AdminMenu = () => {
             </div>
             <div className="boximage_admin">
               <NavLink to="/account-admin" className="userAdminImage">
-                <p>{storage.email}</p>
+                <div>{storage.email}</div>
                 <img src={storage.image || user} alt="admin profile" />
               </NavLink>
             </div>
