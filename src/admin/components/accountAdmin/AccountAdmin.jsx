@@ -137,7 +137,7 @@ function AccountAdmin() {
         <div className="goback">
           <Link to="/dashboard" className="box_guopIconbAck">
             <FaAngleLeft id="box_icon_Back" />
-            <p>Back</p>
+            <div>Back</div>
           </Link>
         </div>
         <div className="box_addAdmin">

@@ -21,22 +21,7 @@ import Contact from "./components/contact/Contact"
 import ProfileEdit from "./components/profile/ProfileEdit";
 import More from "./components/more/More";
 import Search from "./components/header/Search";
-
-//------ Seller ------//
-import Stores from "./components/seller/stores/Store";
-import Store_management from "./components/seller/store_management/Store_management";
 import AddProduct from "./components/seller/addProduct/AddProduct";
-import EditProduct from "./components/seller/editProduct/EditProduct";
-import ReviewStore from "./components/seller/reviewStore/ReviewStore";
-// import Payment_store from "./components/seller/payment_store/PaymentStore";
-// import AddPaymentStore from "./components/seller/payment_store/AddPaymentStore";
-import Dashboard_seller from "./components/seller/stores/Dashboard_seller";
-// import OrderStore from "./components/seller/orderStore/OrderStore";
-import PendingOrder from "./components/seller/orderStore/PendingOrder";
-import ProcessingOrder from "./components/seller/orderStore/ProcessingOrder";
-import ShippedOrder from "./components/seller/orderStore/ShippedOrder";
-import DeliveredOrder from "./components/seller/orderStore/DeliveredOrder";
-import BillStore from "./components/seller/orderStore/BillStore";
 
 //------ Admin ------//
 import Dashboard from "./admin/Dashboard";
@@ -55,8 +40,6 @@ import OrderShipped from "./admin/components/orderPage/OrderShipped";
 import OrderDelivered from "./admin/components/orderPage/OrderDelivered";
 import Payment_store from "./admin/components/payment_store/PaymentStore";
 import AddPaymentStore from "./admin/components/payment_store/AddPaymentStore";
-// import Edit_Admin from "./admin/components/menagerAdmin/EditAdmin";
-// import Edit_Account from "./admin/components/accountAdmin/EditAccount";
 import EditAdmin from "./admin/components/menagerAdmin/EditAdmin";
 import AccountAdmin from "./admin/components/accountAdmin/AccountAdmin";
 import { CartProvider } from "./components/cart/CartContext";
@@ -72,9 +55,6 @@ function App() {
           <Route path="/loginuser" Component={LoginUser} />
           <Route path="/forgotpassword" Component={ForgotPassword} />
           <Route path="/qrcode" Component={QRCode} />
-
-          {/* <Route path="/signup1" Component={Signup1} />
-          <Route path="/signup" Component={Signup1} /> */}
           <Route path="/signup2" Component={Signup2} />
 
           {/* --------- Profile page---------- */}
@@ -84,28 +64,18 @@ function App() {
           <Route path="/search" Component={Search} />
 
           {/* --------- Home Page ---------- */}
-          <Route path="/" exact Component={Home} />
+          <Route path="/hotel/:hotelName/hotel-number/:hotel_number"  Component={Home} />
+          <Route path="/"  Component={Home} />
           <Route path="/goods/:goods_id" Component={ProductDetails} />
+          <Route path="/hotel/:hotelName/hotel-number/:hotel_number/cart" Component={Cart} />
           <Route path="/cart" Component={Cart} />
           <Route path="/address" Component={Address} />
           <Route path="/payment" Component={Payment} />
+          <Route path="/hotel/:hotelName/hotel-number/:hotel_number/order" Component={Order} />
           <Route path="/order" Component={Order} />
           <Route path="/bill/:bill_id" Component={Bill} />
+      
 
-          {/* --------- Seller ---------- */}
-          <Route path="/stores" Component={Stores} />
-          <Route path="/store-management" Component={Store_management} />
-          <Route path="/add-product" Component={AddProduct} />
-          <Route path="/edit-product/:product_id" Component={EditProduct} />
-          <Route path="/eview-store" Component={ReviewStore} />
-          <Route path="/payment-store" Component={Payment_store} />
-          <Route path="/add-payment-store" Component={AddPaymentStore} />
-          <Route path="/dashboard-seller" Component={Dashboard_seller} />
-          <Route path="/order-pending" Component={PendingOrder} />
-          <Route path="/order-processing" Component={ProcessingOrder} />
-          <Route path="/order-shipped" Component={ShippedOrder} />
-          <Route path="/order-delivered" Component={DeliveredOrder} />
-          <Route path="/bill-store/:id" Component={BillStore} />
 
           {/* --------- Admin ---------- */}
           <Route path="/dashboard" Component={Dashboard} />
@@ -124,6 +94,8 @@ function App() {
           <Route path="/order/processing" Component={OrderProcess} />
           <Route path="/order/shipped" Component={OrderShipped} />
           <Route path="/order/delivered" Component={OrderDelivered} />
+          <Route path="/payment-store" Component={Payment_store} />
+          <Route path="/add-payment-store" Component={AddPaymentStore} />
           
         </Routes>
       </Router>

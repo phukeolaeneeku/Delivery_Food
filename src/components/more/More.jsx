@@ -108,7 +108,7 @@ export const More = () => {
           <hr className="hr" />
           <div onClick={() => setShowConfirmation(true)} className="menu_icon">
             <IoLogOutOutline id="icon_more" />
-            <p>Log out </p>
+            <div>Log out </div>
           </div>
 
           {showConfirmation && (
@@ -141,7 +141,7 @@ export const More = () => {
             onClick={() => setShowConfirmationDelete(true)}
           >
             <MdDelete id="icon_more" />
-            <p>Delete account</p>
+            <div>Delete account</div>
           </div>
 
           {showConfirmationDelete && (
