@@ -92,9 +92,13 @@ h3{
     color: #282B30;
 }
 
-.menu_icon:hover {
+.menu_icon:hover #icon_more{
     color: var(--orange);
-    transition: 0.5s;
+    transition: 0.3s;
+}
+.menu_icon:hover .txtP{
+    color: var(--orange);
+    transition: 0.3s;
 }
 
 .confirmation-popup {
