@@ -2,7 +2,10 @@
     width: 65%;
     margin: 6rem auto 0 auto;
 }
-
+.box_Order_RotatingLines{
+    text-align: center;
+    margin-top: 8rem;
+}
 .product-area {
     margin-bottom: 10rem;
 }

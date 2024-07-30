@@ -5,19 +5,20 @@ import Menu from "../menuFooter/Menu";
 import { Link, useNavigate } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import axios from "axios";
+import { RotatingLines } from "react-loader-spinner";
 
 const Order = () => {
   const token = localStorage.getItem("token");
   const user = localStorage.getItem("user");
   // const user_id = JSON.parse(window.localStorage.getItem("user")).user_id;
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   const [order_list, set_order_list] = useState([]);
   const [display_order, set_display_order] = useState([]);
   const [show_all_order, set_show_all_order] = useState(false);
   const [category, set_category] = useState(1);
   const [products_list, set_products_list] = useState([]);
-
 
   useEffect(() => {
     let config = {
@@ -104,16 +105,15 @@ const Order = () => {
     axios
       .request(config)
       .then((response) => {
-        // console.log(JSON.stringify(response.data));
         const sortedReviews = response.data.sort((a, b) => b.id - a.id);
         set_order_list(sortedReviews);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
   }, [user_id]);
 
-  // Update displayed orders when the orders or show_all_order state changes
   useEffect(() => {
     if (show_all_order) {
       set_display_order(order_list);
@@ -137,7 +137,21 @@ const Order = () => {
           </Link> */}
           <h2>Orders</h2>
 
-          {display_order.length === 0 ? (
+          {loading ? (
+            <div className="box_Order_RotatingLines">
+              <RotatingLines
+                visible={true}
+                height="45"
+                width="45"
+                color="grey"
+                strokeWidth="5"
+                animationDuration="0.75"
+                ariaLabel="rotating-lines-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            </div>
+          ) : display_order.length === 0 ? (
             <p className="no-reviews-message">No order right now</p>
           ) : (
             display_order.map((item) => (

@@ -253,6 +253,7 @@ a {
     } */
     .pagination{
         height: 25vh;
+        display: none;
     }
 
     .product-area {

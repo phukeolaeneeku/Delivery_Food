@@ -109,23 +109,6 @@ const ProductHome = () => {
   }
 
   // ==== Paginator management ====
-  // Calculate index range for current page
-  // const startIndex = (currentPage - 1) * itemsPerPage;
-  // const endIndex = startIndex + itemsPerPage;
-  // const currentGoods = goods_list.slice(startIndex, endIndex);
-
-  // const handlePageChange = (page) => {
-  //   setCurrentPage(page);
-  // };
-  // const nextPage = () => {
-  //   setCurrentPage(currentPage === totalPages ? totalPages : currentPage + 1);
-  // };
-
-  // const prevPage = () => {
-  //   setCurrentPage(currentPage === 1 ? 1 : currentPage - 1);
-  // };
-
-  // console.log("fghyftgurtu ", currentGoods);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -142,46 +125,6 @@ const ProductHome = () => {
   const prevPage = () => {
     setCurrentPage(currentPage === 1 ? 1 : currentPage - 1);
   };
-
-  // const renderPageNumbers = () => {
-  //   const pages = [];
-
-  //   for (let i = 1; i <= totalPages; i++) {
-  //     if (
-  //       i === 1 ||
-  //       i === totalPages ||
-  //       i === currentPage ||
-  //       (i >= currentPage - 1 && i <= currentPage + 1)
-  //     ) {
-  //       pages.push(
-  //         <button
-  //           key={i}
-  //           style={{
-  //             padding: "10px 20px",
-  //             margin: "0 5px",
-  //             fontSize: "16px",
-  //             cursor: "pointer",
-  //             borderRadius: "3px",
-  //             backgroundColor: currentPage === i ? "#007bff" : "white",
-  //             color: currentPage === i ? "white" : "black",
-  //             border: "1px solid #ddd",
-  //           }}
-  //           onClick={() => handlePageChange(i)}
-  //         >
-  //           {i}
-  //         </button>
-  //       );
-  //     } else if (i === currentPage - 2 || i === currentPage + 2) {
-  //       pages.push(
-  //         <span key={i} style={{ margin: "0 10px" }}>
-  //           ...
-  //         </span>
-  //       );
-  //     }
-  //   }
-
-  //   return pages;
-  // };
 
   const renderPageNumbers = () => {
     const pages = [];
@@ -345,133 +288,7 @@ const ProductHome = () => {
             />
           </div>
         )}
-        <br />
         {/* Render pagination */}
-        {/* <div className="pagination" style={{ textAlign: "center" }}>
-          <button
-            style={{
-              padding: "10px 20px",
-              margin: "0 5px",
-              fontSize: "16px",
-              borderRadius: "5px",
-              cursor: "pointer",
-              background: "#FF4F16",
-              color: "white",
-            }}
-            disabled={currentPage === 1}
-            onClick={prevPage}
-          >
-            Previous
-          </button>
-          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-            (page) => (
-              <button
-                key={page}
-                style={{
-                  padding: "10px 20px",
-                  margin: "0 5px",
-                  fontSize: "16px",
-                  cursor: "pointer",
-                  borderRadius: "3px",
-                  backgroundColor:
-                    currentPage === page ? "#007bff" : "transparent",
-                  color: currentPage === page ? "white" : "black",
-                }}
-                onClick={() => handlePageChange(page)}
-                disabled={page === "..."}
-              >
-                {page}
-              </button>
-            )
-          )}
-          <button
-            style={{
-              padding: "10px 20px",
-              margin: "0 5px",
-              fontSize: "16px",
-              borderRadius: "5px",
-              cursor: "pointer",
-              background: "#FF4F16",
-              color: "white",
-            }}
-            disabled={currentPage === totalPages}
-            onClick={nextPage}
-          >
-            Next
-          </button>
-        </div> */}
-        {/* <div className="pagination" style={{ textAlign: "center" }}>
-          <button
-            style={{
-              padding: "10px 20px",
-              margin: "0 5px",
-              fontSize: "16px",
-              borderRadius: "5px",
-              cursor: "pointer",
-              background: "#FF4F16",
-              color: "white",
-              border: "none",
-            }}
-            disabled={currentPage === 1}
-            onClick={prevPage}
-          >
-            Previous
-          </button>
-          {renderPageNumbers()}
-          <button
-            style={{
-              padding: "10px 20px",
-              margin: "0 5px",
-              fontSize: "16px",
-              borderRadius: "5px",
-              cursor: "pointer",
-              background: "#FF4F16",
-              color: "white",
-              border: "none",
-            }}
-            disabled={currentPage === totalPages}
-            onClick={nextPage}
-          >
-            Next
-          </button>
-        </div> */}
-
-        {/* <div className="pagination" style={{ textAlign: "center" }}>
-          <button
-            style={{
-              padding: "10px 20px",
-              margin: "0 5px",
-              fontSize: "16px",
-              borderRadius: "5px",
-              cursor: "pointer",
-              background: "#FF4F16",
-              color: "white",
-              border: "none",
-            }}
-            disabled={currentPage === 1}
-            onClick={prevPage}
-          >
-            Previous
-          </button>
-          {renderPageNumbers()}
-          <button
-            style={{
-              padding: "10px 20px",
-              margin: "0 5px",
-              fontSize: "16px",
-              borderRadius: "5px",
-              cursor: "pointer",
-              background: "#FF4F16",
-              color: "white",
-              border: "none",
-            }}
-            disabled={currentPage === totalPages}
-            onClick={nextPage}
-          >
-            Next
-          </button>
-        </div> */}
-
         <div className="pagination" style={{ textAlign: "center" }}>
           <button
             style={{
