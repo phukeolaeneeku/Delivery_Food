@@ -59,6 +59,12 @@
 .toggle-reviews-button:hover{
     border:  2px solid #ff1616;
 }
+.container_box_text_ForMobile{
+    display: block;
+}
+.box_text_ForMobile{
+    display: none;
+}
 
 @media screen and (max-width: 431px) {
     #container_order_item {
@@ -69,5 +75,17 @@
         margin-top: 1rem;
         padding: 20px;
     }
-   
+    
+    .box_text_ForPC{
+        display: none;
+    }
+    .box_text_ForMobile{
+        display: flex;
+        color: black;
+        align-items: center;
+        justify-content: center;
+    }
+    .btn_show_more{
+        margin-bottom: 2rem;
+    }
 }

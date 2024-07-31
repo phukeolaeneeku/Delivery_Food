@@ -162,9 +162,14 @@ const Order = () => {
               >
                 <div className="box_item_order_text">
                   <p>ID: {item.id}</p>
-                  <p>Date Time: {new Date(item.created_at).toLocaleString()}</p>
+                  <p className="box_text_ForPC">
+                    Date Time: {new Date(item.created_at).toLocaleString()}
+                  </p>
                   <p>Status: {item.status}</p>
                 </div>
+                <p className="box_text_ForMobile">
+                  Date Time: {new Date(item.created_at).toLocaleString()}
+                </p>
               </Link>
             ))
           )}
@@ -186,8 +191,6 @@ const Order = () => {
             </button>
           </div>
         )}
-
-       
 
         <>
           {display_order.length === 0 ? (
