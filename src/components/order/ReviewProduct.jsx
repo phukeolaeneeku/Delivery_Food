@@ -32,12 +32,12 @@ function ReviewProduct(id) {
     user_id = JSON.parse(window.localStorage.getItem("user")).user_id;
   }
 
-  console.log("#############################");
-  console.log(review);
-  console.log(user_id);
-  console.log(product_id);
-  console.log(rating);
-  console.log(comment);
+  // console.log("#############################");
+  // console.log(review);
+  // console.log(user_id);
+  // console.log(product_id);
+  // console.log(rating);
+  // console.log(comment);
 
   const orderitems = [
     {
@@ -110,9 +110,6 @@ function ReviewProduct(id) {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      // url:
-      // import.meta.env.VITE_API +
-      // `store/review/${product_id}/user/${user_id}/`,
       url:
         import.meta.env.VITE_API +
         `/store/reviews/by-product/${product_id}/user/${user_id}`,
@@ -124,7 +121,7 @@ function ReviewProduct(id) {
     axios
       .request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
         setReview(response.data);
       })
       .catch((error) => {

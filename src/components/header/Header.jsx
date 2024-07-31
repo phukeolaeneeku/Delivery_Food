@@ -16,9 +16,10 @@ const Header = ({ set_category_name }) => {
   const [logo, set_logo] = useState(null);
   const storage = JSON.parse(window.localStorage.getItem("user"));
   const navigate = useNavigate();
-  const [search, setSearch] = useState(
-    new URLSearchParams(window.location.search).get("search")
-  );
+  // const [search, setSearch] = useState(
+  //   new URLSearchParams(window.location.search).get("search")
+  // );
+  const [search, setSearch] = useState(new URLSearchParams(window.location.search).get("search") || "");
   var store_id = false;
   var is_admin = false;
   if (localStorage.getItem("user")) {

@@ -1,14 +1,9 @@
 import { FiPlus, FiCopy } from "react-icons/fi";
 import "./payment.css";
-import qrcode from "../../img/QRCODE.png";
-import wechat from "../../img/WeChat.png";
 import Menu from "../menuFooter/Menu";
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../header/Header";
-import { IoIosArrowBack } from "react-icons/io";
-import { FaAngleLeft, FaUsers } from "react-icons/fa";
-import { MdArrowBack } from "react-icons/md";
 import axios from "axios";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -30,6 +25,7 @@ const Payment = ({ orders, order_from, onPay }) => {
   const [copied, setCopied] = useState(false);
   const MySwal = withReactContent(Swal);
   const [paymentMethod, setPaymentMethod] = useState("");
+  const usdToKrw = 15.00;
 
   var user_id = null;
   if (localStorage.getItem("user")) {
@@ -244,7 +240,7 @@ const Payment = ({ orders, order_from, onPay }) => {
   };
 
 
-  const usdToKrw = 15.00;
+
 
 
   return (
