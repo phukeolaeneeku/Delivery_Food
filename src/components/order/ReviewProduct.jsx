@@ -10,6 +10,7 @@ import axios from "axios";
 import Payment from "../cart/Payment";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { RotatingLines } from "react-loader-spinner";
 
 function ReviewProduct(id) {
   const token = localStorage.getItem("token");
@@ -180,10 +181,10 @@ function ReviewProduct(id) {
       <Header />
 
       <div className="contentBody">
-        <Link to="/order" className="box_back_icons_back">
+        {/* <Link to="/order" className="box_back_icons_back">
           <IoIosArrowBack id="icons_IoIosArrowBack" />
           <p>Back</p>
-        </Link>
+        </Link> */}
         {product ? (
           <div key={product.id}>
             <div className="boxProduct_deteils">
@@ -198,7 +199,7 @@ function ReviewProduct(id) {
               <div className="txtContentproduct">
                 <h1 className="txt_nameP">Name: {product.name}</h1>
                 <p className="money_txt">
-                  Price:{" "}
+                  Price:{" "}$
                   {parseFloat(product.price).toLocaleString("en-US", {
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0,
@@ -213,7 +214,7 @@ function ReviewProduct(id) {
 
                 {review.length != "" ? (
                   <div className="box_comments">
-                    <h2>Already commented.</h2> <br />
+                    <h1>Already commented.</h1> <br />
                     <div className="txt_review">
                       <p>Comment: {review.comment}</p>
                       <p>Rating: {review.rating}</p>
@@ -224,7 +225,7 @@ function ReviewProduct(id) {
                   </div>
                 ) : (
                   <div className="box_leave_review">
-                    <h2>Leave a Review</h2>
+                    <h1>Leave a Review</h1>
                     <div className="box_container_start">
                       {[...Array(5)].map((_, index) => (
                         <span
@@ -264,7 +265,19 @@ function ReviewProduct(id) {
             </div>
           </div>
         ) : (
-          <p>Loading...</p>
+          <div className="box_RotatingLines_review">
+            <RotatingLines
+              visible={true}
+              height="45"
+              width="45"
+              color="grey"
+              strokeWidth="5"
+              animationDuration="0.75"
+              ariaLabel="rotating-lines-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+            />
+          </div>
         )}
       </div>
       <Menu />

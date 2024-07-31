@@ -140,7 +140,7 @@ const Signup2 = () => {
           console.log("This is an unknown error.");
         }
       });
-    console.log(data);
+    // console.log(data);
   };
 
   useEffect(() => {

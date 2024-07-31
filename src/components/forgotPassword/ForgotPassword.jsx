@@ -6,10 +6,13 @@ import { MdArrowBack } from "react-icons/md";
 import axios from "axios";
 import Header from "../header/Header";
 import Menu from "../menuFooter/Menu";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const [errorText, set_errorText] = useState("");
+  const MySwal = withReactContent(Swal);
   const [data, set_data] = useState({
     email: "",
     code: "",
@@ -86,14 +89,22 @@ const ForgotPassword = () => {
       .post(`${import.meta.env.VITE_API}/user/my-page`, data)
       .then((response) => {
         console.log(response.data);
-        alert("Your password has been changed.");
+        // alert("Your password has been changed.");
+        MySwal.fire({
+          text: "Your password has been changed.",
+          icon: "success",
+        });
         navigate("/loginuser");
       })
       .catch((error) => {
         console.error(error.response.data.message);
 
         if (error.response.data.message == "Email does not exist.") {
-          alert("Email does not exist. Please register first!");
+          // alert("Email does not exist. Please register first!");
+          MySwal.fire({
+            text: "Email does not exist. Please register first!",
+            icon: "question",
+          });
           navigate("/signup2", { replace: true });
         } else {
           alert(error.response.data.message);

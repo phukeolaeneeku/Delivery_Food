@@ -4,6 +4,29 @@
     color: black;
     padding: 0 100px;
 }
+.txtContentproduct h1{
+    font-size: 24px;
+}
+
+.product-page-img{
+    width: 300px;
+    height: 450px;
+    overflow: hidden;
+    object-fit: contain;
+}
+.product-page-img img{
+    width: 100%;
+    height: auto;
+    margin-left: 3px;
+    overflow: hidden;
+    object-fit: contain;
+}
+.box_comments h1{
+    font-size: 20px;
+ }
+ .box_leave_review h1{
+    font-size: 20px;
+ }
 
 .box_comments {
     margin-top: 2rem;
@@ -58,11 +81,15 @@
     color: white;
     cursor: pointer;
 }
-
 .btn_review:hover {
     background-color: #f44100;
     transition: 0.5s;
     box-shadow: rgba(0, 0, 0, 0.10);
+}
+
+.box_RotatingLines_review{
+    text-align: center;
+    margin-top: 8rem;
 }
 
 /* Responsive */
@@ -74,9 +101,21 @@
     .box_leave_review {
         width: 97%;
     }
-
+    .box_comments h2 {
+        margin-top: 10px;
+    }
+    .container_textarea{
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    
     .container_textarea textarea {
         width: 100%;
+        font-size: 16px;
+        padding: 10px;
+    }
+    .box_container_start{
+        margin-bottom: 1rem;
     }
 
     .btn_review {
@@ -86,4 +125,79 @@
     .box_comments {
         padding: 0;
     }
+    .product-page-img{
+        width: 100%;
+        height: auto;
+    }
+    .product-page-img img{
+        width: 100%;
+        height: auto;
+        margin-left: 3px;
+        overflow: hidden;
+        object-fit: contain;
+    }
+     .boxProduct_deteils{
+        display: block;
+     }
+     .box_comments h1{
+        font-size: 20px;
+     }
+     .box_leave_review h1{
+        font-size: 20px;
+     }
+   
+}
+
+@media screen and (max-width: 376px) {
+    .box_container_back {
+        padding: 0;
+    }
+
+    .box_leave_review {
+        width: 97%;
+    }
+    .box_comments h2 {
+        margin-top: 10px;
+    }
+    .container_textarea{
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    
+    .container_textarea textarea {
+        width: 100%;
+        font-size: 16px;
+        padding: 10px;
+    }
+    .box_container_start{
+        margin-bottom: 1rem;
+    }
+
+    .btn_review {
+        width: 100%;
+        height: 50px;
+    }
+    .box_comments {
+        padding: 0;
+    }
+    .product-page-img{
+        width: 100%;
+        height: auto;
+    }
+    .product-page-img img{
+        width: 100%;
+        height: auto;
+        margin-left: 3px;
+        overflow: hidden;
+        object-fit: contain;
+    }
+     .boxProduct_deteils{
+        display: block;
+     }
+     .box_comments h1{
+        font-size: 20px;
+     }
+     .box_leave_review h1{
+        font-size: 20px;
+     }
 }

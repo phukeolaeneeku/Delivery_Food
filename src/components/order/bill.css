@@ -126,9 +126,10 @@
 
     .bill-detial {
         padding: 0;
+        margin-bottom: 6rem;
     }
     .titlePrice{
-        padding: 2rem 10px;
+        padding: 0;
     }
     .place-on{
         padding: 0;

@@ -106,17 +106,17 @@
     
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 431px) {
     .slider_banner {
-        height: 210px;
-        margin-top: 3rem;
+        height: 220px;
+        margin-top: 2rem;
     }
     .but1_banner {
-        top: 60px;
+        top: 70px;
     }
     
     .but2_banner {
-        top: 60px;
+        top: 70px;
     }
    
 }

@@ -156,10 +156,11 @@ const Bill = ({ totalPrice, currency }) => {
                       <th>Price</th>
                       <th>Amount</th>
                       {/* <th>Type of menu</th> */}
-                      <th>Type of water</th>
+                      <th>Water</th>
                       {order_list.status === "Delivered" && <th>Review</th>}
                     </tr>
                   </thead>
+                  <hr />
                   <tbody>
                     {order_list.items &&
                       order_list.items.map((item, index) => (
@@ -195,6 +196,7 @@ const Bill = ({ totalPrice, currency }) => {
                         </tr>
                       ))}
                   </tbody>
+                 
                 </table>
               </div>
               <p className="box_more_details">
