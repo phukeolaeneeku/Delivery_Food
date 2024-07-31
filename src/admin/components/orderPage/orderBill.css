@@ -8,16 +8,26 @@
 
 
 .container_Order_Bill {
+    justify-content: center;
     justify-content: space-between;
 }
 
-.container_Order_Bill,
-.back_Order_Bill {
+.container_Order_Bill{
     display: flex;
     align-items: center;
 }
+.back_Order_Bill {
+    display: flex;
+    padding: 4px 12px;
+    align-items: center;
+    color: #FFF;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 79, 22, 0.92);
+}
 .back_Order_Bill{
-    gap: 10px;
+    gap: 5px;
 }
 .box_container_sudToKrw{
     display: grid;

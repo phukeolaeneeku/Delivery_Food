@@ -6,17 +6,20 @@ import { IoSearchOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { RotatingLines } from "react-loader-spinner";
 
 const OrderPending = () => {
   const token = localStorage.getItem("token");
-  var store_id = false;
+  let store_id = false;
   if (localStorage.getItem("user")) {
     store_id = JSON.parse(window.localStorage.getItem("user")).store_id;
   }
 
   const [order_list, set_order_list] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   useEffect(() => {
     let data = JSON.stringify({
@@ -37,7 +40,7 @@ const OrderPending = () => {
     axios
       .request(config)
       .then((response) => {
-        if (response.data.result != "success") {
+        if (response.data.result !== "success") {
           localStorage.clear();
           navigate("/loginuser");
           return;
@@ -49,7 +52,7 @@ const OrderPending = () => {
         navigate("/loginuser");
         return;
       });
-  }, [token]);
+  }, [token, navigate]);
 
   useEffect(() => {
     let data = "";
@@ -67,25 +70,115 @@ const OrderPending = () => {
     axios
       .request(config)
       .then((response) => {
-        // console.log(JSON.stringify(response.data.orders));
         set_order_list(response.data.orders);
-        setOrders(response.data.orders);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
       });
-  });
+  }, [store_id]);
 
-  console.log(order_list);
+  const totalPages = Math.ceil(order_list.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentOrders = order_list.slice(startIndex, endIndex);
 
-  // // prev next button user in react
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const recordsPerPage = 4;
-  // const lastIndex = currentPage * recordsPerPage;
-  // const firstIndex = lastIndex - recordsPerPage;
-  // const records = order_list.slice(firstIndex, lastIndex);
-  // const npage = Math.ceil(order_list.length / recordsPerPage);
-  // const numbers = [...Array(npage + 1).keys()].slice(1);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const nextPage = () => {
+    setCurrentPage(currentPage === totalPages ? totalPages : currentPage + 1);
+  };
+
+  const prevPage = () => {
+    setCurrentPage(currentPage === 1 ? 1 : currentPage - 1);
+  };
+
+  const renderPageNumbers = () => {
+    const pages = [];
+    const startPage = Math.max(2, currentPage - 1);
+    const endPage = Math.min(totalPages - 1, currentPage + 1);
+
+    pages.push(
+      <button
+        key={1}
+        style={{
+          padding: "10px 20px",
+          margin: "0 5px",
+          fontSize: "16px",
+          cursor: "pointer",
+          borderRadius: "3px",
+          backgroundColor: currentPage === 1 ? "#007bff" : "white",
+          color: currentPage === 1 ? "white" : "black",
+          border: "1px solid #ddd",
+        }}
+        onClick={() => handlePageChange(1)}
+      >
+        1
+      </button>
+    );
+
+    if (startPage > 2) {
+      pages.push(
+        <span key="start-ellipsis" style={{ margin: "0 10px" }}>
+          ...
+        </span>
+      );
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(
+        <button
+          key={i}
+          style={{
+            padding: "10px 20px",
+            margin: "0 5px",
+            fontSize: "16px",
+            cursor: "pointer",
+            borderRadius: "3px",
+            backgroundColor: currentPage === i ? "#007bff" : "white",
+            color: currentPage === i ? "white" : "black",
+            border: "1px solid #ddd",
+          }}
+          onClick={() => handlePageChange(i)}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    if (endPage < totalPages - 1) {
+      pages.push(
+        <span key="end-ellipsis" style={{ margin: "0 10px" }}>
+          ...
+        </span>
+      );
+    }
+
+    if (totalPages > 1) {
+      pages.push(
+        <button
+          key={totalPages}
+          style={{
+            padding: "10px 20px",
+            margin: "0 5px",
+            fontSize: "16px",
+            cursor: "pointer",
+            borderRadius: "3px",
+            backgroundColor: currentPage === totalPages ? "#007bff" : "white",
+            color: currentPage === totalPages ? "white" : "black",
+            border: "1px solid #ddd",
+          }}
+          onClick={() => handlePageChange(totalPages)}
+        >
+          {totalPages}
+        </button>
+      );
+    }
+
+    return pages;
+  };
 
   return (
     <>
@@ -94,40 +187,14 @@ const OrderPending = () => {
         <div className="container_box_orderpage">
           <div className="box_head_search">
             <h3>Orders Pending</h3>
-            {/* <form className="search">
-              <div className="search-box_menageruser">
-                <input type="text" placeholder="Search ..." />
-                <button type="submit">
-                  <IoSearchOutline />
-                </button>
-              </div>
-            </form> */}
           </div>
 
-          {/* <div className="box_users_order">
-            <div className="box_order_text">
-              <p>No: 1</p>
-              <div>
-                <p>Name: Samsung</p>
-              </div>
-            </div>
-            <div className="box_container_time">
-              <p>20/11/2023</p>
-            </div>
-            <div className="container_order_icon">
-              <div className="btn_pending">Pending</div>
-              <Link to="/orderbill-admin" className="btn_view">
-                View
-              </Link>
-            </div>
-          </div> */}
-
-          {order_list.map((order) => (
-            <div className="box_users_order">
+          {currentOrders.map((order, index) => (
+            <div className="box_users_order" key={index}>
               <div className="box_order_text">
                 <p>No: {order.id}</p>
                 <div>
-                <p>Name: {order.user.nickname || order.user.email}</p>
+                  <p>Name: {order.user.nickname || order.user.email}</p>
                 </div>
               </div>
               <div className="box_container_time">
@@ -142,53 +209,67 @@ const OrderPending = () => {
             </div>
           ))}
 
-          {order_list.length == 0 && (
+          {loading ? (
+            <div className="box_Orderpage_RotatingLines">
+              <RotatingLines
+                visible={true}
+                height="45"
+                width="45"
+                color="grey"
+                strokeWidth="5"
+                animationDuration="0.75"
+                ariaLabel="rotating-lines-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            </div>
+          ) : order_list.length === 0 ? (
             <div className="heade_productorder_store">
               <p>No Order</p>
             </div>
+          ) : (
+            <p></p>
           )}
 
-          {/* <div className="box_container_next_product">
-            <button className="box_prev_left_product" onClick={prePage}>
-              <AiOutlineLeft id="box_icon_left_right_product" />
-              <p>Prev</p>
+          <div className="pagination" style={{ textAlign: "center" }}>
+            <button
+              style={{
+                padding: "10px 20px",
+                margin: "0 5px",
+                fontSize: "16px",
+                borderRadius: "5px",
+                cursor: "pointer",
+                background: "#007bff",
+                color: "white",
+                border: "none",
+              }}
+              disabled={currentPage === 1}
+              onClick={prevPage}
+            >
+              Previous
             </button>
-
-            <div className="box_num_product">
-              {numbers.map((n, i) => (
-                <div
-                  className={`page-link ${currentPage === n ? "active" : ""}`}
-                  key={i}
-                >
-                  <div className="num_admin_product">
-                    <p onClick={() => changeCPage(n)}>{n}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <button className="box_prev_right_product" onClick={nextPage}>
-              <p>Next</p>
-              <AiOutlineRight id="box_icon_left_right_product" />
+            {renderPageNumbers()}
+            <button
+              style={{
+                padding: "10px 20px",
+                margin: "0 5px",
+                fontSize: "16px",
+                borderRadius: "5px",
+                cursor: "pointer",
+                background: "#FF4F16",
+                color: "white",
+                border: "none",
+              }}
+              disabled={currentPage === totalPages}
+              onClick={nextPage}
+            >
+              Next
             </button>
-          </div> */}
+          </div>
         </div>
       </section>
     </>
   );
-  // function prePage() {
-  //   if (currentPage !== 1) {
-  //     setCurrentPage(currentPage - 1);
-  //   }
-  // }
-  // function nextPage() {
-  //   if (currentPage !== npage) {
-  //     setCurrentPage(currentPage + 1);
-  //   }
-  // }
-  // function changeCPage(userID) {
-  //   setCurrentPage(userID);
-  // }
 };
 
 export default OrderPending;

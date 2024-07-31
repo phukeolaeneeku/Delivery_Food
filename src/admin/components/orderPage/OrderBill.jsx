@@ -20,7 +20,7 @@ const OrderBill = () => {
   const [lao_url, set_lao_url] = useState("");
   const [order_bill, set_order_bill] = useState(null);
   const MySwal = withReactContent(Swal);
-  const usdToKrw = 15.00;
+  const usdToKrw = 15.0;
 
   const goBack = () => {
     window.history.back();
@@ -279,8 +279,6 @@ const OrderBill = () => {
     }
   };
 
-
-
   // console.log("order bill: ", order_bill);
   // console.log("mainImageBill: ", mainImageBill);
   return (
@@ -289,10 +287,10 @@ const OrderBill = () => {
       <section id="abill">
         <div className="abill-detial">
           <div className="container_Order_Bill">
-            <Link to={goBack} className="back_Order_Bill">
+            <button onClick={goBack} className="back_Order_Bill">
               <FaAngleLeft id="box_icon_Back" />
-              {/* <p>Back</p> */}
-            </Link>
+              <div>Back</div>
+            </button>
             <h2>Orders</h2>
             <div></div>
           </div>
@@ -344,7 +342,7 @@ const OrderBill = () => {
               </div>
               <div className="atitlePriceKRW">
                 <h3>TotalKRW :</h3>
-                <h3>₩ {order_list.total_prices * usdToKrw }</h3>
+                <h3>₩ {order_list.total_prices * usdToKrw}</h3>
               </div>
             </div>
 

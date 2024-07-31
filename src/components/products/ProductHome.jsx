@@ -210,6 +210,7 @@ const ProductHome = () => {
 
     return pages;
   };
+  
   return (
     <div>
       <Header set_category_name={set_category_name} />
@@ -234,19 +235,6 @@ const ProductHome = () => {
           <h1 className="htxthead">
             <span className="spennofStyle"></span>Product
           </h1>
-          {/* <div className="categoryBoxfiler">
-            <form className="boxfilterseach">
-              <select
-                className="filter_priceProduct"
-                onClick={(e) => set_filter(e.target.value)}
-              >
-                <option value="1">Latest</option>
-                <option value="3">Sort by review</option>
-                <option value="2">Highest price</option>
-                <option value="4">Low to highest prices</option>
-              </select>
-            </form>
-          </div> */}
         </div>
         {currentGoods.length > 0 ? (
           <div className="product-area">

@@ -105,7 +105,7 @@ const Bill = ({ currency }) => {
       wrapperStyle={{}}
       wrapperClass=""
     />
-  </div>; // Display a loading message while fetching data
+  </div>;
   }
 
   const totalPrice = order_list.items?.reduce((acc, item) => acc + item.price * item.quantity, 0) || 0;

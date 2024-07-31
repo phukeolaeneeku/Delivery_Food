@@ -140,72 +140,19 @@
     border-radius: 7px;
 }
 
-
-/* ============ box_prev_next =========== */
-
-
-.box_next_order{
+.box_num_product{
     display: flex;
-    gap: 1rem;
-    cursor: pointer;
-    border: none;
+    gap: 10px;
     align-items: center;
     justify-content: center;
-    margin-top: 1.5rem;
-    bottom: 0;
-}
-.box_prev_next_order{
-    width: 80px;
-    height: 40px;
-    display: flex;
-    gap: 0.3rem;
-    color: #FFF;
-    cursor: pointer;
-    border: none;
-    border-radius: 6px;
-    align-items: center;
-    justify-content: center;
-    background: #FA442C;
-}
-.box_prev_nexts_order{
-    width: 80px;
-    height: 40px;
-    display: flex;
-    gap: 0.3rem;
-    color: #FFF;
-    cursor: pointer;
-    border: none;
-    border-radius: 6px;
-    align-items: center;
-    justify-content: center;
-    background: #27A7EF;
 }
 
-#box_prev_next_icon{
-    width: 20px;
-    height: 20px;
-}
-
-.num{
-    width: 70px;
-    height: 40px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #444;
-}
-.box_next p{
+.heade_productorder_store{
+    text-align: center;
     font-size: 18px;
 }
 
-.box_num_order{
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    justify-content: center;
+.box_Orderpage_RotatingLines{
+    text-align: center;
+    margin-top: 3rem;
 }
-
-
-
-/* ================ Responsive ==================*/
