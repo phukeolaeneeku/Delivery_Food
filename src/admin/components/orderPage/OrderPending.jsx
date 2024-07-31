@@ -60,7 +60,8 @@ const OrderPending = () => {
     let config = {
       method: "get",
       maxBodyLength: Infinity,
-      url: import.meta.env.VITE_API + `/store/order/pending/?store_id=${store_id}`,
+      url:
+        import.meta.env.VITE_API + `/store/order/pending/?store_id=${store_id}`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -231,41 +232,43 @@ const OrderPending = () => {
             <p></p>
           )}
 
-          <div className="pagination" style={{ textAlign: "center" }}>
-            <button
-              style={{
-                padding: "10px 20px",
-                margin: "0 5px",
-                fontSize: "16px",
-                borderRadius: "5px",
-                cursor: "pointer",
-                background: "#007bff",
-                color: "white",
-                border: "none",
-              }}
-              disabled={currentPage === 1}
-              onClick={prevPage}
-            >
-              Previous
-            </button>
-            {renderPageNumbers()}
-            <button
-              style={{
-                padding: "10px 20px",
-                margin: "0 5px",
-                fontSize: "16px",
-                borderRadius: "5px",
-                cursor: "pointer",
-                background: "#FF4F16",
-                color: "white",
-                border: "none",
-              }}
-              disabled={currentPage === totalPages}
-              onClick={nextPage}
-            >
-              Next
-            </button>
-          </div>
+          {totalPages > 1 && (
+            <div className="pagination" style={{ textAlign: "center" }}>
+              <button
+                style={{
+                  padding: "10px 20px",
+                  margin: "0 5px",
+                  fontSize: "16px",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                  background: "#007bff",
+                  color: "white",
+                  border: "none",
+                }}
+                disabled={currentPage === 1}
+                onClick={prevPage}
+              >
+                Previous
+              </button>
+              {renderPageNumbers()}
+              <button
+                style={{
+                  padding: "10px 20px",
+                  margin: "0 5px",
+                  fontSize: "16px",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                  background: "#FF4F16",
+                  color: "white",
+                  border: "none",
+                }}
+                disabled={currentPage === totalPages}
+                onClick={nextPage}
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       </section>
     </>
