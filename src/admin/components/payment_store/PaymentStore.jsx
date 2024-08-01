@@ -98,7 +98,7 @@ function PaymentStore() {
         
         <form className="box_container_review1">
           <div className="add_payment_box">
-            <h3>Payment</h3> <br />
+            <h1>Payment</h1> <br />
             <p className="no-reviews-message">You don't have Back account. Please add it!</p>
             <Link
               to="/add-payment-store"
