@@ -8,6 +8,16 @@
     border-radius: 10px;
     background-color: #fff;
 }
+.box_containner_FiPrinter{
+    width: 100%;
+    text-align: end;
+    padding: 0 20px;
+    cursor: pointer;
+    
+}
+#FiPrinter{
+    font-size: 25px;
+}
 
 .bill-detial {
     padding: 20px 30px 30px 30px;

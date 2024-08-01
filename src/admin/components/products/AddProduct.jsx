@@ -25,6 +25,8 @@ const AddProduct = () => {
     store_id = JSON.parse(window.localStorage.getItem("user")).store_id;
   }
 
+  console.log("storage.store_id.....", storage.store_id)
+
   const [products, setProducts] = useState([
     {
       name: "",
@@ -168,6 +170,7 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     try {
       const response = await fetch(
         import.meta.env.VITE_API + `/store/${storage.store_id}`,
@@ -399,7 +402,7 @@ const AddProduct = () => {
                         <div className="box_size_add">
                           {product.sizes.map((size, sizeIndex) => (
                             <div key={sizeIndex} className="box_size_add_item">
-                              <p>{size}</p>
+                              <div>{size}</div>
                               <span
                                 onClick={() =>
                                   removeSizeInput(index, sizeIndex)
