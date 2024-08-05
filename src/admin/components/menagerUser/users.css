@@ -56,7 +56,7 @@
 }
 
 .search-box_menageruser button {
-    background: #ff7446;
+    background: #f44336;
     color: #FFF;
     width: 75px;
     height: 45px;
@@ -135,7 +135,7 @@
     border: none;
     align-items: center;
     justify-content: center;
-    background: #FA442C;
+    background: #f44336;
     border-radius: 8px;
 }
 
@@ -165,7 +165,7 @@
     border-radius: 6px;
     align-items: center;
     justify-content: center;
-    background: #FA442C;
+    background: #f44336;
 }
 
 .box_prev_nexts_user {
@@ -308,7 +308,7 @@
     border-radius: 6px;
     align-items: center;
     justify-content: center;
-    background: #fa442c;
+    background: #f44336;
   }
   
   .box_num_resume {

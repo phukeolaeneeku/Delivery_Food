@@ -43,6 +43,8 @@ import EditAdmin from "./admin/components/menagerAdmin/EditAdmin";
 import AccountAdmin from "./admin/components/accountAdmin/AccountAdmin";
 import { CartProvider } from "./components/cart/CartContext";
 import TableHotel from "./admin/components/tableManagement/TableHotel";
+import AddHotel from "./admin/components/tableManagement/AddHotel";
+import Edit from "./admin/components/tableManagement/Edit";
 
 
 
@@ -98,6 +100,8 @@ function App() {
           <Route path="/payment-store" Component={Payment_store} />
           <Route path="/add-payment-store" Component={AddPaymentStore} />
           <Route path="/table-hotel" Component={TableHotel} />
+          <Route path="/add-hotel" Component={AddHotel} />
+          <Route path="/edit-hotel" Component={Edit} />
           
         </Routes>
       </Router>

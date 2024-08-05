@@ -34,11 +34,11 @@ body {
 }
 
 #dashboard .left .menu .link:hover {
-    color: #ff7446;
+    color: #FF4F16;
 }
 
 #dashboard .left .menu .active {
-    background: #ff7446;
+    background: #FF4F16;
     color: #FFF;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.10);
 }
@@ -112,7 +112,7 @@ body {
     cursor: pointer;
 }
 #box_icon_camera{
-    color: #f46738;
+    color: #FF4F16;
 }
 
 .boximage_admin {

@@ -4,6 +4,16 @@
     z-index: 999;
     padding: 140px 20px 20px 250px;
 }
+.container_from{
+    width: 100%;
+    height: auto;
+    margin: auto;
+    margin-top: 1rem;
+    padding: 30px 20px 20px 20px;
+    background: #FFF;
+    box-shadow: 0 2px 6px 0 rgba(67, 89, 113, 0.15);
+    border-radius: 10px;
+}
 .tableStyle  {
     width: 90%;
     border-collapse: collapse;
@@ -11,8 +21,10 @@
     font-size: 18px;
     text-align: center;
     margin-top: 1rem;
+    margin-bottom: 2rem;
   }
 .thTdStyle {
+    font-size: 16px;
     padding: 12px 15px;
     border: 1px solid #ddd;
   };
@@ -39,27 +51,6 @@
     background-color: #f9f9f9;
   }
   
-  button {
-    padding: 5px 10px;
-    margin: 0 5px;
-    border: none;
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
-  button:last-child {
-    background-color: #f44336;
-  }
-  
-  button:last-child:hover {
-    background-color: #d32f2f;
-  }
-  
   form {
     margin-top: 20px;
   }
@@ -78,6 +69,7 @@
     padding: 5px 15px;
     margin: 0 5px;
     border: none;
+    font-size: 14px;
     background-color: #4CAF50;
     color: white;
     cursor: pointer;

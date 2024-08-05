@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import "./addHotel.css";
 import AdminMenu from "../adminMenu/AdminMenu";
 
-function AddHotel() {
+function Edit() {
+
+
+
 
   return (
     <>
      <AdminMenu />
       <div className="container_from_hotel">
         <div className="container_from">
-        <h4>Add Hotel</h4>
+        <h4>Edit Hotel</h4>
           <form>
             <input
               type="text"
@@ -42,4 +45,4 @@ function AddHotel() {
   );
 }
 
-export default AddHotel;
+export default Edit;
