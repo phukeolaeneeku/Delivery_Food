@@ -21,8 +21,7 @@ import Contact from "./components/contact/Contact"
 import ProfileEdit from "./components/profile/ProfileEdit";
 import More from "./components/more/More";
 import Search from "./components/header/Search";
-import AddProduct from "./components/seller/addProduct/AddProduct";
-
+import Table from "./components/table/Table"
 //------ Admin ------//
 import Dashboard from "./admin/Dashboard";
 import Product_admin from "./admin/components/products/Product_Admin";
@@ -74,6 +73,7 @@ function App() {
           <Route path="/hotel/:hotelName/hotel-number/:hotel_number/order" Component={Order} />
           <Route path="/order" Component={Order} />
           <Route path="/bill/:bill_id" Component={Bill} />
+          <Route path="/table" Component={Table} />
       
 
 

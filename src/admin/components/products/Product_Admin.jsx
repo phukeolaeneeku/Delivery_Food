@@ -634,7 +634,7 @@ const Product_Admin = () => {
         set_id(null);
 
         MySwal.fire({
-          text: "Product description has been change.",
+          text: "Product amount has been change.",
           icon: "success",
         });
       })
@@ -1038,6 +1038,13 @@ const Product_Admin = () => {
                       <li>Category: {product.category}</li>
                       <MdOutlineEdit id="icon_edit" />
                     </div>
+                    <div
+                      className="box_icon_MdOutlineEdit"
+                      onClick={() => openConfirmationDesc(product.id)}
+                    >
+                      <li>Amount: {product.description}</li>
+                      <MdOutlineEdit id="icon_edit" />
+                    </div>
 
                     {isConfirmationPopupOpenCategory && (
                       <div className="background_addproductpopup_box">
@@ -1107,6 +1114,40 @@ const Product_Admin = () => {
                               className="btn_confirm btn_addproducttxt_popup"
                               onClick={() => {
                                 ChangeProductPrice();
+                              }}
+                            >
+                              Update
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    {isConfirmationDesc && (
+                      <div className="background_addproductpopup_box">
+                        <div className="hover_addproductpopup_box">
+                          <div className="box_input">
+                            <p>Edit product amount</p>
+                            <input
+                              type="text"
+                              placeholder="Amount..."
+                              className="input_of_txtAddproduct"
+                              value={data}
+                              onChange={(e) => {
+                                set_data(e.target.value);
+                              }}
+                            />
+                          </div>
+                          <div className="btn_foasdf">
+                            <button
+                              className="btn_cancel btn_addproducttxt_popup"
+                              onClick={closeConfirmationDesc}
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              className="btn_confirm btn_addproducttxt_popup"
+                              onClick={() => {
+                                ChangeProductDescription();
                               }}
                             >
                               Update

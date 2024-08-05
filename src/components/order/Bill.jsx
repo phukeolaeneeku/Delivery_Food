@@ -104,12 +104,14 @@ const Bill = () => {
   };
   const handlePrintBill = () => {
     const billElement = document.querySelector(".bill-detial");
-    const printWindow = window.open("", "", "height=500,width=500");
+    const printWindow = window.open("", "", "height=500px,width=500px");
     printWindow.document.write(billElement.outerHTML);
     printWindow.document.close();
     printWindow.print();
     printWindow.close();
   };
+ 
+  
 
   if (!order_list) {
     return (
@@ -170,7 +172,7 @@ const Bill = () => {
                       <th>Product</th>
                       <th>Price</th>
                       <th>Amount</th>
-                      <th>Size</th>
+                      <th>Water</th>
                       {order_list.status === "Delivered" && <th>Review</th>}
                     </tr>
                   </thead>

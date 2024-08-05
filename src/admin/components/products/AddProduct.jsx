@@ -30,7 +30,7 @@ const AddProduct = () => {
   const [products, setProducts] = useState([
     {
       name: "",
-      description: "0",
+      description: "",
       price: "",
       category: "",
       sizes: [],
@@ -150,7 +150,7 @@ const AddProduct = () => {
       ...products,
       {
         name: "",
-        description: "0",
+        description: "",
         price: "",
         category: "",
         sizes: [],
@@ -307,7 +307,7 @@ const AddProduct = () => {
                       <div className="box">
                         <input
                           type="text"
-                          placeholder="Product Name"
+                          placeholder="Product name..."
                           value={product.name}
                           onChange={(e) => handleProductName(e, index)}
                           required
@@ -316,7 +316,7 @@ const AddProduct = () => {
                       <div className="box">
                         <input
                           type="text"
-                          placeholder="Product Price"
+                          placeholder="Price..."
                           value={product.price}
                           onChange={(e) => handleProductPrice(e, index)}
                           required
@@ -339,6 +339,16 @@ const AddProduct = () => {
                             </option>
                           ))}
                         </select>
+                      </div>
+
+                      <div className="box">
+                        <input
+                          type="text"
+                          placeholder="Amount..."
+                          value={product.description }
+                          onChange={(e) => handleProductDescription(e, index)}
+                          required
+                        />
                       </div>
 
                       {/* <div className="box">
