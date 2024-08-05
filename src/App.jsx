@@ -5,7 +5,7 @@ import "./App.css";
 import LoginUser from "./components/loginAndSignup/LoginUser";
 import ForgotPassword from "./components/forgotPassword/ForgotPassword";
 import Signup2 from "./components/loginAndSignup/Signup2";
-
+import AddProduct from "./components/seller/addProduct/AddProduct";
 import QRCode from "../QRCode";
 
 
@@ -42,6 +42,7 @@ import AddPaymentStore from "./admin/components/payment_store/AddPaymentStore";
 import EditAdmin from "./admin/components/menagerAdmin/EditAdmin";
 import AccountAdmin from "./admin/components/accountAdmin/AccountAdmin";
 import { CartProvider } from "./components/cart/CartContext";
+import TableHotel from "./admin/components/tableManagement/TableHotel";
 
 
 
@@ -63,14 +64,14 @@ function App() {
           <Route path="/search" Component={Search} />
 
           {/* --------- Home Page ---------- */}
-          <Route path="/hotel/:hotelName/hotel-number/:hotel_number"  Component={Home} />
+          <Route path="/hotel/:hotelName/room_number/:room_number/address/:address"  Component={Home} />
           <Route path="/"  Component={Home} />
           <Route path="/goods/:goods_id" Component={ProductDetails} />
-          <Route path="/hotel/:hotelName/hotel-number/:hotel_number/cart" Component={Cart} />
+          <Route path="/hotel/:hotelName/room_number/:room_number/address/:address/cart" Component={Cart} />
           <Route path="/cart" Component={Cart} />
           <Route path="/address" Component={Address} />
           <Route path="/payment" Component={Payment} />
-          <Route path="/hotel/:hotelName/hotel-number/:hotel_number/order" Component={Order} />
+          <Route path="/hotel/:hotelName/room_number/:room_number/address/:address/order" Component={Order} />
           <Route path="/order" Component={Order} />
           <Route path="/bill/:bill_id" Component={Bill} />
           <Route path="/table" Component={Table} />
@@ -96,6 +97,7 @@ function App() {
           <Route path="/order/delivered" Component={OrderDelivered} />
           <Route path="/payment-store" Component={Payment_store} />
           <Route path="/add-payment-store" Component={AddPaymentStore} />
+          <Route path="/table-hotel" Component={TableHotel} />
           
         </Routes>
       </Router>

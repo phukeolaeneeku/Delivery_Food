@@ -8,6 +8,7 @@ import axios from "axios";
 import { AiOutlineDashboard } from "react-icons/ai";
 import { BiLogIn } from "react-icons/bi";
 import { RotatingLines } from "react-loader-spinner";
+import { CiViewTable } from "react-icons/ci";
 
 const Header = ({ set_category_name }) => {
   const location = useLocation();
@@ -176,6 +177,16 @@ const Header = ({ set_category_name }) => {
 
             {user ? (
               <div className="right_ofHeadBox">
+                <div className="linkLi">
+                  <Link
+                    to="/table"
+                    className={
+                      location.pathname === "/table" ? "link active" : "link"
+                    }
+                  >
+                    <CiViewTable className="head_colorrCart" />
+                  </Link>
+                </div>
                 <div className="linkLi">
                   <Link
                     to="/cart"

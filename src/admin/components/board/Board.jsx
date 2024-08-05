@@ -172,7 +172,7 @@ const Board = () => {
                   <div className="menu-box four">
                     <div>
                       <IoDocumentText className="iconGad gone4" />
-                      <p>Pending</p>
+                      <div>Pending</div>
                     </div>
                     <h2>{pending}</h2>
                     <Link to="/order/pending" className="txtcol">
@@ -182,7 +182,7 @@ const Board = () => {
                   <div className="menu-box three">
                     <div>
                       <IoDocumentText className="iconGad gone3" />
-                      <p>Process</p>
+                      <div>Process</div>
                     </div>
                     <h2>{processing}</h2>
                     <Link to="/order/processing" className="txtcol">
@@ -192,17 +192,17 @@ const Board = () => {
                   <div className="menu-box one">
                     <div>
                       <IoDocumentText className="iconGad gone1" />
-                      <p>Shipped</p>
+                      <div>Shipped</div>
                     </div>
                     <h2>{shipped}</h2>
                     <Link to="/order/shipped" className="txtcol">
-                      View More
+                      <p>View More</p>
                     </Link>
                   </div>
                   <div className="menu-box two">
                     <div>
                       <IoDocumentText className="iconGad gone2" />
-                      <p> Delivered</p>
+                      <div> Delivered</div>
                     </div>
                     <h2>{delivered}</h2>
                     <Link to="/order/delivered" className="txtcol">
