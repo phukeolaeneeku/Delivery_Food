@@ -45,6 +45,7 @@ import { CartProvider } from "./components/cart/CartContext";
 import TableHotel from "./admin/components/tableManagement/TableHotel";
 import AddHotel from "./admin/components/tableManagement/AddHotel";
 import Edit from "./admin/components/tableManagement/Edit";
+import AddCategory from "./admin/components/products/AddCategory";
 
 
 
@@ -102,6 +103,7 @@ function App() {
           <Route path="/table-hotel" Component={TableHotel} />
           <Route path="/add-hotel" Component={AddHotel} />
           <Route path="/edit-hotel" Component={Edit} />
+          <Route path="/add-category" Component={AddCategory} />
           
         </Routes>
       </Router>

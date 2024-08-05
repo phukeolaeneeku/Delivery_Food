@@ -718,6 +718,10 @@ const Product_Admin = () => {
               <span className="spennofStyleadmin"></span>Product
             </h1>
             <div className="categoryBoxfilers">
+              <Link to="/add-category" className="box_add_products">
+                <BiPlus id="icon_add_product" />
+                <div>Add Category</div>
+              </Link>
               <Link to="/addproduct-admin" className="box_add_products">
                 <BiPlus id="icon_add_product" />
                 <div>Add Product</div>
@@ -798,7 +802,7 @@ const Product_Admin = () => {
                       <CiCamera id="iconCamera_category" />
                     </div>
                     <div className="box_icon_MdOutlineEdit">
-                      <p>{category.name}</p>
+                      <div>{category.name}</div>
                       <div
                         className="box_MdOutlineEdit"
                         onClick={() => {
