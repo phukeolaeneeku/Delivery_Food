@@ -41,7 +41,7 @@ const TableHotel = () => {
       <div className="conainer_hotel">
         <div className="container_from">
           <div className="txtAddButton">
-            <h2>Table</h2>
+            <h2>Hotels</h2>
             <Link to="/add-hotel" className="btn_addtable">
               <BiPlus id="icon_BiPlus" />
               Add Hotel

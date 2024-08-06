@@ -197,7 +197,7 @@ const AdminMenu = () => {
             </NavLink>
             <NavLink to="/table-hotel" className="link">
               <CiViewTable />
-              <div>Tables</div>
+              <div>Hotels</div>
             </NavLink>
 
             <div onClick={() => setShowConfirmation(true)} className="link">

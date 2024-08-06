@@ -37,7 +37,7 @@ const Product_Admin = () => {
 
   const MySwal = withReactContent(Swal);
 
-  // console.log("goods_list...", goods_list);
+  console.log("categories...", categories);
 
   useEffect(() => {
     const extractedNames = data_array.map((item) => item.name);
@@ -792,6 +792,9 @@ const Product_Admin = () => {
                   <div className="box_contact_category" key={index}>
                     <div className="img">
                       <img src={category.image} alt="img" />
+                    </div>
+                    <div className="deleteBox_productconotents">
+                      <AiOutlineDelete />
                     </div>
                     <div
                       className="ChooseImage_category"
