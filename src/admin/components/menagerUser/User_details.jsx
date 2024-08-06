@@ -84,13 +84,13 @@ const User_details = () => {
         <div className="goback">
           <Link to="/users" className="box_guopIconbAck">
             <FaAngleLeft id="box_icon_Back" />
-            <p>Back</p>
+            <div>Back</div>
           </Link>
         </div>
         <div className="box_addAdmin">
           <form>
             <div className="addAdminForm">
-              <h3>User Details</h3>
+              <h2>User Details</h2>
               <div
                 className="del-update"
                 onClick={() => {
@@ -108,7 +108,7 @@ const User_details = () => {
                 <div className="boxiconnandinput">
                   <LuUser className="iconinput" />
                   <div className="input">
-                    <p>{user.id}</p>
+                    <div>{user.id}</div>
                   </div>
                 </div>
               </div>
@@ -119,7 +119,7 @@ const User_details = () => {
                 <div className="boxiconnandinput">
                   <LuUser className="iconinput" />
                   <div className="input">
-                    <p>{user.nickname}</p>
+                    <div>{user.nickname}</div>
                   </div>
                 </div>
               </div>
@@ -131,7 +131,7 @@ const User_details = () => {
                 <div className="boxiconnandinput">
                   <MdOutlineEmail className="iconinput" />
                   <div className="input">
-                    <p>{user.email}</p>
+                    <div>{user.email}</div>
                   </div>
                 </div>
               </div>

@@ -302,36 +302,30 @@ const OrderBill = () => {
           </div>
           <hr />
           <div className="abillGopBox">
-            <table>
-              <thead>
-                <tr>
-                  <th>Product Name</th>
-                  <th>Price</th>
-                  <th>Amount</th>
-                  {/* <th>Type of menu</th> */}
-                  <th>Type of water</th>
-                </tr>
-              </thead>
+            <div className="box_table">
+              <div className="txtHeader">
+                <div className="Header">Product Name</div>
+                <div className="Header">Price</div>
+                <div className="Header">Amount</div>
+                <div className="Header">water</div>
+              </div>
               {order_list.items &&
                 order_list.items.map((item) => (
-                  <tbody key={item.id}>
-                    <tr>
-                      <td>{item.product.name}</td>
-                      <td>
+                  <div className="txtHeader" key={item.id}>
+                      <div className="txt_Des">{item.product.name}</div>
+                      <div className="txt_Des">
                         $
                         {parseFloat(item.price).toLocaleString("en-US", {
                           minimumFractionDigits: 0,
                           maximumFractionDigits: 0,
                           useGrouping: true,
                         })}
-                      </td>
-                      <td>{item.quantity}</td>
-                      {/* <td>{item.color}</td> */}
-                      <td>{item.size}</td>
-                    </tr>
-                  </tbody>
+                      </div>
+                      <div className="txt_Des">{item.quantity}</div>
+                      <div className="txt_Des">{item.size}</div>
+                  </div>
                 ))}
-            </table>
+            </div>
           </div>
           <hr />
           <div className="box_container_total_txt">

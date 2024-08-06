@@ -110,8 +110,6 @@ const Bill = () => {
     printWindow.print();
     printWindow.close();
   };
- 
-  
 
   if (!order_list) {
     return (
@@ -135,7 +133,6 @@ const Bill = () => {
       (acc, item) => acc + item.price * item.quantity,
       0
     ) || 0;
-  
 
   return (
     <>
@@ -153,7 +150,7 @@ const Bill = () => {
           <Header />
           <div className="bill">
             <div className="box_containner_FiPrinter">
-              <FiPrinter id="FiPrinter" onClick={handlePrintBill}/>
+              <FiPrinter id="FiPrinter" onClick={handlePrintBill} />
             </div>
 
             <div className="bill-detial">
@@ -166,29 +163,27 @@ const Bill = () => {
                 </div>
               </div>
               <div className="billGopBox">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Product</th>
-                      <th>Price</th>
-                      <th>Amount</th>
-                      <th>Water</th>
-                      {order_list.status === "Delivered" && <th>Review</th>}
-                    </tr>
-                  </thead>
-                  <tbody>
+                <div className="box_table">
+                  <div className="txtHeader">
+                    <div className="Header">Product</div>
+                    <div className="Header">Price</div>
+                    <div className="Header">Amount</div>
+                    <div className="Header">Water</div>
+                    {order_list.status === "Delivered" && <div className="Header">Review</div>}
+                  </div>
+                  <div>
                     {order_list.items?.map((item, index) => (
-                      <tr key={index}>
-                        <td>{item.product.name}</td>
-                        <td>
+                      <div className="txtHeader" key={index}>
+                        <div className="txt_Des">{item.product.name}</div>
+                        <div className="txt_Des">
                           {parseFloat(item.price).toLocaleString("en-US", {
                             minimumFractionDigits: 0,
                             maximumFractionDigits: 0,
                             useGrouping: true,
                           })}
-                        </td>
-                        <td>{item.quantity}</td>
-                        <td>{item.size}</td>
+                        </div>
+                        <div className="txt_Des">{item.quantity}</div>
+                        <div className="txt_Des">{item.size}</div>
                         {order_list.status === "Delivered" && (
                           <th>
                             <button
@@ -199,10 +194,10 @@ const Bill = () => {
                             </button>
                           </th>
                         )}
-                      </tr>
+                      </div>
                     ))}
-                  </tbody>
-                </table>
+                  </div>
+                </div>
               </div>
               <p className="box_more_details">
                 More details: {order_list.province}

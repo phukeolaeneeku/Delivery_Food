@@ -9,6 +9,7 @@ import profile from "../../../img/profile.jpg";
 import axios from "axios";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { RotatingLines } from "react-loader-spinner";
 
 const Users = () => {
   const token = localStorage.getItem("token");
@@ -17,6 +18,7 @@ const Users = () => {
   const [id, setId] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [loading, setLoading] = useState(true); // New loading state
   const itemsPerPage = 4;
   const MySwal = withReactContent(Swal);
 
@@ -49,6 +51,7 @@ const Users = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
+      setLoading(true); // Set loading to true before fetching data
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API}/user/client-users`,
@@ -61,6 +64,8 @@ const Users = () => {
         setUsers(response.data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false); // Set loading to false after data is fetched
       }
     };
 
@@ -69,10 +74,7 @@ const Users = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(
-        `${import.meta.env.VITE_API}/user/client-users/${id}`
-      );
-      // alert("Delete user successful.");
+      await axios.delete(`${import.meta.env.VITE_API}/user/client-users/${id}`);
       MySwal.fire({
         text: "Delete user successful.",
         icon: "success",
@@ -88,8 +90,7 @@ const Users = () => {
   const handlePageChange = (page) => setCurrentPage(page);
   const nextPage = () =>
     setCurrentPage((prev) => (prev === totalPages ? totalPages : prev + 1));
-  const prevPage = () =>
-    setCurrentPage((prev) => (prev === 1 ? 1 : prev - 1));
+  const prevPage = () => setCurrentPage((prev) => (prev === 1 ? 1 : prev - 1));
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentUsers = users.slice(startIndex, startIndex + itemsPerPage);
@@ -102,17 +103,23 @@ const Users = () => {
         <div className="container_box_adminusers">
           <div className="box_users">
             <h2>Users</h2>
-            {/* <form className="search">
-              <div className="search-box_menageruser">
-                <input type="text" placeholder="Search ..." />
-                <button type="submit">
-                  <IoSearchOutline />
-                </button>
-              </div>
-            </form> */}
           </div>
 
-          {users.length === 0 ? (
+          {loading ? (
+            <div className="box_Orderpage_RotatingLines">
+              <RotatingLines
+                visible={true}
+                height="45"
+                width="45"
+                color="grey"
+                strokeWidth="5"
+                animationDuration="0.75"
+                ariaLabel="rotating-lines-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            </div>
+          ) : users.length === 0 ? (
             <p className="no-reviews-message">No Users</p>
           ) : (
             currentUsers.map((user, index) => (
