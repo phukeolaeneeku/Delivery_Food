@@ -1,48 +1,101 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useRef } from "react";
 import AdminMenu from "../adminMenu/AdminMenu";
 import "./category.css";
 import imageicon from "../../../img/imageicon.jpg";
 import { CiCamera } from "react-icons/ci";
-import axios from 'axios';
+import axios from "axios";
+import Swal from "sweetalert2"; // Assuming you're using SweetAlert2 for notifications
 
 const AddCategory = () => {
-  const [categories, set_categories] = useState();
+  const [categories, setCategories] = useState({
+    name: "", 
+    image: null,
+  });
+
   const [selectedImage, setSelectedImage] = useState(null);
-  const fileInputRef = React.createRef();
+  const fileInputRef = useRef(null);
 
   const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setSelectedImage(URL.createObjectURL(file));
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      const imageUrl = URL.createObjectURL(file);
+      setSelectedImage(imageUrl);
+      setCategories((prevState) => ({
+        ...prevState,
+        image: file,
+      }));
     }
   };
 
   const handleCameraClick = () => {
-    fileInputRef.current.click();
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
 
-  useEffect(() => {
-    const submitCategory = async () => {
-      const formData = new FormData();
-      formData.append('name', 'kk2');
-      formData.append('image', selectedImage);
+  const handleCategoryName = (e) => {
+    const value = e.target.value;
+    setCategories((prevState) => ({
+      ...prevState,
+      name: value,
+    }));
+  };
 
-      try {
-        const response = await axios.post('http://43.201.158.188:8000/store/categories', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        console.log(JSON.stringify(response.data));
-      } catch (error) {
-        console.error('Error uploading category:', error);
-      }
-    };
-
-    if (selectedImage) {
-      submitCategory();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    if (categories.name.trim() === "") {
+      Swal.fire({
+        text: "Please enter a category name!",
+        icon: "question",
+      });
+      return;
     }
-  }, [selectedImage]);
+  
+    const data = new FormData();
+    data.append("name", categories.name);
+    data.append("image", categories.image);
+  
+    // Log the form data to check what is being sent
+    for (let [key, value] of data.entries()) {
+      console.log(`${key}:`, value);
+    }
+  
+    const config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: import.meta.env.VITE_API + `/store/categories`,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      data: data,
+    };
+  
+    axios
+      .request(config)
+      .then((response) => {
+        console.log("Category added:", response.data);
+        setCategories({
+          name: "",
+          image: null,
+        });
+        setSelectedImage(null);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = ""; // Reset file input value
+        }
+        Swal.fire({
+          text: "Category added successfully!",
+          icon: "success",
+        });
+      })
+      .catch((error) => {
+        console.error("Error:", error.response ? error.response.data : error.message);
+        Swal.fire({
+          text: "An error occurred while adding the category.",
+          icon: "error",
+        });
+      });
+  };
 
   return (
     <>
@@ -52,33 +105,40 @@ const AddCategory = () => {
           <div className="Box_btn_haed">
             <h2>Add Category</h2>
             <div className="btn_submit">
-              <button type="submit" onClick={handleSubmit}>Post Category</button>
+              <button type="submit" onClick={handleSubmit}>
+                Post Category
+              </button>
             </div>
           </div>
 
           <div className="group_container_category">
             <div className="Category_box_content">
-              <div className="box_input-img">
+              <div className="box_input-img_category">
                 <img src={selectedImage || imageicon} alt="category" />
-                <input 
-                  type="file" 
-                  style={{ display: "none" }} 
-                  ref={fileInputRef} 
-                  onChange={handleImageChange} 
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  onChange={handleImageChange}
+                  ref={fileInputRef}
                 />
               </div>
 
               <div className="edit_images">
-                <label className="trigger_popup_fricc" onClick={handleCameraClick}>
+                <label
+                  className="trigger_popup_fricc"
+                  onClick={handleCameraClick}
+                >
                   <CiCamera id="icon_ci_camera" />
                 </label>
               </div>
               <div className="box_container_image">
                 <div className="input-box">
                   <div className="box">
-                    <input
-                      type="text"
-                      placeholder="Category name..."
+                    <input 
+                      type="text" 
+                      value={categories.name || ""}
+                      onChange={handleCategoryName}
+                      placeholder="Category name..." 
                     />
                   </div>
                 </div>

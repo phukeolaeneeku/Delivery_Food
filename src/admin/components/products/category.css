@@ -78,14 +78,14 @@
     cursor: pointer;
 }
 
-.box_input-img {
+.box_input-img_category {
     position: relative;
     cursor: pointer;
     width: 300px;
     height: 38vh;
     overflow: hidden;
 }
-.box_input-img img{
+.box_input-img_category img{
     position: relative;
     cursor: pointer;
     width: 100%;
@@ -93,7 +93,7 @@
     object-fit: cover;
 }
 
-.box_input-img input {
+.box_input-img_category input {
     display: none;
 }
 

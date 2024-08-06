@@ -36,8 +36,7 @@ const Product_Admin = () => {
   const [currentColor, setCurrentColor] = useState("");
 
   const MySwal = withReactContent(Swal);
-
-  console.log("categories...", categories);
+  // console.log(categories)
 
   useEffect(() => {
     const extractedNames = data_array.map((item) => item.name);
@@ -378,7 +377,7 @@ const Product_Admin = () => {
   // console.log(id);
   // console.log(data);
 
-  /////////////////////handleDelete
+  /////////////////////handleDelete Product ////////
   const handleDelete = (id) => {
     console.log(id);
     let data = JSON.stringify({
@@ -407,6 +406,28 @@ const Product_Admin = () => {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  /////////////////////handleDelete Category ////////
+  const handleDeleteCategory = (id) => {
+    let config = {
+      method: 'delete',
+      maxBodyLength: Infinity,
+      url: import.meta.env.VITE_API + `/store/categories/${id}`,
+      headers: { }
+    };
+    
+    axios.request(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+      MySwal.fire({
+        text: "Successful delete the category.",
+        icon: "success",
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   };
 
   // Submit button
@@ -793,7 +814,7 @@ const Product_Admin = () => {
                     <div className="img">
                       <img src={category.image} alt="img" />
                     </div>
-                    <div className="deleteBox_productconotents">
+                    <div className="deleteBox_productconotents"  onClick={() => handleDeleteCategory(category.id)}>
                       <AiOutlineDelete />
                     </div>
                     <div
