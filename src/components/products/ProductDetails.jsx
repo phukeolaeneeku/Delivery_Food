@@ -361,9 +361,9 @@ function ProductDetails() {
                       <img src={product.images} alt="image" />
                     </div>
                     <div className="txtContentproduct">
-                      <h1 className="txt_nameP">{product.name}</h1>
-                      <p className="money_txt">$ {product.format_price}</p>
-
+                      <h1 className="txt_nameP"> {product.name}</h1>
+                      <p className="money_txt">Price: ${product.format_price}</p>
+                      <p className="money_txt">Quantity: {product.quantity}</p>
                       {/* <p className="txt_description">{product.description}</p>
 
                       <div className="star">

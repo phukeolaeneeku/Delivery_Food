@@ -30,11 +30,12 @@ const AddProduct = () => {
   const [products, setProducts] = useState([
     {
       name: "",
-      description: "",
+      description: "0",
       price: "",
       category: "",
+      quantity: "",
       sizes: [],
-      colors: [],
+      colors: [0],
       images: [],
       imagePreview: "",
     },
@@ -121,10 +122,10 @@ const AddProduct = () => {
     setProducts(updatedProducts);
   };
 
-  const handleProductDescription = (e, index) => {
+  const handleProductQuantity = (e, index) => {
     const value = e.target.value;
     const updatedProducts = [...products];
-    updatedProducts[index].description = value;
+    updatedProducts[index].quantity = value;
     setProducts(updatedProducts);
   };
 
@@ -150,9 +151,10 @@ const AddProduct = () => {
       ...products,
       {
         name: "",
-        description: "",
+        description: "0",
         price: "",
         category: "",
+        quantity: "",
         sizes: [],
         colors: [0],
         images: [],
@@ -344,9 +346,9 @@ const AddProduct = () => {
                       <div className="box">
                         <input
                           type="text"
-                          placeholder="Amount..."
-                          value={product.description }
-                          onChange={(e) => handleProductDescription(e, index)}
+                          placeholder="Quantity..."
+                          value={product.quantity }
+                          onChange={(e) => handleProductQuantity(e, index)}
                           required
                         />
                       </div>

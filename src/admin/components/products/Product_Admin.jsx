@@ -35,6 +35,8 @@ const Product_Admin = () => {
   const [currentSize, setCurrentSize] = useState("");
   const [currentColor, setCurrentColor] = useState("");
 
+  console.log("goods_list....", goods_list)
+
   const MySwal = withReactContent(Swal);
   // console.log(categories)
 
@@ -100,6 +102,7 @@ const Product_Admin = () => {
   const [isConfirmationPopupOpenCategory, setConfirmationPopupOpenCategory] =
     useState(false);
   const [isConfirmationDesc, setConfirmationDesc] = useState(false);
+  const [isConfirmationQuantity, setConfirmationQuantity] = useState(false);
   const [isConfirmationSize, setConfirmationSize] = useState(false);
   const [isConfirmationColor, setConfirmationColor] = useState(false);
   const [isConfirmationPopupOpenImage, setConfirmationPopupOpenImage] =
@@ -291,12 +294,23 @@ const Product_Admin = () => {
     set_id(id);
     setConfirmationDesc(true);
   };
+  const openConfirmationQuantity = (id) => {
+    // setUpdateProductId(productID.price);
+    set_id(id);
+    setConfirmationQuantity(true);
+  };
 
   const closeConfirmationDesc = () => {
     // setUpdateProductId(null);
     set_data(null);
     set_id(null);
     setConfirmationDesc(false);
+  };
+  const closeConfirmationQuantity = () => {
+    // setUpdateProductId(null);
+    set_data(null);
+    set_id(null);
+    setConfirmationQuantity(false);
   };
 
   ///// onClick icon edit product Size
@@ -633,9 +647,9 @@ const Product_Admin = () => {
       .catch((error) => console.error(error));
   };
 
-  const ChangeProductDescription = () => {
+  const ChangeProductQuantity = () => {
     const formdata = new FormData();
-    formdata.append("description", data);
+    formdata.append("quantity", data);
 
     const requestOptions = {
       method: "PATCH",
@@ -650,12 +664,12 @@ const Product_Admin = () => {
       .then((response) => response.json())
       .then((result) => {
         console.log(result);
-        setConfirmationDesc(false);
+        setConfirmationQuantity(false);
         set_data(null);
         set_id(null);
 
         MySwal.fire({
-          text: "Product amount has been change.",
+          text: "Product quantity has been change.",
           icon: "success",
         });
       })
@@ -1068,9 +1082,9 @@ const Product_Admin = () => {
                     </div>
                     <div
                       className="box_icon_MdOutlineEdit"
-                      onClick={() => openConfirmationDesc(product.id)}
+                      onClick={() => openConfirmationQuantity(product.id)}
                     >
-                      <li>Amount: {product.description}</li>
+                      <li>Quantity: {product.quantity}</li>
                       <MdOutlineEdit id="icon_edit" />
                     </div>
 
@@ -1150,14 +1164,14 @@ const Product_Admin = () => {
                         </div>
                       </div>
                     )}
-                    {isConfirmationDesc && (
+                    {isConfirmationQuantity && (
                       <div className="background_addproductpopup_box">
                         <div className="hover_addproductpopup_box">
                           <div className="box_input">
-                            <p>Edit product amount</p>
+                            <p>Edit product quantity</p>
                             <input
                               type="text"
-                              placeholder="Amount..."
+                              placeholder="Quantity..."
                               className="input_of_txtAddproduct"
                               value={data}
                               onChange={(e) => {
@@ -1168,14 +1182,14 @@ const Product_Admin = () => {
                           <div className="btn_foasdf">
                             <button
                               className="btn_cancel btn_addproducttxt_popup"
-                              onClick={closeConfirmationDesc}
+                              onClick={closeConfirmationQuantity}
                             >
                               Cancel
                             </button>
                             <button
                               className="btn_confirm btn_addproducttxt_popup"
                               onClick={() => {
-                                ChangeProductDescription();
+                                ChangeProductQuantity();
                               }}
                             >
                               Update

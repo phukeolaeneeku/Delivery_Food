@@ -25,7 +25,7 @@ const Payment = ({ orders, order_from, onPay }) => {
   const [copied, setCopied] = useState(false);
   const MySwal = withReactContent(Swal);
   const [paymentMethod, setPaymentMethod] = useState("");
-  const usdToKrw = 15.00;
+  const usdToKrw = 15.0;
 
   var user_id = null;
   if (localStorage.getItem("user")) {
@@ -171,13 +171,6 @@ const Payment = ({ orders, order_from, onPay }) => {
       });
       return;
     }
-    // if (!account_name) {
-    //   MySwal.fire({
-    //     text: "Please add the account name!",
-    //     icon: "question",
-    //   });
-    //   return;
-    // }
 
     const products = orders.flatMap((order) =>
       order.items.map((item) => ({
@@ -185,7 +178,7 @@ const Payment = ({ orders, order_from, onPay }) => {
         quantity: item.quantity,
         price: item.price,
         color: item.color,
-        size: item.size || '0',
+        size: item.size || "0",
       }))
     );
 
@@ -216,8 +209,6 @@ const Payment = ({ orders, order_from, onPay }) => {
     axios
       .request(config)
       .then((response) => {
-        console.log("response...")
-        console.log("response...", response.data.items)
         MySwal.fire({
           text: "The order has been completed.",
           icon: "success",
@@ -237,13 +228,27 @@ const Payment = ({ orders, order_from, onPay }) => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        if (error.response) {
+          const quantity = error.response.data?.quantity;
+          console.log("Quantity:", quantity); // Debugging line
+          console.log("Status:", error.response.status); // Debugging line
+
+          if (error.response.status === 400) {
+            if (quantity === 0) {
+              MySwal.fire({
+                text: "The product is out of stock!",
+                icon: "info",
+              });
+            } else {
+              MySwal.fire({
+                text: "The product is still not enough.",
+                icon: "warning",
+              });
+            }
+          }
+        }
       });
   };
-
-
-
-
 
   return (
     <>
@@ -256,7 +261,7 @@ const Payment = ({ orders, order_from, onPay }) => {
           {orders.map((product, index) => (
             <div key={index}>
               {product.items.map((item, itemIndex) => (
-                <div className="box_item_gourp" key={item.id}>
+                <div className="box_item_gourp" key={itemIndex}>
                   <div className="box_item_images">
                     <img src={item.images} alt="" />
                     <div className="box_item_text_payment">
@@ -266,7 +271,7 @@ const Payment = ({ orders, order_from, onPay }) => {
                       ):(
                         <p></p>
                       )} */}
-                      
+
                       <p>
                         Price: $
                         {parseFloat(item.price).toLocaleString("en-US", {
@@ -284,8 +289,10 @@ const Payment = ({ orders, order_from, onPay }) => {
                         })}
                       </p>
                       {item.size != 0 ? (
-                        <p className="box_txtFor_PC">Type of water: {item.size}</p>
-                      ):(
+                        <p className="box_txtFor_PC">
+                          Type of water: {item.size}
+                        </p>
+                      ) : (
                         <p></p>
                       )}
                       <textarea
@@ -307,26 +314,28 @@ const Payment = ({ orders, order_from, onPay }) => {
                     </div>
                   </div>
                   {item.size != 0 ? (
-                        <p className="box_txtFor_Mobile">Type of water: {item.size}</p>
-                      ):(
-                        <p></p>
-                      )}
-                      <textarea
-                        type="text"
-                        placeholder="Description..."
-                        className="txt_textarea_description_Mobile"
-                        value={
-                          more[index * product.items.length + itemIndex]
-                            ?.description || ""
-                        }
-                        onChange={(e) =>
-                          handleProvince(
-                            e,
-                            index * product.items.length + itemIndex
-                          )
-                        }
-                      />
-                      <hr className="Line"/>
+                    <p className="box_txtFor_Mobile">
+                      Type of water: {item.size}
+                    </p>
+                  ) : (
+                    <p></p>
+                  )}
+                  <textarea
+                    type="text"
+                    placeholder="Description..."
+                    className="txt_textarea_description_Mobile"
+                    value={
+                      more[index * product.items.length + itemIndex]
+                        ?.description || ""
+                    }
+                    onChange={(e) =>
+                      handleProvince(
+                        e,
+                        index * product.items.length + itemIndex
+                      )
+                    }
+                  />
+                  <hr className="Line" />
                 </div>
               ))}
             </div>
@@ -489,11 +498,14 @@ const Payment = ({ orders, order_from, onPay }) => {
                     <span>
                       {" "}
                       ₩{" "}
-                      {parseFloat(totalPrice * usdToKrw).toLocaleString("en-US", {
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 0,
-                        useGrouping: true,
-                      })}
+                      {parseFloat(totalPrice * usdToKrw).toLocaleString(
+                        "en-US",
+                        {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                          useGrouping: true,
+                        }
+                      )}
                     </span>
                   </p>
                 </>
