@@ -216,6 +216,8 @@ const Payment = ({ orders, order_from, onPay }) => {
     axios
       .request(config)
       .then((response) => {
+        console.log("response...")
+        console.log("response...", response.data.items)
         MySwal.fire({
           text: "The order has been completed.",
           icon: "success",
