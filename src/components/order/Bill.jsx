@@ -185,14 +185,14 @@ const Bill = () => {
                         <div className="txt_Des">{item.quantity}</div>
                         <div className="txt_Des">{item.size}</div>
                         {order_list.status === "Delivered" && (
-                          <th>
+                          <div className="Header">
                             <button
                               className="Delivered_review"
                               onClick={() => handleReview(item.product.id)}
                             >
                               Review
                             </button>
-                          </th>
+                          </div>
                         )}
                       </div>
                     ))}
