@@ -8,34 +8,18 @@ import QRCode from "qrcode.react";
 import axios from "axios";
 
 const TableHotel = () => {
-  const [selectedTableId, setSelectedTableId] = useState(null);
   const [hotel, setHotel] = useState([]);
 
-  // const handleClickHotel = (id) => {
-  //   setSelectedTableId(id);
-  //   const qrCodeValue = `https://example.com/hotel/${id}`;
-  //   Swal.fire({
-  //     title: `QR Code for Hotel ${id}`,
-  //     html: (
-  //       <QRCode value={qrCodeValue} size={200} />
-  //     ),
-  //     showCloseButton: true,
-  //     // showCancelButton: true,
-  //     confirmButtonText: "Close",
-  //     // cancelButtonText: "Download",
-  //   }).then((result) => {
-  //     if (result.dismiss === Swal.DismissReason.cancel) {
-  //       const canvas = document.querySelector("canvas");
-  //       const url = canvas.toDataURL("image/png");
-  //       const link = document.createElement("a");
-  //       link.href = url;
-  //       link.download = `qrcode-table-${id}.png`;
-  //       link.click();
-  //     }
-  //   });
-  // };
+  const handleClickHotel = (id, qr_code) => {
+    Swal.fire({
+      title: `QR Code for Hotel ${id}`,
+      html: `<img src="${qr_code}" alt="QR Code" style="max-width: 80%; height: auto;" />`,
+      showCloseButton: true,
+      confirmButtonText: "Close",
+    });
+  };
 
-  console.log("hotel...", hotel)
+  // console.log("hotel...", hotel)
 
   useEffect(() =>{
     fatchHotel()
@@ -74,7 +58,7 @@ const TableHotel = () => {
         let config = {
           method: 'delete',
           maxBodyLength: Infinity,
-          url: `http://43.201.158.188:8000/store/hotel-qr/${id}`,
+          url: import.meta.env.VITE_API + `/store/hotel-qr/${id}`,
           headers: { }
         };
         
@@ -90,15 +74,7 @@ const TableHotel = () => {
         })
         .catch((error) => {
           console.log(error);
-        });
-
-        // const newData = hotel.filter((_, i) => i !== index);
-        // setHotel(newData);
-
-        // alert("Deleted")
-        
-
-        
+        }); 
       }
     });
   };
@@ -123,7 +99,6 @@ const TableHotel = () => {
                 <th className="thTdStyle">Hotel name</th>
                 <th className="thTdStyle">Address</th>
                 <th className="thTdStyle">Room_number</th>
-                {/* <th className="thTdStyle">QRCode</th> */}
                 <th className="thTdStyle">Actions</th>
               </tr>
             </thead>
@@ -131,10 +106,9 @@ const TableHotel = () => {
               {hotel.map((hotel, index) => (
                 <tr key={index} >
                   <td className="thTdStyle">{hotel.id}</td>
-                  <td className="thTdStyle" onClick={() => handleClickHotel(hotel.id)}>{hotel.hotel}</td>
+                  <td className="thTdStyle" onClick={() => handleClickHotel(hotel.id, hotel.qr_code)}>{hotel.hotel}</td>
                   <td className="thTdStyle">{hotel.address}</td>
                   <td className="thTdStyle">{hotel.room_number}</td>
-                  {/* <td className="thTdStyle"><img src={hotel.qr_code} alt="" /></td> */}
                   
                   <td className="thTdStyle">
                     <Link to="/edit-hotel" className="buttonStyle">
