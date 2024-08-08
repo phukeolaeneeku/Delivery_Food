@@ -102,7 +102,7 @@ function App() {
           <Route path="/add-payment-store" Component={AddPaymentStore} />
           <Route path="/table-hotel" Component={TableHotel} />
           <Route path="/add-hotel" Component={AddHotel} />
-          <Route path="/edit-hotel" Component={Edit} />
+          <Route path="/edit-hotel/:id" Component={Edit} />
           <Route path="/add-category" Component={AddCategory} />
           
         </Routes>

@@ -111,7 +111,7 @@ const TableHotel = () => {
                   <td className="thTdStyle">{hotel.room_number}</td>
                   
                   <td className="thTdStyle">
-                    <Link to="/edit-hotel" className="buttonStyle">
+                    <Link to={`/edit-hotel/${hotel.id}`} className="buttonStyle">
                       Edit
                     </Link>
                     <button
