@@ -2,7 +2,7 @@ import "./menu.css";
 import { Link, useLocation } from "react-router-dom";
 import QRCode_delivery from "../../img/QRCode_delivery.png";
 import Logo1 from "../../img/Logo1.png";
-import { FaCartShopping } from "react-icons/fa6";
+import { FaRegUser } from "react-icons/fa6";
 import { HiOutlineHome } from "react-icons/hi";
 import { BsShop, BsClipboardCheck } from "react-icons/bs";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
@@ -88,18 +88,6 @@ const Menu = () => {
           </span>
           <span>Home</span>
         </Link>
-        {/* <Link
-          to="#"
-          className={
-            location.pathname === "/chats" ? "box-menu active" : "box-menu"
-          }
-          onClick={() => handleMenuClick("/chats")}
-        >
-          <span className="iconMenuSpan">
-            <IoChatbubbleEllipsesOutline />
-          </span>
-          <span>Chat</span>
-        </Link> */}
         <Link
           to="/order"
           className={
@@ -124,30 +112,35 @@ const Menu = () => {
           </span>
           <span>Cart</span>
         </Link>
-        {/* <Link
-          to="/contact"
-          className={
-            location.pathname === "/contact" ? "box-menu active" : "box-menu"
-          }
-          onClick={() => handleMenuClick("/contact")}
-        >
-          <span className="iconMenuSpan">
-            <GrContact />
-          </span>
-          <span>Contact</span>
-        </Link> */}
         <Link
           to="https://www.kakaocorp.com/page/service/service/KakaoTalk?lang=en"
           className={
-            location.pathname === "https://www.kakaocorp.com/page/service/service/KakaoTalk?lang=en" ? "box-menu active" : "box-menu"
+            location.pathname ===
+            "https://www.kakaocorp.com/page/service/service/KakaoTalk?lang=en"
+              ? "box-menu active"
+              : "box-menu"
           }
-          onClick={() => handleMenuClick("https://www.kakaocorp.com/page/service/service/KakaoTalk?lang=en")}
+          onClick={() =>
+            handleMenuClick(
+              "https://www.kakaocorp.com/page/service/service/KakaoTalk?lang=en"
+            )
+          }
         >
           <span className="iconMenuSpan">
             <GrContact />
           </span>
 
           <span>Kakao</span>
+        </Link>
+
+        <Link
+          to="/more"
+          className={location.pathname === "/more" ? "box-menu active" : "box-menu"}
+        >
+          <span className="iconMenuSpan">
+            <FaRegUser />
+          </span>
+          <span>User</span>
         </Link>
       </div>
     </section>

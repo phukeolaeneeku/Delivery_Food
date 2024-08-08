@@ -46,6 +46,9 @@ import TableHotel from "./admin/components/tableManagement/TableHotel";
 import AddHotel from "./admin/components/tableManagement/AddHotel";
 import Edit from "./admin/components/tableManagement/Edit";
 import AddCategory from "./admin/components/products/AddCategory";
+import WebInfo from "./admin/components/managementInfo/WebInfo";
+import AddInfo from "./admin/components/managementInfo/AddInfo";
+import EditInfo from "./admin/components/managementInfo/EditInfo"
 
 
 
@@ -104,6 +107,9 @@ function App() {
           <Route path="/add-hotel" Component={AddHotel} />
           <Route path="/edit-hotel/:id" Component={Edit} />
           <Route path="/add-category" Component={AddCategory} />
+          <Route path="/info" Component={WebInfo} />
+          <Route path="/add-info" Component={AddInfo} />
+          <Route path="/edit-info" Component={EditInfo} />
           
         </Routes>
       </Router>

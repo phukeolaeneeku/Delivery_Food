@@ -17,6 +17,7 @@ import { CiBank } from "react-icons/ci";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { CiViewTable } from "react-icons/ci";
+import { CiSquareInfo } from "react-icons/ci";
 
 const AdminMenu = () => {
   const token = localStorage.getItem("token");
@@ -194,6 +195,10 @@ const AdminMenu = () => {
             <NavLink to="/payment-store" className="link">
               <CiBank />
               <div>Bank</div>
+            </NavLink>
+            <NavLink to="/info" className="link">
+              <CiSquareInfo />
+              <div>Info</div>
             </NavLink>
             <NavLink to="/table-hotel" className="link">
               <CiViewTable />

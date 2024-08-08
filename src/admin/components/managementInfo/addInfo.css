@@ -1,22 +1,25 @@
-.container_from_hotel{
+.container_from_info{
     width: 90%;
     z-index: 999;
     margin: auto;
     padding: 140px 20px 20px 250px;
 }
-.container_from{
-    width: 100%;
+
+.box_container_from{
+    width: 90%;
     height: auto;
+    margin: auto;
     margin-top: 1rem;
     padding: 30px 20px 20px 20px;
     background: #FFF;
     box-shadow: 0 2px 6px 0 rgba(67, 89, 113, 0.15);
     border-radius: 10px;
 }
-.container_from h4{
+.box_container_from h4{
     font-size: 18px;
     margin-bottom: 2rem;
 }
+
 .inputStyle {
     width: 100%;
     padding: 10px;
@@ -24,8 +27,8 @@
     border-radius: 5px;
     box-sizing: border-box;
 }
-  
-.BoxSubmit {
+
+.Btn_BoxSubmit {
     background-color: #FF4F16;
     color: white;
     padding: 12px 20px;
@@ -37,7 +40,6 @@
     font-size: 16px;
 }
   
-.BoxSubmit:hover {
+.Btn_BoxSubmit:hover {
     background-color: #f04b14;
 }
-  

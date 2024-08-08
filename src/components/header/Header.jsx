@@ -204,7 +204,7 @@ const Header = ({ set_category_name }) => {
                       location.pathname === "/more" ? "link active" : "link"
                     }
                   >
-                    <FaRegUser className="head_colorr" />
+                    <FaRegUser className="head_colorrCart" />
                   </Link>
                 </div>
                 {storage.is_admin !== false && (

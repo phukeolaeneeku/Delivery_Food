@@ -1,12 +1,9 @@
-import productImage from "../../img/productImage.png";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect} from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import { HiOutlineBuildingStorefront } from "react-icons/hi2";
-import { FaMagnifyingGlass, FaCartShopping, FaRegUser } from "react-icons/fa6";
-import { AiOutlineDashboard } from "react-icons/ai";
 import Header from "./Header";
 import Banner from "../header/Banner";
+import Menu from "../menuFooter/Menu";
 
 const Search = () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -280,6 +277,7 @@ const Search = () => {
           </button>
         </div>
       </div>
+      <Menu/>
     </div>
   );
 };
