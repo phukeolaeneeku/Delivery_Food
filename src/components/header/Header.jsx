@@ -20,7 +20,9 @@ const Header = ({ set_category_name }) => {
   // const [search, setSearch] = useState(
   //   new URLSearchParams(window.location.search).get("search")
   // );
-  const [search, setSearch] = useState(new URLSearchParams(window.location.search).get("search") || "");
+  const [search, setSearch] = useState(
+    new URLSearchParams(window.location.search).get("search") || ""
+  );
   var store_id = false;
   var is_admin = false;
   if (localStorage.getItem("user")) {
@@ -91,12 +93,33 @@ const Header = ({ set_category_name }) => {
     set_category_name("");
   };
 
-
   const [isLoading, setIsLoading] = useState(true);
 
   const handleImageLoad = () => {
     setIsLoading(false);
   };
+
+  // useEffect(() => {
+  //   const script = document.createElement("script");
+  //   script.src =
+  //     "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+  //   script.async = false;
+  //   document.body.appendChild(script);
+
+  //   window.googleTranslateElementInit = googleTranslateElementInit;
+  // }, []);
+
+  // function googleTranslateElementInit() {
+  //   new google.translate.TranslateElement(
+  //     {
+  //       pageLanguage: "en",
+  //       includedLanguages: "en,ko,lo",
+  //       layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+  //       autoDisplay: false,
+  //     },
+  //     "google_translate_element"
+  //   );
+  // }
 
   return (
     <section id="header">
@@ -109,19 +132,21 @@ const Header = ({ set_category_name }) => {
               </Link> */}
 
               <Link to="/">
-                {isLoading && <div>
-                  <RotatingLines
-                    visible={true}
-                    height="35"
-                    width="35"
-                    color="Gray"
-                    strokeWidth="5"
-                    animationDuration="0.75"
-                    ariaLabel="rotating-lines-loading"
-                    wrapperStyle={{}}
-                    wrapperClass=""
-                  />  
-                </div>}
+                {isLoading && (
+                  <div>
+                    <RotatingLines
+                      visible={true}
+                      height="35"
+                      width="35"
+                      color="Gray"
+                      strokeWidth="5"
+                      animationDuration="0.75"
+                      ariaLabel="rotating-lines-loading"
+                      wrapperStyle={{}}
+                      wrapperClass=""
+                    />
+                  </div>
+                )}
                 <img
                   src={logo}
                   alt="Logo"
@@ -138,13 +163,10 @@ const Header = ({ set_category_name }) => {
                   onClick={handleProductsAll}
                   className={location.pathname === "/" ? "link active" : "link"}
                 >
-                  Home
+                  집
                 </Link>
-                <Link
-                  to="https://www.kakaocorp.com/page/service/service/KakaoTalk?lang=en"
-                  className="link"
-                >
-                  Chat
+                <Link to="https://open.kakao.com/o/gUkkzsIg" className="link">
+                  카카오톡
                 </Link>
                 <Link
                   to="/order"
@@ -152,7 +174,7 @@ const Header = ({ set_category_name }) => {
                     location.pathname === "/order" ? "link active" : "link"
                   }
                 >
-                  Orders
+                  주문
                 </Link>
               </div>
             </div>
@@ -169,11 +191,13 @@ const Header = ({ set_category_name }) => {
                   type="text"
                   value={search}
                   className="input_search_heaederr"
-                  placeholder="Search..."
+                  placeholder="찾다..."
                   onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
             </form>
+
+            <div id="google_translate_element" className="fixedElement"></div>
 
             {user ? (
               <div className="right_ofHeadBox">
@@ -224,7 +248,7 @@ const Header = ({ set_category_name }) => {
                 </div>
                 <div className="linkLi">
                   <Link to="/loginuser" className="Box_icon_login_BiLogIn">
-                    Login
+                    로그인
                     <BiLogIn id="icon_BiLogIn" />
                   </Link>
                 </div>

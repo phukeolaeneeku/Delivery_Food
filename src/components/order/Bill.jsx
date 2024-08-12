@@ -17,6 +17,7 @@ const Bill = () => {
   const [showReview, setShowReview] = useState(false);
   const [product_id, setProductId] = useState(null);
   const usdToKrw = 15.0;
+  const usdToKIP = 25000;
   const navigate = useNavigate();
 
   const [rating, setRating] = useState(0);
@@ -94,7 +95,7 @@ const Bill = () => {
       );
 
       console.log("Review submitted:", response.data);
-      alert("Review submitted successfully.");
+      alert("리뷰가 성공적으로 제출되었습니다.");
       setRating(0);
       setComment("");
       setShowReview(false); // Close the review form after submission
@@ -156,20 +157,22 @@ const Bill = () => {
             <div className="bill-detial">
               <div className="guopoidHead">
                 <div className="box_containner_txt">
-                  <p>Order ID: {order_list.id}</p>
+                  <p>주문 ID: {order_list.id}</p>
                   <p>
-                    Date: {new Date(order_list.created_at).toLocaleString()}
+                    날짜: {new Date(order_list.created_at).toLocaleString()}
                   </p>
                 </div>
               </div>
               <div className="billGopBox">
                 <div className="box_table">
                   <div className="txtHeader">
-                    <div className="Header">Product</div>
-                    <div className="Header">Price</div>
-                    <div className="Header">Amount</div>
-                    <div className="Header">Water</div>
-                    {order_list.status === "Delivered" && <div className="Header">Review</div>}
+                    <div className="Header">제품</div>
+                    <div className="Header">가격</div>
+                    <div className="Header">양</div>
+                    <div className="Header">물</div>
+                    {order_list.status === "Delivered" && (
+                      <div className="Header">리뷰</div>
+                    )}
                   </div>
                   <div>
                     {order_list.items?.map((item, index) => (
@@ -190,7 +193,7 @@ const Bill = () => {
                               className="Delivered_review"
                               onClick={() => handleReview(item.product.id)}
                             >
-                              Review
+                              리뷰
                             </button>
                           </div>
                         )}
@@ -200,12 +203,12 @@ const Bill = () => {
                 </div>
               </div>
               <p className="box_more_details">
-                More details: {order_list.province}
+                자세한 내용: {order_list.province}
               </p>
               <div className="titlePrice">
-                <h4>Total USD:</h4>
+                <h4>합계 USD:</h4>
                 <p>
-                  $
+                  ${" "}
                   {totalPrice.toLocaleString("en-US", {
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0,
@@ -214,9 +217,20 @@ const Bill = () => {
                 </p>
               </div>
               <div className="titlePrice">
-                <h4>Total KRW:</h4>
+                <h4>합계 KIP:</h4>
                 <p>
-                  ₩
+                  {(totalPrice * usdToKIP).toLocaleString("en-US", {
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                    useGrouping: true,
+                  })}{" "}
+                  KIP
+                </p>
+              </div>
+              <div className="titlePrice">
+                <h4>합계 KRW:</h4>
+                <p>
+                  ₩{" "}
                   {(totalPrice * usdToKrw).toLocaleString("en-US", {
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0,
@@ -227,10 +241,10 @@ const Bill = () => {
 
               <div className="box_place">
                 <div className="place-on">
-                  <p>Payment method: {order_list.account_name}</p>
-                  <p>Contact number: +856{order_list.tel}</p>
-                  <p>Address for delivery: {order_list.district}</p>
-                  <p>Status: {order_list.status}</p>
+                  <p>결제수단: {order_list.account_name}</p>
+                  <p>연락처: +856{order_list.tel}</p>
+                  <p>배송받을 주소: {order_list.district}</p>
+                  <p>지위: {order_list.status}</p>
                 </div>
               </div>
             </div>

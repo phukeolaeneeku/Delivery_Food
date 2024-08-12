@@ -107,21 +107,20 @@
 .cart_Total_box {
     margin: 4rem 0;
 }
-.cart_Total_box h2{
+.cart_Total_box h1{
     font-size: 20px;
-    margin-bottom: 1.5rem;
 }
 
 .box_item_total_text {
     width: 100%;
     display: flex;
-    padding: 0.7rem 1rem;
+    padding: 0.1rem 0.5rem;
     justify-content: space-between;
 }
 
 
 .txt_Total{
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
 }
 

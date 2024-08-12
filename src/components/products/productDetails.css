@@ -181,13 +181,15 @@ body {
     
 }
 .size{
+    width: 100%;
     display: grid;
     gap: 0.5rem;
     grid-template-columns: 1fr 1fr 1fr 1fr ;
 }
 
 .echSize_type {
-
+    width: 115px;
+    text-align: center;
     cursor: pointer;
     padding: 4px 20px;
     border: 1px solid rgba(0, 0, 0, 0.30);
@@ -567,7 +569,7 @@ body {
   }
   
   .rating {
-    font-weight: bold;
+    font-size: 22px;
   }
   
   .comment {

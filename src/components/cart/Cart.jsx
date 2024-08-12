@@ -175,11 +175,11 @@ const Cart = () => {
       0
     );
   };
-  const usdToLAK = 25000;
-  const getTotalPriceForStoreLAK = (store_name) => {
+  const usdToKIP = 25000;
+  const getTotalPriceForStoreKIP = (store_name) => {
     const storeItems = cart.filter((item) => item.store_name === store_name);
     return storeItems.reduce(
-      (total, item) => total + item.price * (item.quantity || 0) * usdToLAK,
+      (total, item) => total + item.price * (item.quantity || 0) * usdToKIP,
       0
     );
   };
@@ -259,9 +259,9 @@ const Cart = () => {
                               <div className="box_item_image">
                                 <img src={item.images} alt="" />
                                 <div className="box_item_text">
-                                  <p>name: {item.name}</p>
+                                  <p>제품명: {item.name}</p>
                                   <p>
-                                    price{": "} $
+                                  가격{": "} $
                                     {parseFloat(item.price).toLocaleString(
                                       "en-US",
                                       {
@@ -286,7 +286,7 @@ const Cart = () => {
                                     <p>Type of menu: {item.color}</p>
                                   )} */}
                                   {item.size != 0 && (
-                                    <p>Type of water: {item.size}</p>
+                                    <p>추가 요청 사항: {item.size}</p>
                                   )}
                                 </div>
                                 <div className="box_icon_order">
@@ -342,18 +342,22 @@ const Cart = () => {
                     </div>
                     <div className="box_item_total">
                       <div className="cart_Total_box">
-                        <h2>Cart Total</h2>
+                        <h1>장바구니 합계</h1>
                         <div className="box_item_total_text">
-                          <p>Quantity:</p>
-                          <p>{getTotalItemForStore(store)} Items</p>
+                          <p>수량:</p>
+                          <p>{getTotalItemForStore(store)} 품목</p>
                         </div>
                         <hr />
                         <div className="box_item_total_text">
-                          <p className="txt_Total">Total: </p>
+                          <p className="txt_Total">합계 USD: </p>
                           <p>$ {getTotalPriceForStore(store).toFixed(2)}</p>
                         </div>
                         <div className="box_item_total_text">
-                          <p className="txt_Total">Total: </p>
+                          <p className="txt_Total">합계 KIP: </p>
+                          <p>{getTotalPriceForStoreKIP(store).toFixed(2)} KIP</p>
+                        </div>
+                        <div className="box_item_total_text">
+                          <p className="txt_Total">합계 KRW: </p>
                           <p>₩ {getTotalPriceForStoreKRW(store).toFixed(2)}</p>
                         </div>
                         <div className="btn">
@@ -363,7 +367,7 @@ const Cart = () => {
                             }}
                             className="checkout_btn"
                           >
-                            Checkout
+                             점검
                           </button>
                         </div>
                       </div>
@@ -380,7 +384,7 @@ const Cart = () => {
             <br />
             <h2 className="box_betavinOfob asd2">
               <span className="spennofStyle" />
-              Shopping
+              더 많은 제품
             </h2>
             <div className="product-area">
               {products_list.map(

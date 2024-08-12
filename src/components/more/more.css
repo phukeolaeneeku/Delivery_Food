@@ -96,7 +96,7 @@ h3{
     color: var(--orange);
     transition: 0.3s;
 }
-.menu_icon:hover .txtP{
+.menu_icon:hover .txtPP{
     color: var(--orange);
     transition: 0.3s;
 }

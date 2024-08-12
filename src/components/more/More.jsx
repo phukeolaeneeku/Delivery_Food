@@ -86,7 +86,7 @@ export const More = () => {
       <Header />
       {/* <div className="header_box_management">
       </div> */}
-      <h3>Setting Account</h3>
+      <h3>계정 설정</h3>
       <div className="MorePage">
         <div className="profile_box">
           <div className="left_box">
@@ -96,7 +96,7 @@ export const More = () => {
               <img src={profile} alt="" />
             )}
             <div className="user_name">
-              Name: {storage.nickname || storage.email}
+            이름: {storage.nickname || storage.email}
             </div>
           </div>
           {/* <Link to="/profileedit" className="right_box">
@@ -108,27 +108,27 @@ export const More = () => {
           <hr className="hr" />
           <div onClick={() => setShowConfirmation(true)} className="menu_icon">
             <IoLogOutOutline id="icon_more" />
-            <div className="txtP">Log out </div>
+            <div className="txtPP">로그아웃 </div>
           </div>
 
           {showConfirmation && (
             <div className="background_addproductpopup_logoutAndDelete">
               <div className="hover_addproductpopup_logoutAndDelete">
                 <div className="box_logout">
-                  <p>Are you sure you want to log out?</p>
+                  <p>정말로 로그아웃하시겠습니까?</p>
                 </div>
                 <div className="btn_foasdf">
                   <button
                     className="btn_cancel btn_addproducttxt_popup"
                     onClick={handleCancelLogout}
                   >
-                    No
+                    아니요
                   </button>
                   <button
                     className="btn_confirm btn_addproducttxt_popup"
                     onClick={handleConfirmLogout}
                   >
-                    Yes
+                    예
                   </button>
                 </div>
               </div>
@@ -141,27 +141,27 @@ export const More = () => {
             onClick={() => setShowConfirmationDelete(true)}
           >
             <MdDelete id="icon_more" />
-            <div className="txtP">Delete account</div>
+            <div className="txtPP">계정 삭제</div>
           </div>
 
           {showConfirmationDelete && (
             <div className="background_addproductpopup_logoutAndDelete">
               <div className="hover_addproductpopup_logoutAndDelete">
                 <div className="box_logout">
-                  <p>Are you sure you want to Delete?</p>
+                  <p>삭제하시겠습니까?</p>
                 </div>
                 <div className="btn_foasdf">
                   <button
                     className="btn_cancel btn_addproducttxt_popup"
                     onClick={handleCancelDelete}
                   >
-                    No
+                    아니요
                   </button>
                   <button
                     className="btn_confirm btn_addproducttxt_popup"
                     onClick={handleConfirmDelete}
                   >
-                    Yes
+                    예
                   </button>
                 </div>
               </div>

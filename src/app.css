@@ -13,3 +13,27 @@
   --black: #000;
 }
 
+
+.scroll-to-top {
+
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.scroll-to-top button {
+  position: relative;
+  background-color: #115c9a9e;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  width: 100px;
+  height: 30px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.scroll-to-top button:hover {
+  background-color: #0056b3;
+}
