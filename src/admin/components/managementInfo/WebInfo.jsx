@@ -57,6 +57,7 @@ const WebInfo = () => {
           {webInfo.length > 0 ? (
             webInfo.map((info, index) => (
               <div className="txt_container_info" key={index}>
+                <p className="txtP">Name: {info.name}</p>
                 <p className="txtP">Email: {info.email}</p>
                 <p className="txtP">Phone number: {info.tel1}</p>
                 <p className="txtP">Address: {info.address}</p>

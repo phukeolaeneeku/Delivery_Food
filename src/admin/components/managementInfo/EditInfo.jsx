@@ -3,59 +3,58 @@ import AdminMenu from "../adminMenu/AdminMenu";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-function AddInfo() {
-  
+function EditInfo() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-  const [webInfo, setWebInfo] = useState([]);
+  const [name, setName] = useState("");
+  const [webInfo, setWebInfo] = useState({});
 
   useEffect(() => {
     fetchInfo();
   }, []);
 
   const fetchInfo = () => {
-    let config = {
+    const config = {
       method: "get",
       maxBodyLength: Infinity,
       url: import.meta.env.VITE_API + "/store/web-info",
-      headers: {},
     };
 
     axios
       .request(config)
       .then((response) => {
-        setWebInfo(response.data[0]);
+        const info = response.data[0];
+        setWebInfo(info);
+        setEmail(info.email);
+        setPhone(info.tel1);
+        setAddress(info.address);
+        setName(info.name);
       })
       .catch((error) => {
-        console.log(error);
+        console.error("Error fetching info:", error);
       });
   };
 
-  console.log(webInfo)
-
-  const UpdateInfo = (event) => {
+  const updateInfo = (event) => {
     event.preventDefault();
 
-    let data = JSON.stringify({
-      email: email,
-      phone: phone,
-      address: address,
-    });
+    let data = new FormData();
+    data.append("tel1", phone);
+    data.append("email", email);
+    data.append("address", address);
+    data.append("name", name);
 
-    let config = {
-      method: 'patch',
+    const config = {
+      method: "patch",
       maxBodyLength: Infinity,
-      url: `${import.meta.env.VITE_API}/store/web-info/create_update`,
-      headers: { 
-        'Content-Type': 'application/json'
-      },
-      data: data
+      url: import.meta.env.VITE_API + "/store/web-info/create_update",
+      data: data,
     };
 
-    axios.request(config)
+    axios
+      .request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
         Swal.fire({
           text: "The web info update was successful.",
           icon: "success",
@@ -63,11 +62,16 @@ function AddInfo() {
         setEmail("");
         setPhone("");
         setAddress("");
+        setName("");
       })
       .catch((error) => {
-        console.log(error);
+        console.error("Error updating info:", error);
+        Swal.fire({
+          text: "There was an error updating the web info.",
+          icon: "error",
+        });
       });
-  }
+  };
 
   return (
     <>
@@ -75,11 +79,19 @@ function AddInfo() {
       <div className="container_from_info">
         <div className="box_container_from">
           <h4>Edit Web Info</h4>
-          <form onSubmit={UpdateInfo}>
+          <form onSubmit={updateInfo}>
             <input
               type="text"
               name="email"
-              value={webInfo.email}
+              value={name}
+              placeholder="Name..."
+              className="inputStyle"
+              onChange={(e) => setName(e.target.value)}
+            />
+            <input
+              type="text"
+              name="email"
+              value={email}
               placeholder="Email..."
               className="inputStyle"
               onChange={(e) => setEmail(e.target.value)}
@@ -87,7 +99,7 @@ function AddInfo() {
             <input
               type="text"
               name="phone"
-              value={webInfo.tel1}
+              value={phone}
               placeholder="Phone number..."
               className="inputStyle"
               onChange={(e) => setPhone(e.target.value)}
@@ -95,7 +107,7 @@ function AddInfo() {
             <input
               type="text"
               name="address"
-              value={webInfo.address}
+              value={address}
               placeholder="Address..."
               className="inputStyle"
               onChange={(e) => setAddress(e.target.value)}
@@ -110,4 +122,4 @@ function AddInfo() {
   );
 }
 
-export default AddInfo;
+export default EditInfo;
