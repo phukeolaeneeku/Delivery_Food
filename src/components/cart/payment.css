@@ -27,6 +27,7 @@
     display: none;
 }
 
+
 .box_item_images {
     width: 100%;
     margin: auto;
@@ -69,6 +70,7 @@
 .box_item_text_payment {
     display: flex;
     width: 100%;
+    padding: 0;
     flex-direction: column;
     margin-left: 2rem;
     font-size: 17px;
@@ -216,6 +218,9 @@
     }
 
     .txt_textarea_description_Mobile {
+        display: flex;
+    }
+    .txt_textarea_description_Mobiles {
         display: flex;
     }
 

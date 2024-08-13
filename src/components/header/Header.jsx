@@ -163,7 +163,7 @@ const Header = ({ set_category_name }) => {
                   onClick={handleProductsAll}
                   className={location.pathname === "/" ? "link active" : "link"}
                 >
-                  집
+                  Home
                 </Link>
                 <Link to="https://open.kakao.com/o/gUkkzsIg" className="link">
                   카카오톡

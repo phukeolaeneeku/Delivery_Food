@@ -21,6 +21,7 @@ const OrderBill = () => {
   const [order_bill, set_order_bill] = useState(null);
   const MySwal = withReactContent(Swal);
   const usdToKrw = 15.0;
+  const usdToKIP = 25000;
 
   const goBack = () => {
     window.history.back();
@@ -333,6 +334,10 @@ const OrderBill = () => {
               <div className="atitlePriceUSD">
                 <h3>TotalUSD :</h3>
                 <h3>$ {order_list.total_prices}</h3>
+              </div>
+              <div className="atitlePriceKRW">
+                <h3>TotalKRW :</h3>
+                <h3>{order_list.total_prices * usdToKIP} KIP</h3>
               </div>
               <div className="atitlePriceKRW">
                 <h3>TotalKRW :</h3>

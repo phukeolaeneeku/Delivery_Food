@@ -286,7 +286,7 @@ const Cart = () => {
                                     <p>Type of menu: {item.color}</p>
                                   )} */}
                                   {item.size != 0 && (
-                                    <p>추가 요청 사항: {item.size}</p>
+                                    <p>물의 종류: {item.size}</p>
                                   )}
                                 </div>
                                 <div className="box_icon_order">

@@ -290,12 +290,11 @@ const Payment = ({ orders, order_from, onPay }) => {
                         })}
                       </p>
                       {item.size != 0 ? (
-                        <p className="box_txtFor_PC">
-                          추가 요청 사항: {item.size}
-                        </p>
+                        <p className="box_txtFor_PC">물의 종류: {item.size}</p>
                       ) : (
                         <p></p>
                       )}
+                      <div className="box_txtFor_PC">추가 요청 사항:</div>
                       <textarea
                         type="text"
                         placeholder="서술..."
@@ -315,12 +314,14 @@ const Payment = ({ orders, order_from, onPay }) => {
                     </div>
                   </div>
                   {item.size != 0 ? (
-                    <p className="box_txtFor_Mobile">
-                      추가 요청 사항: {item.size}
-                    </p>
+                    <p className="box_txtFor_Mobile">물의 종류: {item.size}</p>
                   ) : (
                     <p></p>
                   )}
+                  <div className="txt_textarea_description_Mobiles">
+                    추가 요청 사항:
+                  </div>
+
                   <textarea
                     type="text"
                     placeholder="서술..."
