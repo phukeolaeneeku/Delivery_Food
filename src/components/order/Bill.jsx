@@ -103,10 +103,104 @@ const Bill = () => {
       console.error("Error submitting review:", error);
     }
   };
+
   const handlePrintBill = () => {
     const billElement = document.querySelector(".bill-detial");
     const printWindow = window.open("", "", "height=500px,width=500px");
-    printWindow.document.write(billElement.outerHTML);
+    printWindow.document.write(`
+      <html>
+        <head>
+          <style>
+            @media print {
+              @page {
+                size: 58mm 210mm;
+                margin: 0;
+              }
+              body {
+                width: 58mm;
+                margin: 0;
+                font-size: 10px;
+                font-family: Arial, sans-serif;
+              }
+              .bill-detial {
+                padding: 15px 10px 10px 10px;
+                text-align: start;
+              }
+              .guopoidHead {
+                width: 100%;
+                text-align: start;
+                border-bottom: #4444 solid 1px;
+                grid-template-columns: 1fr;
+              }
+              .billGopBox {
+                display: grid;
+                width: 100%;
+                margin: auto;
+                border-bottom: #4444 solid 1px;
+              }
+              .box_table {
+                width: 100%;
+              }
+              .txtHeader {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                margin: 0.5rem 0;
+              }
+              .Header {
+                width: 100%;
+                text-align: center;
+                font-size: 18px;
+                font-weight: 600;
+                margin-bottom: 5px;
+              }
+              .Header_review{
+                display: none;
+              }
+              .Delivered_review{
+                display: none;
+              }
+              .txt_Des {
+                width: 100%;
+                text-align: center;
+              }
+              .titlePrice {
+                padding: 0;
+                margin-top: -1.2rem;
+                display: flex;
+                text-align: center;
+                justify-content: space-between;
+              }
+              .place-on {
+                text-align: start;
+              }
+              .Delivered_review{
+                display: none;
+
+              }
+              .txtHeader .Header{
+                font-size: 12px;
+              }
+              .titlePrice h4{
+                font-size: 12px;
+                font-weight: 100;
+              }
+              .Header{
+                padding: 10px 0;
+                border-bottom: #4444 solid 1px;
+              }
+              .box_totleAdd_container{
+                border-bottom: #4444 solid 1px;
+              }
+
+            }
+          </style>
+        </head>
+        <body>
+          ${billElement.outerHTML}
+        </body>
+      </html>
+    `);
     printWindow.document.close();
     printWindow.print();
     printWindow.close();
@@ -156,12 +250,8 @@ const Bill = () => {
 
             <div className="bill-detial">
               <div className="guopoidHead">
-                <div className="box_containner_txt">
-                  <p>주문 ID: {order_list.id}</p>
-                  <p>
-                    날짜: {new Date(order_list.created_at).toLocaleString()}
-                  </p>
-                </div>
+                <p>주문 ID: {order_list.id}</p>
+                <p>날짜: {new Date(order_list.created_at).toLocaleString()}</p>
               </div>
               <div className="billGopBox">
                 <div className="box_table">
@@ -171,7 +261,7 @@ const Bill = () => {
                     <div className="Header">양</div>
                     <div className="Header">물</div>
                     {order_list.status === "Delivered" && (
-                      <div className="Header">리뷰</div>
+                      <div className="Header_review">리뷰</div>
                     )}
                   </div>
                   <div>
@@ -188,7 +278,7 @@ const Bill = () => {
                         <div className="txt_Des">{item.quantity}</div>
                         <div className="txt_Des">{item.size}</div>
                         {order_list.status === "Delivered" && (
-                          <div className="Header">
+                          <div className="Header_review">
                             <button
                               className="Delivered_review"
                               onClick={() => handleReview(item.product.id)}
@@ -202,41 +292,43 @@ const Bill = () => {
                   </div>
                 </div>
               </div>
-              <p className="box_more_details">
-                자세한 내용: {order_list.province}
-              </p>
-              <div className="titlePrice">
-                <h4>합계 USD:</h4>
-                <p>
-                  ${" "}
-                  {totalPrice.toLocaleString("en-US", {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0,
-                    useGrouping: true,
-                  })}
+              <div className="box_totleAdd_container">
+                <p className="box_more_details">
+                  자세한 내용: {order_list.province}
                 </p>
-              </div>
-              <div className="titlePrice">
-                <h4>합계 KIP:</h4>
-                <p>
-                  {(totalPrice * usdToKIP).toLocaleString("en-US", {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0,
-                    useGrouping: true,
-                  })}{" "}
-                  KIP
-                </p>
-              </div>
-              <div className="titlePrice">
-                <h4>합계 KRW:</h4>
-                <p>
-                  ₩{" "}
-                  {(totalPrice * usdToKrw).toLocaleString("en-US", {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0,
-                    useGrouping: true,
-                  })}
-                </p>
+                <div className="titlePrice">
+                  <h4>합계 USD:</h4>
+                  <p>
+                    ${" "}
+                    {totalPrice.toLocaleString("en-US", {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                      useGrouping: true,
+                    })}
+                  </p>
+                </div>
+                <div className="titlePrice">
+                  <h4>합계 KIP:</h4>
+                  <p>
+                    {(totalPrice * usdToKIP).toLocaleString("en-US", {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                      useGrouping: true,
+                    })}{" "}
+                    KIP
+                  </p>
+                </div>
+                <div className="titlePrice">
+                  <h4>합계 KRW:</h4>
+                  <p>
+                    ₩{" "}
+                    {(totalPrice * usdToKrw).toLocaleString("en-US", {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                      useGrouping: true,
+                    })}
+                  </p>
+                </div>
               </div>
 
               <div className="box_place">

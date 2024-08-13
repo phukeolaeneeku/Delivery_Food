@@ -46,51 +46,42 @@ const Signup2 = () => {
   const SignUp = () => {
     if (!data.email) {
       MySwal.fire({
-        text: "Please fill the email!",
+        text: "이메일을 작성해주세요!",
         icon: "question",
       });
       return;
     }
     if (!data.code) {
       MySwal.fire({
-        text: "Please fill the code!",
+        text: "코드를 채워주세요!",
         icon: "question",
       });
       return;
     }
-    // if (user_tyep == "1") {
-    //   if (!data.nickname) {
-    //     MySwal.fire({
-    //       text: "Please fill the nickname!",
-    //       icon: "question",
-    //     });
-    //     return;
-    //   }
-    // }
     if (!data.password) {
       MySwal.fire({
-        text: "Please fill the password!",
+        text: "비밀번호를 입력해주세요!",
         icon: "question",
       });
       return;
     }
     if (!data.password2) {
       MySwal.fire({
-        text: "Please fill the confirm password!",
+        text: "확인 비밀번호를 입력해주세요!",
         icon: "question",
       });
       return;
     }
     if (data.password != data.password2) {
       MySwal.fire({
-        text: "Password do not match!",
+        text: "비밀번호가 일치하지 않습니다!",
         icon: "question",
       });
       return;
     }
     if (data.password.length <= 7 || data.password2.length <= 7) {
       MySwal.fire({
-        text: "Password must be at least 8 characters!",
+        text: "비밀번호는 8자 이상이어야 합니다!",
         icon: "question",
       });
       return;
@@ -174,12 +165,12 @@ const Signup2 = () => {
         <form>
 
           {user_tyep == "1" ? (
-            <h2 className="box_container_login_text">User registration</h2>
+            <h2 className="box_container_login_text">사용자 등록</h2>
           ) : (
             <h2>Seller registration</h2>
           )}
-          <p>You are in the process of signing up as a user!</p>
-          <label htmlFor="email">Email</label>
+          <p>사용자 등록을 진행 중입니다!</p>
+          <label htmlFor="email">이메일</label>
           <div className="container_form_user2">
             <input
               type="email"
@@ -187,7 +178,7 @@ const Signup2 = () => {
               id="email"
               onChange={onChange}
               value={data.email}
-              placeholder="Email"
+              placeholder="이메일을 입력해주세요..."
               required
             />
             {minute > 0 || second > 0 ? (
@@ -225,18 +216,18 @@ const Signup2 = () => {
                 id="email_send_btn"
                 className="verification"
               >
-                Verify
+                확인하다
               </div>
             )}
           </div>
-          <label htmlFor="code">Certication Number</label>
+          <label htmlFor="code">코드 확인</label>
           <input
             type="text"
             name="code"
             id="code"
             onChange={onChange}
             value={data.code}
-            placeholder="Certication Number"
+            placeholder="인증번호를 입력해주세요..."
             required
           />
           {/* {user_tyep == "1" && (
@@ -249,23 +240,23 @@ const Signup2 = () => {
               required
             />
           )} */}
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">비밀번호</label>
           <input
             type="password"
             name="password"
             onChange={onChange}
             value={data.password}
-            placeholder="password"
+            placeholder="비밀번호를 입력해주세요..."
             required
           />
-          <label htmlFor="password2">Confirm password</label>
+          <label htmlFor="password2">비밀번호 확인</label>
           <input
             type="password"
             name="password2"
             id="password2"
             onChange={onChange}
             value={data.password2}
-            placeholder="Confirm password"
+            placeholder="확인 비밀번호를 입력해주세요..."
             required
           />
           {user_tyep == "2" && (
@@ -332,11 +323,11 @@ const Signup2 = () => {
             <p className="error-text">Passwords do not match.</p>
           )} */}
           <button type="button" onClick={SignUp}>
-            Register
+          등록하다
           </button>
           <div className="forgot_password">
-            Already have an acount?{" "}
-            <Link to="/loginuser">Login</Link>
+          이미 계정이 있나요?{" "}
+            <Link to="/loginuser">로그인</Link>
           </div>
         </form>
         {/* {errorText.length > 0 && <div>{errorText}</div>} */}

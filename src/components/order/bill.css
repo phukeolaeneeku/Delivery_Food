@@ -13,7 +13,6 @@
     text-align: end;
     padding: 0 20px;
     cursor: pointer;
-    
 }
 #FiPrinter{
     font-size: 25px;
@@ -48,34 +47,39 @@
     color: #555;
 }
 
-/* .box_containner_txt {
-} */
 
 .billGopBox {
     display: grid;
     width: 100%;
     margin: auto;
-    padding: 30px 0;
     border-bottom: #DDDCE1 solid 1px;
 }
 
-.box_table {
-    width: 100%;
-}
 
 .txtHeader {
     width: 100%;
     display: flex;
     justify-content: space-between;
     margin: 0.5rem 0;
+
 }
 
-.Header {
+.Header{
+    padding: 10px 0;
+    border-bottom: #DDDCE1 solid 1px;
+}
+
+.box_totleAdd_container{
+    border-bottom: #DDDCE1 solid 1px;
+}
+
+.Header_review {
     width: 100%;
     text-align: center;
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 10px;
+
 }
 
 .txt_Des {
@@ -93,9 +97,14 @@
     display: flex;
     justify-content: space-between;
 }
+.titlePrice h4{
+    font-size: 16px;
+    font-weight: 100;
+}
 .box_place{
     display: flex;
     align-items: flex-end;
+    margin-top: 8px;
     justify-content: space-between;
 }
 
@@ -173,3 +182,4 @@
     gap: 0.5rem;
     align-items: center;
 }
+

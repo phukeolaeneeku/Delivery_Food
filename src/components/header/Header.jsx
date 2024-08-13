@@ -197,7 +197,7 @@ const Header = ({ set_category_name }) => {
               </div>
             </form>
 
-            <div id="google_translate_element" className="fixedElement"></div>
+            {/* <div id="google_translate_element" className="fixedElement"></div> */}
 
             {user ? (
               <div className="right_ofHeadBox">

@@ -380,8 +380,8 @@ const Payment = ({ orders, order_from, onPay }) => {
                   onChange={handlePaymentMethod}
                 >
                   <option value="">현금 또는 이체를 선택하세요</option>
-                  <option value="KIP">KIP</option>
                   <option value="USD">USD</option>
+                  <option value="KIP">KIP</option>
                   <option value="TransferKRW"> 이체를 KRW</option>
                 </select>
               </div>
@@ -389,18 +389,18 @@ const Payment = ({ orders, order_from, onPay }) => {
           </div>
 
           <div className="box_transfer">
-            {paymentMethod === "USD" ? (
+            {paymentMethod === "KIP" ? (
               <div className="box_address_input">
                 <p className="box_containner_totals">
                   총 가격:
                   <span>
                     {" "}
-                    ${" "}
-                    {parseFloat(totalPrice).toLocaleString("en-US", {
+                    {parseFloat(totalPrice * usdToKIP).toLocaleString("en-US", {
                       minimumFractionDigits: 0,
                       maximumFractionDigits: 0,
                       useGrouping: true,
-                    })}
+                    })}{" "}
+                    KIP
                   </span>
                 </p>
               </div>
@@ -455,18 +455,18 @@ const Payment = ({ orders, order_from, onPay }) => {
               />
             )}
 
-            {paymentMethod !== "USD" && paymentMethod !== "TransferKRW" && (
+            {paymentMethod !== "KIP" && paymentMethod !== "TransferKRW" && (
               <>
                 <p className="box_containner_total">
                   총 가격:
                   <span>
                     {" "}
-                    {parseFloat(totalPrice * usdToKIP).toLocaleString("en-US", {
+                    $
+                    {parseFloat(totalPrice).toLocaleString("en-US", {
                       minimumFractionDigits: 0,
                       maximumFractionDigits: 0,
                       useGrouping: true,
-                    })}{" "}
-                    KIP
+                    })}
                   </span>
                 </p>
               </>
