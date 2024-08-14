@@ -102,21 +102,18 @@ function App() {
 
             {/* --------- Home Page ---------- */}
             <Route
-              path="/hotel/:hotelName/room_number/:room_number/address/:address"
-              element={<Home />}
+              path="/hotel/:hotelName/room_number/:room_number/address/:address" element={<Home />}
             />
             <Route path="/" element={<Home />} />
             <Route path="/goods/:goods_id" element={<ProductDetails />} />
             <Route
-              path="/hotel/:hotelName/room_number/:room_number/address/:address/cart"
-              element={<Cart />}
+              path="/hotel/:hotelName/room_number/:room_number/address/:address/cart" element={<Cart />}
             />
             <Route path="/cart" element={<Cart />} />
             <Route path="/address" element={<Address />} />
             <Route path="/payment" element={<Payment />} />
             <Route
-              path="/hotel/:hotelName/room_number/:room_number/address/:address/order"
-              element={<Order />}
+              path="/hotel/:hotelName/room_number/:room_number/address/:address/order" element={<Order />}
             />
             <Route path="/order" element={<Order />} />
             <Route path="/bill/:bill_id" element={<Bill />} />

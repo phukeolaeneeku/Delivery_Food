@@ -35,7 +35,7 @@ const Product_Admin = () => {
   const [currentSize, setCurrentSize] = useState("");
   const [currentColor, setCurrentColor] = useState("");
 
-  console.log("goods_list....", goods_list)
+  // console.log("goods_list....", goods_list)
 
   const MySwal = withReactContent(Swal);
   // console.log(categories)

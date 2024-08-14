@@ -25,7 +25,7 @@ const AddProduct = () => {
     store_id = JSON.parse(window.localStorage.getItem("user")).store_id;
   }
 
-  console.log("storage.store_id.....", storage.store_id)
+  // console.log("storage.store_id.....", storage.store_id)
 
   const [products, setProducts] = useState([
     {
@@ -42,8 +42,8 @@ const AddProduct = () => {
   ]);
   const MySwal = withReactContent(Swal);
 
-  console.log(store_id);
-  console.log("Product1: ", products);
+  // console.log(store_id);
+  // console.log("Product1: ", products);
 
   useEffect(() => {
     let data = JSON.stringify({
@@ -64,7 +64,7 @@ const AddProduct = () => {
     axios
       .request(config)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.result != "success") {
           localStorage.clear();
 
@@ -93,7 +93,7 @@ const AddProduct = () => {
     axios
       .request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
         set_categories(response.data);
       })
       .catch((error) => {
@@ -352,63 +352,6 @@ const AddProduct = () => {
                           required
                         />
                       </div>
-
-                      {/* <div className="box">
-                        <select
-                          name="category"
-                          className="product_category"
-                          required
-                        >
-                          <option value="Sneakers">Sneakers</option>
-                          <option value="Women Clothes">Women Clothes</option>
-                          <option value="Electronic Devices">
-                            Electronic Devices
-                          </option>
-                          <option value="Cosmetics">Cosmetics</option>
-                        </select>
-                      </div> */}
-
-                      {/* <div className="box">
-                        <input
-                          type="text"
-                          placeholder="Description"
-                          value={product.description}
-                          onChange={(e) => handleProductDescription(e, index)}
-                          required
-                        />
-                      </div> */}
-
-                      {/* <div className="box_size_product_container">
-                        <div className="box_size_add">
-                          {product.colors.map((color, colorIndex) => (
-                            <div key={colorIndex} className="box_size_add_item">
-                              <p>{color}</p>
-                              <span
-                                onClick={() =>
-                                  removeColorInput(index, colorIndex)
-                                }
-                              >
-                                <MdClose id="icon_MdClose" />
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-
-                        <div className="box_size_content">
-                          <input
-                            type="text"
-                            placeholder="Add Type of menu..."
-                            value={product.currentcolors || ""}
-                            onChange={(e) => handleColorInputChange(e, index)}
-                          />
-                          <div
-                            className="btn_addsize"
-                            onClick={() => addColorInput(index)}
-                          >
-                            Add
-                          </div>
-                        </div>
-                      </div> */}
 
                       <div className="box_size_product_container">
                         <div className="box_size_add">

@@ -39,7 +39,7 @@ const Board = () => {
     axios
       .request(config)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (response.data.result != "success") {
           localStorage.clear();
           navigate("/loginuser");
