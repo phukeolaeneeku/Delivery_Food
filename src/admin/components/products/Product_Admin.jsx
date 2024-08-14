@@ -1142,8 +1142,8 @@ const Product_Admin = () => {
                                 <option className="inputproduct" value="">
                                   Select set or not
                                 </option>
-                                <option value="set">세트</option>
-                                <option value="not">아니다</option>
+                                <option value="set">Set</option>
+                                <option value="not">Not</option>
                               </select>
                             </div>
                           </div>
