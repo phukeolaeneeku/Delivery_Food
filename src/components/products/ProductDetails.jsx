@@ -371,7 +371,7 @@ function ProductDetails() {
                         <div className="container_txt">메뉴가 설정되었습니다: {product.description}</div>
                       )}
 
-                      <div>Delivery:</div>
+                      {/* <div>Delivery:</div> */}
 
                       {/* <div className="star">
                         <div
