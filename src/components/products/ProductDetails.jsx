@@ -356,13 +356,24 @@ function ProductDetails() {
                     </div>
                     <div className="txtContentproduct">
                       <h1 className="txt_nameP"> {product.name}</h1>
-                      <p className="money_txt">
-                      가격: ${product.format_price}
-                      </p>
-                      <p className="money_txt">수량: {product.quantity}</p>
-                      {/* <p className="txt_description">{product.description}</p>
+                      <div className="container_txt">
+                        {" "}
+                        가격: ${product.format_price}
+                      </div>
+                      <div className="container_txt">
+                        {" "}
+                        수량: {product.quantity}
+                      </div>
 
-                      <div className="star">
+                      {product.description === "not" ? (
+                        <p></p>
+                      ) : (
+                        <div className="container_txt">메뉴가 설정되었습니다: {product.description}</div>
+                      )}
+
+                      <div>Delivery:</div>
+
+                      {/* <div className="star">
                         <div
                           className="on"
                           style={{ width: `${StarAVG(product.star_avg)}%` }}
@@ -508,7 +519,9 @@ function ProductDetails() {
               <div className="review-list">
                 <h2 className="review-list-title">모든 리뷰</h2>
                 {displayedReviews.length === 0 ? (
-                  <p className="no-reviews-message">사용 가능한 리뷰가 없습니다.</p>
+                  <p className="no-reviews-message">
+                    사용 가능한 리뷰가 없습니다.
+                  </p>
                 ) : (
                   <ul className="reviews">
                     {displayedReviews.map((review) => (
@@ -533,8 +546,7 @@ function ProductDetails() {
               </div>
             </div>
             <h2 className="box_betavinOfob asd2">
-              <span className="spennofStyle"> </span>
-              더 많은 제품
+              <span className="spennofStyle"> </span>더 많은 제품
             </h2>
             <div className="product-area">
               {products_list.map(

@@ -30,7 +30,7 @@ const AddProduct = () => {
   const [products, setProducts] = useState([
     {
       name: "",
-      description: "0",
+      description: "",
       price: "",
       category: "",
       quantity: "",
@@ -108,6 +108,12 @@ const AddProduct = () => {
     setProducts(updatedProducts);
   };
 
+  const handleProductDescription = (e, index) => {
+    const value = e.target.value;
+    const updatedProducts = [...products];
+    updatedProducts[index].description = value;
+    setProducts(updatedProducts);
+  };
   const handleProductCategory = (e, index) => {
     const value = e.target.value;
     const updatedProducts = [...products];
@@ -151,7 +157,7 @@ const AddProduct = () => {
       ...products,
       {
         name: "",
-        description: "0",
+        description: "",
         price: "",
         category: "",
         quantity: "",
@@ -172,7 +178,7 @@ const AddProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       const response = await fetch(
         import.meta.env.VITE_API + `/store/${storage.store_id}`,
@@ -329,6 +335,21 @@ const AddProduct = () => {
                         <select
                           name="category"
                           className="product_category"
+                          onChange={(e) => handleProductDescription(e, index)}
+                          required
+                        >
+                          <option className="inputproduct" value="1">
+                            Select set or not
+                          </option>
+                          <option value="set">세트</option>
+                          <option value="not">아니다</option>
+                        </select>
+                      </div>
+
+                      <div className="box">
+                        <select
+                          name="category"
+                          className="product_category"
                           onChange={(e) => handleProductCategory(e, index)}
                           required
                         >
@@ -347,7 +368,7 @@ const AddProduct = () => {
                         <input
                           type="text"
                           placeholder="Quantity..."
-                          value={product.quantity }
+                          value={product.quantity}
                           onChange={(e) => handleProductQuantity(e, index)}
                           required
                         />

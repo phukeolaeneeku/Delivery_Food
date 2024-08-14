@@ -17,6 +17,8 @@ body {
     z-index: 99;
 }
 
+
+
 .headerr_positoinn {
     display: flex;
     justify-content: space-between;
@@ -99,14 +101,15 @@ body {
     font-size: 20px;
 }
 
-.money_txt {
-    color: #0E64D2;
+.container_txt {
     font-family: Inter;
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
     letter-spacing: 0.72px;
+    margin-bottom: 1rem;
 }
+
 
 .startBox {
     display: flex;
@@ -115,7 +118,6 @@ body {
 }
 
 .txt_nameP,
-.money_txt,
 .startBox,
 .txt_description,
 .color_product,

@@ -168,6 +168,9 @@
     background: #FF4F16;
     box-shadow: 0px 30px 20px -20px rgba(0, 0, 0, 0.15);
 }
+.txt_textarea_description_Mobiles{
+    display: none;
+}
 
 
 /* Responsive */
