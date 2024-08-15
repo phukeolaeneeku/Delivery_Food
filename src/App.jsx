@@ -89,6 +89,7 @@ function App() {
         <Router>
           <Routes>
             {/* --------- Login-Signup page---------- */}
+            <Route path="/hotel/:hotelName/room_number/:room_number/address/:address/loginuser" element={<LoginUser />} />
             <Route path="/loginuser" element={<LoginUser />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/qrcode" element={<QRCode />} />

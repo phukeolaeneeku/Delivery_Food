@@ -104,107 +104,107 @@ const Bill = () => {
     }
   };
 
-  const handlePrintBill = () => {
-    const billElement = document.querySelector(".bill-detial");
-    const printWindow = window.open("", "", "height=500px,width=500px");
-    printWindow.document.write(`
-      <html>
-        <head>
-          <style>
-            @media print {
-              @page {
-                size: 58mm 210mm;
-                margin: 0;
-              }
-              body {
-                width: 58mm;
-                margin: 0;
-                font-size: 10px;
-                font-family: Arial, sans-serif;
-              }
-              .bill-detial {
-                padding: 15px 10px 10px 10px;
-                text-align: start;
-              }
-              .guopoidHead {
-                width: 100%;
-                text-align: start;
-                border-bottom: #4444 solid 1px;
-                grid-template-columns: 1fr;
-              }
-              .billGopBox {
-                display: grid;
-                width: 100%;
-                margin: auto;
-                border-bottom: #4444 solid 1px;
-              }
-              .box_table {
-                width: 100%;
-              }
-              .txtHeader {
-                width: 100%;
-                display: flex;
-                justify-content: space-between;
-                margin: 0.5rem 0;
-              }
-              .Header {
-                width: 100%;
-                text-align: center;
-                font-size: 18px;
-                font-weight: 600;
-                margin-bottom: 5px;
-              }
-              .Header_review{
-                display: none;
-              }
-              .Delivered_review{
-                display: none;
-              }
-              .txt_Des {
-                width: 100%;
-                text-align: center;
-              }
-              .titlePrice {
-                padding: 0;
-                margin-top: -1.2rem;
-                display: flex;
-                text-align: center;
-                justify-content: space-between;
-              }
-              .place-on {
-                text-align: start;
-              }
-              .Delivered_review{
-                display: none;
+  // const handlePrintBill = () => {
+  //   const billElement = document.querySelector(".bill-detial");
+  //   const printWindow = window.open("", "", "height=500px,width=500px");
+  //   printWindow.document.write(`
+  //     <html>
+  //       <head>
+  //         <style>
+  //           @media print {
+  //             @page {
+  //               size: 58mm 210mm;
+  //               margin: 0;
+  //             }
+  //             body {
+  //               width: 58mm;
+  //               margin: 0;
+  //               font-size: 10px;
+  //               font-family: Arial, sans-serif;
+  //             }
+  //             .bill-detial {
+  //               padding: 15px 10px 10px 10px;
+  //               text-align: start;
+  //             }
+  //             .guopoidHead {
+  //               width: 100%;
+  //               text-align: start;
+  //               border-bottom: #4444 solid 1px;
+  //               grid-template-columns: 1fr;
+  //             }
+  //             .billGopBox {
+  //               display: grid;
+  //               width: 100%;
+  //               margin: auto;
+  //               border-bottom: #4444 solid 1px;
+  //             }
+  //             .box_table {
+  //               width: 100%;
+  //             }
+  //             .txtHeader {
+  //               width: 100%;
+  //               display: flex;
+  //               justify-content: space-between;
+  //               margin: 0.5rem 0;
+  //             }
+  //             .Header {
+  //               width: 100%;
+  //               text-align: center;
+  //               font-size: 18px;
+  //               font-weight: 600;
+  //               margin-bottom: 5px;
+  //             }
+  //             .Header_review{
+  //               display: none;
+  //             }
+  //             .Delivered_review{
+  //               display: none;
+  //             }
+  //             .txt_Des {
+  //               width: 100%;
+  //               text-align: center;
+  //             }
+  //             .titlePrice {
+  //               padding: 0;
+  //               margin-top: -1.2rem;
+  //               display: flex;
+  //               text-align: center;
+  //               justify-content: space-between;
+  //             }
+  //             .place-on {
+  //               text-align: start;
+  //             }
+  //             .Delivered_review{
+  //               display: none;
 
-              }
-              .txtHeader .Header{
-                font-size: 12px;
-              }
-              .titlePrice h4{
-                font-size: 12px;
-                font-weight: 100;
-              }
-              .Header{
-                padding: 10px 0;
-                border-bottom: #4444 solid 1px;
-              }
-              .box_totleAdd_container{
-                border-bottom: #4444 solid 1px;
-              }
+  //             }
+  //             .txtHeader .Header{
+  //               font-size: 12px;
+  //             }
+  //             .titlePrice h4{
+  //               font-size: 12px;
+  //               font-weight: 100;
+  //             }
+  //             .Header{
+  //               padding: 10px 0;
+  //               border-bottom: #4444 solid 1px;
+  //             }
+  //             .box_totleAdd_container{
+  //               border-bottom: #4444 solid 1px;
+  //             }
 
-            }
-          </style>
-        </head>
-        <body>
-          ${billElement.outerHTML}
-        </body>
-      </html>
-    `);
-    printWindow.document.close();
-    printWindow.print();
-    printWindow.close();
-  };
+  //           }
+  //         </style>
+  //       </head>
+  //       <body>
+  //         ${billElement.outerHTML}
+  //       </body>
+  //     </html>
+  //   `);
+  //   printWindow.document.close();
+  //   printWindow.print();
+  //   printWindow.close();
+  // };
 
   if (!order_list) {
     return (
@@ -244,9 +244,9 @@ const Bill = () => {
         <>
           <Header />
           <div className="bill">
-            <div className="box_containner_FiPrinter">
+            {/* <div className="box_containner_FiPrinter">
               <FiPrinter id="FiPrinter" onClick={handlePrintBill} />
-            </div>
+            </div> */}
 
             <div className="bill-detial">
               <div className="guopoidHead">
@@ -256,7 +256,7 @@ const Bill = () => {
               <div className="billGopBox">
                 <div className="box_table">
                   <div className="txtHeader">
-                    <div className="Header">제품</div>
+                    <div className="Header">제품명</div>
                     <div className="Header">가격</div>
                     <div className="Header">양</div>
                     <div className="Header">물</div>
@@ -292,6 +292,7 @@ const Bill = () => {
                   </div>
                 </div>
               </div>
+              
               <div className="box_totleAdd_container">
                 <p className="box_more_details">
                   자세한 내용: {order_list.province}

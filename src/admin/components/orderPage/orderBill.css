@@ -1,21 +1,19 @@
 /* Bill */
 #abill {
     position: absolute;
-    width: 80%;
-    margin-top: 6.5rem;
+    width: 75%;
+    margin-top: 7.5rem;
     left: 18%;
 }
 
 
 .container_Order_Bill {
-    justify-content: center;
-    justify-content: space-between;
-}
-
-.container_Order_Bill{
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
 }
+
 .back_Order_Bill {
     display: flex;
     padding: 4px 12px;
@@ -23,12 +21,21 @@
     color: #FFF;
     cursor: pointer;
     border: none;
+    gap: 5px;
     border-radius: 5px;
     background: rgba(255, 79, 22, 0.92);
 }
-.back_Order_Bill{
-    gap: 5px;
+
+.box_containner_FiPrinter{
+    width: 100%;
+    text-align: end;
+    padding: 0 20px;
+    cursor: pointer;
 }
+#FiPrinter{
+    font-size: 25px;
+}
+
 .box_container_sudToKrw{
     display: grid;
 }
@@ -65,8 +72,11 @@
     display: grid;
     width: 100%;
     margin: auto;
-    padding: 30px 0;
+    border-bottom: #DDDCE1 solid 1px;
 
+}
+.box_totleAdd_container{
+    border-bottom: #DDDCE1 solid 1px;
 }
 
 
@@ -246,3 +256,4 @@
     border-radius: 7px;
     cursor: pointer;
 }
+

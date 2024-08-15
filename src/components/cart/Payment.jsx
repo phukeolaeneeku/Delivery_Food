@@ -472,6 +472,7 @@ const Payment = ({ orders, order_from, onPay }) => {
               </>
             )}
           </div>
+          {/* <p>Delivery: </p> */}
 
           <Link onClick={handlePay} className="save">
             확인하다
