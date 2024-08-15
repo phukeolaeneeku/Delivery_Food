@@ -27,6 +27,7 @@ const Payment = ({ orders, order_from, onPay }) => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const usdToKrw = 15.0;
   const usdToKIP = 25000;
+  const delivery = 2;
 
   var user_id = null;
   if (localStorage.getItem("user")) {
@@ -258,7 +259,6 @@ const Payment = ({ orders, order_from, onPay }) => {
         <h2 className="h2_boxPayment">지불</h2>
         <div className="adress_payment_content">
           <h4>세부:</h4>
-
           {orders.map((product, index) => (
             <div key={index}>
               {product.items.map((item, itemIndex) => (
@@ -341,8 +341,9 @@ const Payment = ({ orders, order_from, onPay }) => {
                 </div>
               ))}
             </div>
-          ))}
 
+            
+          ))}
           <div className="box_address">
             <h4>주소:</h4>
             <form className="box_address_input">
@@ -387,7 +388,6 @@ const Payment = ({ orders, order_from, onPay }) => {
               </div>
             </form>
           </div>
-
           <div className="box_transfer">
             {paymentMethod === "KIP" ? (
               <div className="box_address_input">
@@ -472,8 +472,8 @@ const Payment = ({ orders, order_from, onPay }) => {
               </>
             )}
           </div>
-          {/* <p>Delivery: </p> */}
-
+         
+          
           <Link onClick={handlePay} className="save">
             확인하다
           </Link>
