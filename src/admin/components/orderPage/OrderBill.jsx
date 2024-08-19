@@ -24,6 +24,83 @@ const OrderBill = () => {
   const usdToKrw = 15.0;
   const usdToKIP = 25000;
 
+  ////////////////
+
+  const [amount, setAmount] = useState(1);
+  const [amountKIP, setAmountKIP] = useState(1);
+  const [fromCurrency, setFromCurrency] = useState("USD");
+  const [toCurrency, setToCurrency] = useState("KRW");
+  const [toCurrencyKIP, setToCurrencyKIP] = useState("LAK");
+  const [exchangeRate, setExchangeRate] = useState(1);
+  const [exchangeRates, setExchangeRates] = useState(1);
+  const [currencies, setCurrencies] = useState([]);
+
+  useEffect(() => {
+    // Fetch the list of currencies and exchange rates from an API
+    const getCurrencies = async () => {
+      try {
+        const response = await fetch(
+          "https://api.exchangerate-api.com/v4/latest/USD"
+        );
+        const data = await response.json();
+        const uniqueCurrencies = Array.from(
+          new Set([data.base, ...Object.keys(data.rates)])
+        );
+        setCurrencies(uniqueCurrencies);
+        setExchangeRate(data.rates[toCurrency]);
+        setExchangeRates(data.rates[toCurrencyKIP]);
+      } catch (error) {
+        console.error("Error fetching the currencies:", error);
+      }
+    };
+
+    getCurrencies();
+  }, []);
+
+  useEffect(() => {
+    const getExchangeRate = async () => {
+      if (fromCurrency !== toCurrency) {
+        try {
+          const response = await fetch(
+            `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
+          );
+          const data = await response.json();
+          setExchangeRate(data.rates[toCurrency]);
+        } catch (error) {
+          console.error("Error fetching the exchange rate:", error);
+        }
+      }
+    };
+
+    getExchangeRate();
+  }, [fromCurrency, toCurrency]);
+
+  useEffect(() => {
+    const getExchangeRates = async () => {
+      if (fromCurrency !== toCurrencyKIP) {
+        try {
+          const response = await fetch(
+            `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
+          );
+          const data = await response.json();
+          setExchangeRates(data.rates[toCurrencyKIP]);
+        } catch (error) {
+          console.error("Error fetching the exchange rate:", error);
+        }
+      }
+    };
+
+    getExchangeRates();
+  }, [fromCurrency, toCurrencyKIP]);
+
+  const convertCurrency = () => {
+    return (amount * exchangeRate).toFixed(2);
+  };
+  const convertCurrencyKIP = () => {
+    return (amountKIP * exchangeRates).toFixed(2);
+  };
+  ///////////////////
+
   const goBack = () => {
     window.history.back();
   };
@@ -422,13 +499,25 @@ const OrderBill = () => {
               <h4>합계 USD :</h4>
               <p>$ {order_list.total_prices}</p>
             </div>
+
+            <div className="titlePrice">
+              <h4>T합계 KRW:</h4>
+              <p>
+                ₩
+                {order_list.total_prices && convertCurrency()
+                  ? (
+                      order_list.total_prices * convertCurrency()
+                    ).toLocaleString()
+                  : "0"}
+              </p>
+            </div>
+
             <div className="titlePrice">
               <h4>합계 KIP :</h4>
-              <p>{order_list.total_prices * usdToKIP} KIP</p>
-            </div>
-            <div className="titlePrice">
-              <h4>T합계 KRW :</h4>
-              <p>₩ {order_list.total_prices * usdToKrw}</p>
+              <p>{order_list.total_prices * convertCurrencyKIP() ? (
+                      order_list.total_prices * convertCurrencyKIP()
+                    ).toLocaleString()
+                  : "0"} KIP</p>
             </div>
           </div>
 

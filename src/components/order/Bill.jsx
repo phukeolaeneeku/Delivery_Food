@@ -23,6 +23,83 @@ const Bill = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
+  ////////////////
+
+  const [amount, setAmount] = useState(1);
+  const [amountKIP, setAmountKIP] = useState(1);
+  const [fromCurrency, setFromCurrency] = useState("USD");
+  const [toCurrency, setToCurrency] = useState("KRW");
+  const [toCurrencyKIP, setToCurrencyKIP] = useState("LAK");
+  const [exchangeRate, setExchangeRate] = useState(1);
+  const [exchangeRates, setExchangeRates] = useState(1);
+  const [currencies, setCurrencies] = useState([]);
+
+  useEffect(() => {
+    // Fetch the list of currencies and exchange rates from an API
+    const getCurrencies = async () => {
+      try {
+        const response = await fetch(
+          "https://api.exchangerate-api.com/v4/latest/USD"
+        );
+        const data = await response.json();
+        const uniqueCurrencies = Array.from(
+          new Set([data.base, ...Object.keys(data.rates)])
+        );
+        setCurrencies(uniqueCurrencies);
+        setExchangeRate(data.rates[toCurrency]);
+        setExchangeRates(data.rates[toCurrencyKIP]);
+      } catch (error) {
+        console.error("Error fetching the currencies:", error);
+      }
+    };
+
+    getCurrencies();
+  }, []);
+
+  useEffect(() => {
+    const getExchangeRate = async () => {
+      if (fromCurrency !== toCurrency) {
+        try {
+          const response = await fetch(
+            `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
+          );
+          const data = await response.json();
+          setExchangeRate(data.rates[toCurrency]);
+        } catch (error) {
+          console.error("Error fetching the exchange rate:", error);
+        }
+      }
+    };
+
+    getExchangeRate();
+  }, [fromCurrency, toCurrency]);
+
+  useEffect(() => {
+    const getExchangeRates = async () => {
+      if (fromCurrency !== toCurrencyKIP) {
+        try {
+          const response = await fetch(
+            `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
+          );
+          const data = await response.json();
+          setExchangeRates(data.rates[toCurrencyKIP]);
+        } catch (error) {
+          console.error("Error fetching the exchange rate:", error);
+        }
+      }
+    };
+
+    getExchangeRates();
+  }, [fromCurrency, toCurrencyKIP]);
+
+  const convertCurrency = () => {
+    return (amount * exchangeRate).toFixed(2);
+  };
+  const convertCurrencyKIP = () => {
+    return (amountKIP * exchangeRates).toFixed(2);
+  };
+  ///////////////////
+
   useEffect(() => {
     const checkToken = async () => {
       try {
@@ -104,108 +181,6 @@ const Bill = () => {
     }
   };
 
-  // const handlePrintBill = () => {
-  //   const billElement = document.querySelector(".bill-detial");
-  //   const printWindow = window.open("", "", "height=500px,width=500px");
-  //   printWindow.document.write(`
-  //     <html>
-  //       <head>
-  //         <style>
-  //           @media print {
-  //             @page {
-  //               size: 58mm 210mm;
-  //               margin: 0;
-  //             }
-  //             body {
-  //               width: 58mm;
-  //               margin: 0;
-  //               font-size: 10px;
-  //               font-family: Arial, sans-serif;
-  //             }
-  //             .bill-detial {
-  //               padding: 15px 10px 10px 10px;
-  //               text-align: start;
-  //             }
-  //             .guopoidHead {
-  //               width: 100%;
-  //               text-align: start;
-  //               border-bottom: #4444 solid 1px;
-  //               grid-template-columns: 1fr;
-  //             }
-  //             .billGopBox {
-  //               display: grid;
-  //               width: 100%;
-  //               margin: auto;
-  //               border-bottom: #4444 solid 1px;
-  //             }
-  //             .box_table {
-  //               width: 100%;
-  //             }
-  //             .txtHeader {
-  //               width: 100%;
-  //               display: flex;
-  //               justify-content: space-between;
-  //               margin: 0.5rem 0;
-  //             }
-  //             .Header {
-  //               width: 100%;
-  //               text-align: center;
-  //               font-size: 18px;
-  //               font-weight: 600;
-  //               margin-bottom: 5px;
-  //             }
-  //             .Header_review{
-  //               display: none;
-  //             }
-  //             .Delivered_review{
-  //               display: none;
-  //             }
-  //             .txt_Des {
-  //               width: 100%;
-  //               text-align: center;
-  //             }
-  //             .titlePrice {
-  //               padding: 0;
-  //               margin-top: -1.2rem;
-  //               display: flex;
-  //               text-align: center;
-  //               justify-content: space-between;
-  //             }
-  //             .place-on {
-  //               text-align: start;
-  //             }
-  //             .Delivered_review{
-  //               display: none;
-
-  //             }
-  //             .txtHeader .Header{
-  //               font-size: 12px;
-  //             }
-  //             .titlePrice h4{
-  //               font-size: 12px;
-  //               font-weight: 100;
-  //             }
-  //             .Header{
-  //               padding: 10px 0;
-  //               border-bottom: #4444 solid 1px;
-  //             }
-  //             .box_totleAdd_container{
-  //               border-bottom: #4444 solid 1px;
-  //             }
-
-  //           }
-  //         </style>
-  //       </head>
-  //       <body>
-  //         ${billElement.outerHTML}
-  //       </body>
-  //     </html>
-  //   `);
-  //   printWindow.document.close();
-  //   printWindow.print();
-  //   printWindow.close();
-  // };
-
   if (!order_list) {
     return (
       <div className="box_OrderBill_RotatingLines">
@@ -244,10 +219,6 @@ const Bill = () => {
         <>
           <Header />
           <div className="bill">
-            {/* <div className="box_containner_FiPrinter">
-              <FiPrinter id="FiPrinter" onClick={handlePrintBill} />
-            </div> */}
-
             <div className="bill-detial">
               <div className="guopoidHead">
                 <p>주문 ID: {order_list.id}</p>
@@ -292,7 +263,7 @@ const Bill = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="box_totleAdd_container">
                 <p className="box_more_details">
                   자세한 내용: {order_list.province}
@@ -308,26 +279,27 @@ const Bill = () => {
                     })}
                   </p>
                 </div>
+
+                <div className="titlePrice">
+                  <h4>합계 KRW:</h4>
+                  <p>
+                    ₩{" "}
+                    {(totalPrice * convertCurrency()).toLocaleString("en-US", {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                      useGrouping: true,
+                    })}
+                  </p>
+                </div>
                 <div className="titlePrice">
                   <h4>합계 KIP:</h4>
                   <p>
-                    {(totalPrice * usdToKIP).toLocaleString("en-US", {
+                    {(totalPrice * convertCurrencyKIP()).toLocaleString("en-US", {
                       minimumFractionDigits: 0,
                       maximumFractionDigits: 0,
                       useGrouping: true,
                     })}{" "}
                     KIP
-                  </p>
-                </div>
-                <div className="titlePrice">
-                  <h4>합계 KRW:</h4>
-                  <p>
-                    ₩{" "}
-                    {(totalPrice * usdToKrw).toLocaleString("en-US", {
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 0,
-                      useGrouping: true,
-                    })}
                   </p>
                 </div>
               </div>

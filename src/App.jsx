@@ -49,6 +49,7 @@ import WebInfo from "./admin/components/managementInfo/WebInfo";
 import AddInfo from "./admin/components/managementInfo/AddInfo";
 import EditInfo from "./admin/components/managementInfo/EditInfo";
 import { CartProvider } from "./components/cart/CartContext";
+import Currency from "./admin/components/currency/Currency";
 
 function App() {
 
@@ -148,6 +149,7 @@ function App() {
             <Route path="/info" element={<WebInfo />} />
             <Route path="/add-info" element={<AddInfo />} />
             <Route path="/edit-info" element={<EditInfo />} />
+            <Route path="/currency" element={<Currency />} />
           </Routes>
         </Router>
       </CartProvider>

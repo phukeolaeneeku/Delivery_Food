@@ -1,0 +1,45 @@
+.container_currency {
+    width: 90%;
+    z-index: 999;
+    margin: auto;
+    padding: 140px 20px 20px 250px;
+}
+
+.box_currency {
+    width: 100%;
+    height: auto;
+    margin: auto;
+    margin-top: 1rem;
+    padding: 30px 20px 20px 20px;
+    background: #FFF;
+    box-shadow: 0 2px 6px 0 rgba(67, 89, 113, 0.15);
+    border-radius: 10px;
+}
+
+.box_currency_input{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+.input_number{
+    width: 6%;
+    padding: 4px 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.box_select{
+    display: flex;
+    padding: 4px 10px;
+
+}
+.span{
+    padding: 10px;
+}
+.container_toCurrency_toCurrencyKIP{
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    padding: 6px;
+}

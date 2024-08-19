@@ -27,7 +27,84 @@ const Payment = ({ orders, order_from, onPay }) => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const usdToKrw = 15.0;
   const usdToKIP = 25000;
-  const delivery = 2;
+
+   ////////////////
+
+   const [amount, setAmount] = useState(1);
+   const [amountKIP, setAmountKIP] = useState(1);
+   const [fromCurrency, setFromCurrency] = useState("USD");
+   const [toCurrency, setToCurrency] = useState("KRW");
+   const [toCurrencyKIP, setToCurrencyKIP] = useState("LAK");
+   const [exchangeRate, setExchangeRate] = useState(1);
+   const [exchangeRates, setExchangeRates] = useState(1);
+   const [currencies, setCurrencies] = useState([]);
+ 
+   useEffect(() => {
+     // Fetch the list of currencies and exchange rates from an API
+     const getCurrencies = async () => {
+       try {
+         const response = await fetch(
+           "https://api.exchangerate-api.com/v4/latest/USD"
+         );
+         const data = await response.json();
+         const uniqueCurrencies = Array.from(
+           new Set([data.base, ...Object.keys(data.rates)])
+         );
+         setCurrencies(uniqueCurrencies);
+         setExchangeRate(data.rates[toCurrency]);
+         setExchangeRates(data.rates[toCurrencyKIP]);
+       } catch (error) {
+         console.error("Error fetching the currencies:", error);
+       }
+     };
+ 
+     getCurrencies();
+   }, []);
+ 
+   useEffect(() => {
+     const getExchangeRate = async () => {
+       if (fromCurrency !== toCurrency) {
+         try {
+           const response = await fetch(
+             `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
+           );
+           const data = await response.json();
+           setExchangeRate(data.rates[toCurrency]);
+         } catch (error) {
+           console.error("Error fetching the exchange rate:", error);
+         }
+       }
+     };
+ 
+     getExchangeRate();
+   }, [fromCurrency, toCurrency]);
+ 
+ 
+   useEffect(() => {
+     const getExchangeRates = async () => {
+       if (fromCurrency !== toCurrencyKIP) {
+         try {
+           const response = await fetch(
+             `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
+           );
+           const data = await response.json();
+           setExchangeRates(data.rates[toCurrencyKIP]);
+         } catch (error) {
+           console.error("Error fetching the exchange rate:", error);
+         }
+       }
+     };
+ 
+     getExchangeRates();
+   }, [fromCurrency, toCurrencyKIP]);
+ 
+   const convertCurrency = () => {
+     return (amount * exchangeRate).toFixed(2);
+   };
+   const convertCurrencyKIP = () => {
+     return (amountKIP * exchangeRates).toFixed(2);
+   };
+   ///////////////////
 
   var user_id = null;
   if (localStorage.getItem("user")) {
@@ -395,7 +472,7 @@ const Payment = ({ orders, order_from, onPay }) => {
                   총 가격:
                   <span>
                     {" "}
-                    {parseFloat(totalPrice * usdToKIP).toLocaleString("en-US", {
+                    {parseFloat(totalPrice * convertCurrencyKIP()).toLocaleString("en-US", {
                       minimumFractionDigits: 0,
                       maximumFractionDigits: 0,
                       useGrouping: true,
@@ -436,7 +513,7 @@ const Payment = ({ orders, order_from, onPay }) => {
                   <span>
                     {" "}
                     ₩{" "}
-                    {parseFloat(totalPrice * usdToKrw).toLocaleString("en-US", {
+                    {parseFloat(totalPrice * convertCurrency()).toLocaleString("en-US", {
                       minimumFractionDigits: 0,
                       maximumFractionDigits: 0,
                       useGrouping: true,
