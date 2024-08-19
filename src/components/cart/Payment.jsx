@@ -473,7 +473,7 @@ const Payment = ({ orders, order_from, onPay }) => {
             )}
           </div>
          
-          
+          <div></div>
           <Link onClick={handlePay} className="save">
             확인하다
           </Link>
