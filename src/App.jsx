@@ -52,7 +52,6 @@ import { CartProvider } from "./components/cart/CartContext";
 import Currency from "./admin/components/currency/Currency";
 
 function App() {
-
   function ScrollToTopButton() {
     const [isVisible, setIsVisible] = useState(false);
 
@@ -83,14 +82,41 @@ function App() {
     );
   }
 
+  // useEffect(() => {
+  //   const script = document.createElement("script");
+  //   script.src =
+  //     "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+  //   script.async = false;
+  //   document.body.appendChild(script);
+
+  //   window.googleTranslateElementInit = googleTranslateElementInit;
+  // }, []);
+
+  // function googleTranslateElementInit() {
+  //   new window.google.translate.TranslateElement(
+  //     {
+  //       pageLanguage: "en",
+  //       includedLanguages: "en,ko,lo,es,fr,de,ja",
+  //       layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+  //       autoDisplay: false,
+  //     },
+  //     "google_translate_element"
+  //   );
+  // }
+
   return (
     <>
-
+      {/* <div>
+        <div id="google_translate_element" className="fixedElement"></div>
+      </div> */}
       <CartProvider>
         <Router>
           <Routes>
             {/* --------- Login-Signup page---------- */}
-            <Route path="/hotel/:hotelName/room_number/:room_number/address/:address/loginuser" element={<LoginUser />} />
+            <Route
+              path="/hotel/:hotelName/room_number/:room_number/address/:address/loginuser"
+              element={<LoginUser />}
+            />
             <Route path="/loginuser" element={<LoginUser />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/qrcode" element={<QRCode />} />
@@ -104,18 +130,21 @@ function App() {
 
             {/* --------- Home Page ---------- */}
             <Route
-              path="/hotel/:hotelName/room_number/:room_number/address/:address" element={<Home />}
+              path="/hotel/:hotelName/room_number/:room_number/address/:address"
+              element={<Home />}
             />
             <Route path="/" element={<Home />} />
             <Route path="/goods/:goods_id" element={<ProductDetails />} />
             <Route
-              path="/hotel/:hotelName/room_number/:room_number/address/:address/cart" element={<Cart />}
+              path="/hotel/:hotelName/room_number/:room_number/address/:address/cart"
+              element={<Cart />}
             />
             <Route path="/cart" element={<Cart />} />
             <Route path="/address" element={<Address />} />
             <Route path="/payment" element={<Payment />} />
             <Route
-              path="/hotel/:hotelName/room_number/:room_number/address/:address/order" element={<Order />}
+              path="/hotel/:hotelName/room_number/:room_number/address/:address/order"
+              element={<Order />}
             />
             <Route path="/order" element={<Order />} />
             <Route path="/bill/:bill_id" element={<Bill />} />
@@ -154,6 +183,7 @@ function App() {
         </Router>
       </CartProvider>
       <ScrollToTopButton />
+      <div id="google_translate_element"></div>
     </>
   );
 }

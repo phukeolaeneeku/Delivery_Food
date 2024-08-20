@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./header.css";
 import { HiOutlineBuildingStorefront } from "react-icons/hi2";
 import { FaMagnifyingGlass, FaCartShopping, FaRegUser } from "react-icons/fa6";
@@ -12,77 +12,68 @@ import { CiViewTable } from "react-icons/ci";
 
 const Header = ({ set_category_name }) => {
   const location = useLocation();
-  const token = localStorage.getItem("token");
-  const user = localStorage.getItem("user");
-  const [logo, set_logo] = useState(null);
-  const storage = JSON.parse(window.localStorage.getItem("user"));
   const navigate = useNavigate();
-  // const [search, setSearch] = useState(
-  //   new URLSearchParams(window.location.search).get("search")
-  // );
-  const [search, setSearch] = useState(
-    new URLSearchParams(window.location.search).get("search") || ""
-  );
-  var store_id = false;
-  var is_admin = false;
-  if (localStorage.getItem("user")) {
-    store_id = JSON.parse(window.localStorage.getItem("user")).store_id;
-  }
-  if (localStorage.getItem("user")) {
-    is_admin = JSON.parse(window.localStorage.getItem("user")).is_admin;
-  }
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user")) || {};
+  const [logo, setLogo] = useState(null);
+  const [search, setSearch] = useState(new URLSearchParams(window.location.search).get("search") || "");
+  const [isLoading, setIsLoading] = useState(true);
+  const googleTranslateRef = useRef(null);
 
   useEffect(() => {
-    let data = JSON.stringify({
-      token: token,
-    });
-
-    let config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: import.meta.env.VITE_API + "/user/check-token",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token,
-      },
-      data: data,
-    };
-
-    axios
-      .request(config)
-      .then((response) => {
-        if (response.data.result != "success") {
+    if (token) {
+      const checkToken = async () => {
+        try {
+          const response = await axios.post(import.meta.env.VITE_API + "/user/check-token", { token }, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            }
+          });
+          if (response.data.result !== "success") {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            navigate("/");
+          }
+        } catch (error) {
           localStorage.removeItem("token");
           localStorage.removeItem("user");
-          navigate("/");
-          return;
+          console.error(error);
         }
-      })
-      .catch((error) => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        console.log(error);
-      });
-  }, [token]);
+      };
+      checkToken();
+    }
+  }, [token, navigate]);
 
   useEffect(() => {
-    let config = {
-      method: "get",
-      maxBodyLength: Infinity,
-      url: import.meta.env.VITE_API + "/store/web-info",
-      headers: {},
+    const fetchStoreInfo = async () => {
+      try {
+        const response = await axios.get(import.meta.env.VITE_API + "/store/web-info");
+        setLogo(response.data[0]?.logo || null);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchStoreInfo();
+  }, []);
+
+  useEffect(() => {
+    const checkGoogleTranslate = () => {
+      if (window.google && window.google.translate) {
+        new window.google.translate.TranslateElement(
+          { pageLanguage: 'en', 
+            includedLanguages: "en,ko,lo,es,fr,de,ja",
+            layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
+          },
+          googleTranslateRef.current
+        );
+        clearInterval(intervalId);
+      }
     };
 
-    axios
-      .request(config)
-      .then((response) => {
-        // console.log(JSON.stringify(response.data));
-        set_logo(response.data[0].logo);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [logo]);
+    const intervalId = setInterval(checkGoogleTranslate, 100);
+    return () => clearInterval(intervalId);
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -93,33 +84,9 @@ const Header = ({ set_category_name }) => {
     set_category_name("");
   };
 
-  const [isLoading, setIsLoading] = useState(true);
-
   const handleImageLoad = () => {
     setIsLoading(false);
   };
-
-  // useEffect(() => {
-  //   const script = document.createElement("script");
-  //   script.src =
-  //     "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-  //   script.async = false;
-  //   document.body.appendChild(script);
-
-  //   window.googleTranslateElementInit = googleTranslateElementInit;
-  // }, []);
-
-  // function googleTranslateElementInit() {
-  //   new google.translate.TranslateElement(
-  //     {
-  //       pageLanguage: "en",
-  //       includedLanguages: "en,ko,lo",
-  //       layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
-  //       autoDisplay: false,
-  //     },
-  //     "google_translate_element"
-  //   );
-  // }
 
   return (
     <section id="header">
@@ -127,10 +94,6 @@ const Header = ({ set_category_name }) => {
         <div className="headWithBox">
           <div className="headMenu">
             <div className="logo1">
-              {/* <Link to="/">
-                <img src={logo} alt="Logo" onClick={handleProductsAll} />
-              </Link> */}
-
               <Link to="/">
                 {isLoading && (
                   <div>
@@ -142,13 +105,11 @@ const Header = ({ set_category_name }) => {
                       strokeWidth="5"
                       animationDuration="0.75"
                       ariaLabel="rotating-lines-loading"
-                      wrapperStyle={{}}
-                      wrapperClass=""
                     />
                   </div>
                 )}
                 <img
-                  src={logo}
+                  src={logo || Logo1}
                   alt="Logo"
                   onClick={handleProductsAll}
                   onLoad={handleImageLoad}
@@ -170,9 +131,7 @@ const Header = ({ set_category_name }) => {
                 </Link>
                 <Link
                   to="/order"
-                  className={
-                    location.pathname === "/order" ? "link active" : "link"
-                  }
+                  className={location.pathname === "/order" ? "link active" : "link"}
                 >
                   주문
                 </Link>
@@ -197,16 +156,14 @@ const Header = ({ set_category_name }) => {
               </div>
             </form>
 
-            {/* <div id="google_translate_element" className="fixedElement"></div> */}
+            <div ref={googleTranslateRef}></div>
 
             {user ? (
               <div className="right_ofHeadBox">
                 <div className="linkLi">
                   <Link
                     to="/table"
-                    className={
-                      location.pathname === "/table" ? "link active" : "link"
-                    }
+                    className={location.pathname === "/table" ? "link active" : "link"}
                   >
                     <CiViewTable className="head_colorrCart" />
                   </Link>
@@ -214,9 +171,7 @@ const Header = ({ set_category_name }) => {
                 <div className="linkLi">
                   <Link
                     to="/cart"
-                    className={
-                      location.pathname === "/cart" ? "link active" : "link"
-                    }
+                    className={location.pathname === "/cart" ? "link active" : "link"}
                   >
                     <FaCartShopping className="head_colorrCart" />
                   </Link>
@@ -224,16 +179,14 @@ const Header = ({ set_category_name }) => {
                 <div className="linkLi">
                   <Link
                     to="/more"
-                    className={
-                      location.pathname === "/more" ? "link active" : "link"
-                    }
+                    className={location.pathname === "/more" ? "link active" : "link"}
                   >
                     <FaRegUser className="head_colorrCart" />
                   </Link>
                 </div>
-                {storage.is_admin !== false && (
+                {user.is_admin && (
                   <div className="userAndstore">
-                    <Link to={`/dashboard`}>
+                    <Link to="/dashboard">
                       <AiOutlineDashboard className="head_colorr" />
                     </Link>
                   </div>

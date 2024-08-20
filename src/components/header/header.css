@@ -57,7 +57,7 @@
 }
 
 .headWithBox {
-    width: 80%;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
     margin: 0 auto;
@@ -222,13 +222,8 @@
 
     .fixedElement {
         display: flex;
-        justify-content: center;
-        position: relative;
-        bottom: 0;
-        margin-left: 0vw;
-        padding: 1rem 1rem 1rem 1rem;
-        background-color: #115c9a9e;
-        z-index: 999;
+        align-items: center;
+        border-radius: 5px;
       }
 
     .search_wrap {
