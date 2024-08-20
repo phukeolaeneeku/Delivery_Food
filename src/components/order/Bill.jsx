@@ -23,6 +23,9 @@ const Bill = () => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
+
+  console.log("order_list...", order_list)
+
   ////////////////
 
   const [amount, setAmount] = useState(1);
@@ -218,19 +221,20 @@ const Bill = () => {
       ) : (
         <>
           <Header />
+          <div className="header"></div>
           <div className="bill">
             <div className="bill-detial">
               <div className="guopoidHead">
-                <p>주문 ID: {order_list.id}</p>
-                <p>날짜: {new Date(order_list.created_at).toLocaleString()}</p>
+                <p>Orders ID: {order_list.id}</p>
+                <p>Date time: {new Date(order_list.created_at).toLocaleString()}</p>
               </div>
               <div className="billGopBox">
                 <div className="box_table">
                   <div className="txtHeader">
-                    <div className="Header">제품명</div>
-                    <div className="Header">가격</div>
-                    <div className="Header">양</div>
-                    <div className="Header">물</div>
+                    <div className="Header">Product name</div>
+                    <div className="Header">Price</div>
+                    <div className="Header">Amount</div>
+                    <div className="Header">Water</div>
                     {order_list.status === "Delivered" && (
                       <div className="Header_review">리뷰</div>
                     )}
@@ -254,7 +258,7 @@ const Bill = () => {
                               className="Delivered_review"
                               onClick={() => handleReview(item.product.id)}
                             >
-                              리뷰
+                              Review
                             </button>
                           </div>
                         )}
@@ -266,10 +270,10 @@ const Bill = () => {
 
               <div className="box_totleAdd_container">
                 <p className="box_more_details">
-                  자세한 내용: {order_list.province}
+                More details: {order_list.province}
                 </p>
                 <div className="titlePrice">
-                  <h4>합계 USD:</h4>
+                  <h4>Total USD:</h4>
                   <p>
                     ${" "}
                     {totalPrice.toLocaleString("en-US", {
@@ -281,7 +285,7 @@ const Bill = () => {
                 </div>
 
                 <div className="titlePrice">
-                  <h4>합계 KRW:</h4>
+                  <h4>Total KRW:</h4>
                   <p>
                     ₩{" "}
                     {(totalPrice * convertCurrency()).toLocaleString("en-US", {
@@ -292,7 +296,7 @@ const Bill = () => {
                   </p>
                 </div>
                 <div className="titlePrice">
-                  <h4>합계 KIP:</h4>
+                  <h4>Total KIP:</h4>
                   <p>
                     {(totalPrice * convertCurrencyKIP()).toLocaleString("en-US", {
                       minimumFractionDigits: 0,
@@ -306,10 +310,10 @@ const Bill = () => {
 
               <div className="box_place">
                 <div className="place-on">
-                  <p>결제수단: {order_list.account_name}</p>
-                  <p>연락처: +856{order_list.tel}</p>
-                  <p>배송받을 주소: {order_list.district}</p>
-                  <p>지위: {order_list.status}</p>
+                  <p>Payment method: {order_list.account_name}</p>
+                  <p>Contact: +856{order_list.tel}</p>
+                  <p>Delivery address: {order_list.district}</p>
+                  <p>Status: {order_list.status}</p>
                 </div>
               </div>
             </div>

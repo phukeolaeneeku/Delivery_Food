@@ -52,7 +52,8 @@ const Banner = () => {
   }, [activeSlide]);
 
   return (
-      <div>
+      <div >
+        <div className="header"></div>
         <div className="slider_banner">
           <div className="slide_banner"  >
             <img src={background_image} alt="" />

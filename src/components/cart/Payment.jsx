@@ -230,7 +230,7 @@ const Payment = ({ orders, order_from, onPay }) => {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(store_account_number);
     MySwal.fire({
-      text: "계좌번호가 클립보드에 복사되었습니다!",
+      text: "Your account number has been copied to your clipboard!",
       icon: "success",
     });
   };
@@ -238,14 +238,14 @@ const Payment = ({ orders, order_from, onPay }) => {
   const handlePay = () => {
     if (!tel) {
       MySwal.fire({
-        text: "연락처나 카카오톡 아이디를 추가해주세요!",
+        text: "Please add your contact information or KakaoTalk ID!",
         icon: "question",
       });
       return;
     }
     if (!district) {
       MySwal.fire({
-        text: "주소를 추가해주세요!",
+        text: "Please add your address!",
         icon: "question",
       });
       return;
@@ -289,7 +289,7 @@ const Payment = ({ orders, order_from, onPay }) => {
       .request(config)
       .then((response) => {
         MySwal.fire({
-          text: "주문이 완료되었습니다.",
+          text: "Your order has been completed.",
           icon: "success",
         });
         if (order_from === "buy_now") {
@@ -332,10 +332,11 @@ const Payment = ({ orders, order_from, onPay }) => {
   return (
     <>
       <Header />
+      <div className="header"></div>
       <div className="guopBoxPayment_container">
-        <h2 className="h2_boxPayment">지불</h2>
+        <h2 className="h2_boxPayment">Payment</h2>
         <div className="adress_payment_content">
-          <h4>세부:</h4>
+          <h4>Details:</h4>
           {orders.map((product, index) => (
             <div key={index}>
               {product.items.map((item, itemIndex) => (
@@ -343,7 +344,7 @@ const Payment = ({ orders, order_from, onPay }) => {
                   <div className="box_item_images">
                     <img src={item.images} alt="" />
                     <div className="box_item_text_payment">
-                      <p>제품명: {item.name}</p>
+                      <p>Product name: {item.name}</p>
                       {/* {item.color != 0 ?(
                         <p>Type of menu: {item.color}</p>
                       ):(
@@ -351,7 +352,7 @@ const Payment = ({ orders, order_from, onPay }) => {
                       )} */}
 
                       <p>
-                        가격: $
+                      Price: $
                         {parseFloat(item.price).toLocaleString("en-US", {
                           minimumFractionDigits: 0,
                           maximumFractionDigits: 0,
@@ -359,7 +360,7 @@ const Payment = ({ orders, order_from, onPay }) => {
                         })}
                       </p>
                       <p>
-                        수량:{" "}
+                      Quantity:{" "}
                         {parseFloat(item.quantity).toLocaleString("en-US", {
                           minimumFractionDigits: 0,
                           maximumFractionDigits: 0,
@@ -367,14 +368,14 @@ const Payment = ({ orders, order_from, onPay }) => {
                         })}
                       </p>
                       {item.size != 0 ? (
-                        <p className="box_txtFor_PC">물의 종류: {item.size}</p>
+                        <p className="box_txtFor_PC">Type of water: {item.size}</p>
                       ) : (
                         <p></p>
                       )}
-                      <div className="box_txtFor_PC">추가 요청 사항:</div>
+                      <div className="box_txtFor_PC">Additional Requests:</div>
                       <textarea
                         type="text"
-                        placeholder="서술..."
+                        placeholder="Description..."
                         className="txt_textarea_descriptionPC"
                         value={
                           more[index * product.items.length + itemIndex]
@@ -391,17 +392,17 @@ const Payment = ({ orders, order_from, onPay }) => {
                     </div>
                   </div>
                   {item.size != 0 ? (
-                    <p className="box_txtFor_Mobile">물의 종류: {item.size}</p>
+                    <p className="box_txtFor_Mobile">Type of water: {item.size}</p>
                   ) : (
                     <p></p>
                   )}
                   <div className="txt_textarea_description_Mobiles">
-                    추가 요청 사항:
+                  Additional requests:
                   </div>
 
                   <textarea
                     type="text"
-                    placeholder="서술..."
+                    placeholder="Description..."
                     className="txt_textarea_description_Mobile"
                     value={
                       more[index * product.items.length + itemIndex]
@@ -422,34 +423,33 @@ const Payment = ({ orders, order_from, onPay }) => {
             
           ))}
           <div className="box_address">
-            <h4>주소:</h4>
+            <h4>Address:</h4>
             <form className="box_address_input">
               <div className="box">
-                <label htmlFor="prov">연락하다:</label>
+                <label htmlFor="prov">Contact:</label>
                 <input
                   type="text"
                   id="prov"
                   value={tel}
                   onChange={handleTel}
-                  placeholder="전화번호 또는 카카오톡 아이디... "
+                  placeholder="Phone number or KakaoTalk ID... "
                 />
               </div>
 
               <div className="box">
-                <label htmlFor="city">주소:</label>
+                <label htmlFor="city">Address:</label>
                 <input
                   type="text"
                   id="city"
                   value={district}
                   onChange={handleDistrict}
-                  placeholder="상세 주소 마을, 도시, 호텔..."
+                  placeholder="Detailed address village, city, hotel..."
                 />
               </div>
 
               <div className="box">
                 <label htmlFor="category">
-                  송금의 경우 은행계좌명을 입력하시고, 현금결제의 경우 "현금"을
-                  입력하세요.
+                For remittance, enter your bank account name, and for cash payment, enter “cash.”
                 </label>
                 <select
                   name="category"
@@ -457,10 +457,10 @@ const Payment = ({ orders, order_from, onPay }) => {
                   required
                   onChange={handlePaymentMethod}
                 >
-                  <option value="">현금 또는 이체를 선택하세요</option>
+                  <option value="">Choose cash or transfer</option>
                   <option value="USD">USD</option>
                   <option value="KIP">KIP</option>
-                  <option value="TransferKRW"> 이체를 KRW</option>
+                  <option value="TransferKRW"> transfer KRW</option>
                 </select>
               </div>
             </form>
@@ -469,7 +469,7 @@ const Payment = ({ orders, order_from, onPay }) => {
             {paymentMethod === "KIP" ? (
               <div className="box_address_input">
                 <p className="box_containner_totals">
-                  총 가격:
+                Total price:
                   <span>
                     {" "}
                     {parseFloat(totalPrice * convertCurrencyKIP()).toLocaleString("en-US", {
@@ -485,21 +485,21 @@ const Payment = ({ orders, order_from, onPay }) => {
               <div className="box_address_input">
                 <div className="box">
                   <label htmlFor="name">
-                    주문자 성함으로 송금인을 설정해서 보내주십시오:
+                  Please send the remittance to the name of the orderer:
                   </label>
                   <input
                     type="text"
                     id="name"
                     value={account_name}
                     onChange={handleAccountName}
-                    placeholder="주문자 성함으로 송금인을 설정해서 보내주십시오..."
+                    placeholder="Please set the remittance sender to the name of the orderer and send it..."
                   />
                 </div>
 
-                <p className="box_transfer_p_line">예금주 이창섭 신한은행</p>
+                <p className="box_transfer_p_line">Depositor Lee Chang-seop Shinhan Bank</p>
                 <div className="boxaccount_number">
                   <div className="boxaccount_number_p">
-                    <p>계좌번호:</p>
+                    <p>Account number:</p>
                     <p>{store_account_number}</p>
                   </div>
                   <FiCopy
@@ -509,7 +509,7 @@ const Payment = ({ orders, order_from, onPay }) => {
                 </div>
 
                 <p className="box_containner_totals">
-                  총 가격:
+                Total price:
                   <span>
                     {" "}
                     ₩{" "}
@@ -535,7 +535,7 @@ const Payment = ({ orders, order_from, onPay }) => {
             {paymentMethod !== "KIP" && paymentMethod !== "TransferKRW" && (
               <>
                 <p className="box_containner_total">
-                  총 가격:
+                Total price:
                   <span>
                     {" "}
                     $
@@ -552,7 +552,7 @@ const Payment = ({ orders, order_from, onPay }) => {
          
           <div></div>
           <Link onClick={handlePay} className="save">
-            확인하다
+          Check
           </Link>
         </div>
       </div>

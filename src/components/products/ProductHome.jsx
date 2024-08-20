@@ -233,7 +233,7 @@ const ProductHome = () => {
       <div className="product">
         <div className="productHead_content">
           <h1 className="htxthead">
-            <span className="spennofStyle"></span>제품
+            <span className="spennofStyle"></span>Products
           </h1>
         </div>
         {goods_list.length > 0 ? (

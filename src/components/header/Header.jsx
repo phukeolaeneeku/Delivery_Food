@@ -62,7 +62,7 @@ const Header = ({ set_category_name }) => {
       if (window.google && window.google.translate) {
         new window.google.translate.TranslateElement(
           { pageLanguage: 'en', 
-            includedLanguages: "en,ko,lo,es,fr,de,ja",
+            includedLanguages: "en,ko,lo",
             layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
           },
           googleTranslateRef.current
@@ -127,13 +127,13 @@ const Header = ({ set_category_name }) => {
                   Home
                 </Link>
                 <Link to="https://open.kakao.com/o/gUkkzsIg" className="link">
-                  카카오톡
+                Kakaotalk
                 </Link>
                 <Link
                   to="/order"
                   className={location.pathname === "/order" ? "link active" : "link"}
                 >
-                  주문
+                  Orders
                 </Link>
               </div>
             </div>
@@ -150,7 +150,7 @@ const Header = ({ set_category_name }) => {
                   type="text"
                   value={search}
                   className="input_search_heaederr"
-                  placeholder="찾다..."
+                  placeholder="Search..."
                   onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
@@ -160,14 +160,14 @@ const Header = ({ set_category_name }) => {
 
             {user ? (
               <div className="right_ofHeadBox">
-                <div className="linkLi">
+                {/* <div className="linkLi">
                   <Link
                     to="/table"
                     className={location.pathname === "/table" ? "link active" : "link"}
                   >
                     <CiViewTable className="head_colorrCart" />
                   </Link>
-                </div>
+                </div> */}
                 <div className="linkLi">
                   <Link
                     to="/cart"

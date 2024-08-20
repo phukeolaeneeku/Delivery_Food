@@ -260,7 +260,7 @@ function ProductDetails() {
     }
 
     MySwal.fire({
-      text: "이 상품이 장바구니에 추가되었습니다.",
+      text: "This product has been added to your shopping cart.",
       icon: "success",
     });
   };
@@ -346,6 +346,7 @@ function ProductDetails() {
       ) : (
         <>
           <Header />
+          <div className="header"></div>
           <div className="contentBody">
             <div className="box_betavinOfob">
               {product ? (
@@ -358,17 +359,19 @@ function ProductDetails() {
                       <h1 className="txt_nameP"> {product.name}</h1>
                       <div className="container_txt">
                         {" "}
-                        가격: ${product.format_price}
+                        Price: ${product.format_price}
                       </div>
                       <div className="container_txt">
                         {" "}
-                        수량: {product.quantity}
+                        Quantity: {product.quantity}
                       </div>
 
                       {product.description === "not" ? (
                         <p></p>
                       ) : (
-                        <div className="container_txt">메뉴가 설정되었습니다: {product.description}</div>
+                        <div className="container_txt">
+                          The menu is set: {product.description}
+                        </div>
                       )}
 
                       {/* <div>Delivery:</div> */}
@@ -430,7 +433,7 @@ function ProductDetails() {
                       <div className="size_product_type_water">
                         {product.sizes.length !== 0 ? (
                           <p className="txt_choose_typeOFwater">
-                            음료 두가지를 추가 적으로 선택하 실 수 있습니다.
+                            You can choose two additional drinks.
                           </p>
                         ) : (
                           <p></p>
@@ -485,7 +488,7 @@ function ProductDetails() {
                           }}
                         >
                           {/* <Link className="echbtn btnBut" to={"/payment"}> */}
-                          지금 구매
+                          Buy now
                         </Link>
                         <Link
                           className="echbtn btnAdd"
@@ -493,7 +496,7 @@ function ProductDetails() {
                             addToCart(product, color, size, quantity)
                           }
                         >
-                          장바구니에 추가
+                          Add to Cart
                         </Link>
                       </div>
                     </div>
@@ -517,10 +520,10 @@ function ProductDetails() {
               )}
 
               <div className="review-list">
-                <h2 className="review-list-title">모든 리뷰</h2>
+                <h2 className="review-list-title">All reviews</h2>
                 {displayedReviews.length === 0 ? (
                   <p className="no-reviews-message">
-                    사용 가능한 리뷰가 없습니다.
+                    There are no reviews available.
                   </p>
                 ) : (
                   <ul className="reviews">
@@ -546,7 +549,7 @@ function ProductDetails() {
               </div>
             </div>
             <h2 className="box_betavinOfob asd2">
-              <span className="spennofStyle"> </span>더 많은 제품
+              <span className="spennofStyle"> </span>More products
             </h2>
             <div className="product-area">
               {products_list.map(

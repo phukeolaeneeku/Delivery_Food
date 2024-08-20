@@ -48,7 +48,7 @@ const Menu = () => {
         {data.map((i, index) => (
           <div className="footer_Container" key={index}>
             <div className="footconentBox">
-              <h3 className="txt_footHead">대략</h3>
+              <h3 className="txt_footHead">About us</h3>
               <Link to="/" className="txt_pFoot">
                 <img src={i.logo} alt="" />
               </Link>
@@ -56,14 +56,14 @@ const Menu = () => {
             </div>
 
             <div className="footconentBox">
-              <h3 className="txt_footHead">문의하기</h3>
-              <p className="txt_pFoot">핸드폰: {i.tel1}</p>
+              <h3 className="txt_footHead">Contact us</h3>
+              <p className="txt_pFoot">Phone: {i.tel1}</p>
               {/* <p className="txt_pFoot">Phone: {i.tel2}</p> */}
-              <p className="txt_pFoot">이메일: {i.email}</p>
-              <p className="txt_pFoot">주소: {i.address}</p>
+              <p className="txt_pFoot">Email: {i.email}</p>
+              <p className="txt_pFoot">Address: {i.address}</p>
             </div>
             <div className="footconentBox3">
-              <h3 className="txt_footHead txh3">음식 찾기 URL</h3>
+              <h3 className="txt_footHead txh3">Find foodURL</h3>
               <div className="foot_contentItem">
                 <img src={QRCode_delivery} alt="QrdownloadApp" />
               </div>

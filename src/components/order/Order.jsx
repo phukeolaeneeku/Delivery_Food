@@ -129,13 +129,14 @@ const Order = () => {
   return (
     <>
       <Header />
+      <div className="header"></div>
       <section id="container_order_item">
         <div className="container_order_all">
           {/* <Link to="/" className="box_management_iconnback">
             <IoIosArrowBack id="icons_back" />
             <p>Back</p>
           </Link> */}
-          <h2>주문</h2>
+          <h2>Orders</h2>
 
           {loading ? (
             <div className="box_Order_RotatingLines">
@@ -152,7 +153,7 @@ const Order = () => {
               />
             </div>
           ) : display_order.length === 0 ? (
-            <p className="no-reviews-message">지금은 주문이 없습니다</p>
+            <p className="no-reviews-message">There are no orders right now</p>
           ) : (
             display_order.map((item) => (
               <Link
@@ -163,12 +164,12 @@ const Order = () => {
                 <div className="box_item_order_text">
                   <p>ID: {item.id}</p>
                   <p className="box_text_ForPC">
-                  날짜 시간: {new Date(item.created_at).toLocaleString()}
+                  Date time: {new Date(item.created_at).toLocaleString()}
                   </p>
-                  <p>지위: {item.status}</p>
+                  <p>Status: {item.status}</p>
                 </div>
                 <p className="box_text_ForMobile">
-                날짜 시간: {new Date(item.created_at).toLocaleString()}
+                Date time: {new Date(item.created_at).toLocaleString()}
                 </p>
               </Link>
             ))
@@ -187,7 +188,7 @@ const Order = () => {
               className="toggle-reviews-button"
               onClick={handleToggleOrders}
             >
-              {show_all_order ? "간략히 표시" : "더보기"}
+              {show_all_order ? "Show less" : "See more"}
             </button>
           </div>
         )}
@@ -197,7 +198,7 @@ const Order = () => {
             <>
               <h2 className="box_betavinOfob asd2">
                 <span className="spennofStyle" />
-                더 많은 제품
+                More products
               </h2>
               <div className="product-area">
                 {products_list.map(

@@ -160,7 +160,7 @@ function ReviewProduct(id) {
       .request(config)
       .then((response) => {
         MySwal.fire({
-          text: "성공적인 검토.",
+          text: "Successful review.",
           icon: "success",
         });
         window.location.reload(false);
@@ -176,7 +176,7 @@ function ReviewProduct(id) {
   return (
     <>
       <Header />
-
+      <div className="header"></div>
       <div className="contentBody">
         {/* <Link to="/order" className="box_back_icons_back">
           <IoIosArrowBack id="icons_IoIosArrowBack" />
@@ -211,18 +211,18 @@ function ReviewProduct(id) {
 
                 {review.length != "" ? (
                   <div className="box_comments">
-                    <h1>이미 댓글을 달았습니다.</h1> <br />
+                    <h1>You already commented.</h1> <br />
                     <div className="txt_review">
-                      <p>논평: {review.comment}</p>
-                      <p>평가: {review.rating}</p>
+                      <p>Comment: {review.comment}</p>
+                      <p>Rating: {review.rating}</p>
                       <p>
-                        날짜: {new Date(review.created_at).toLocaleString()}
+                      Date: {new Date(review.created_at).toLocaleString()}
                       </p>
                     </div>
                   </div>
                 ) : (
                   <div className="box_leave_review">
-                    <h1>리뷰를 남겨주세요</h1>
+                    <h1>Please leave a review</h1>
                     <div className="box_container_start">
                       {[...Array(5)].map((_, index) => (
                         <span
@@ -248,12 +248,12 @@ function ReviewProduct(id) {
                         cols="50"
                         value={comment}
                         onChange={handleCommentChange}
-                        placeholder="여기에 리뷰를 작성하세요..."
+                        placeholder="Write your review here..."
                         className="container_textarea"
                       />
                       <br />
                       <button type="submit" className="btn_review">
-                        제출하다
+                      Submit
                       </button>
                     </form>
                   </div>

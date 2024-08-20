@@ -1,6 +1,6 @@
 #container_order_item {
     width: 65%;
-    margin: 6rem auto 0 auto;
+    margin: 9rem auto 0 auto;
 }
 .box_Order_RotatingLines{
     text-align: center;
@@ -69,7 +69,7 @@
 @media screen and (max-width: 431px) {
     #container_order_item {
         width: 95%;
-        padding: 15px 0;
+        padding: 0;
     }
     #container_order_item .box_item_order {
         margin-top: 1rem;

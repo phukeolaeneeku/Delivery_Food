@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./App.css";
+import "./app.css";
 
 //------ Login-SignUp Page ------//
 import LoginUser from "./components/loginAndSignup/LoginUser";
@@ -52,35 +52,35 @@ import { CartProvider } from "./components/cart/CartContext";
 import Currency from "./admin/components/currency/Currency";
 
 function App() {
-  function ScrollToTopButton() {
-    const [isVisible, setIsVisible] = useState(false);
+  // function ScrollToTopButton() {
+  //   const [isVisible, setIsVisible] = useState(false);
 
-    const scrollToTop = () => {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    };
+  //   const scrollToTop = () => {
+  //     window.scrollTo({
+  //       top: 0,
+  //       behavior: "smooth",
+  //     });
+  //   };
 
-    const toggleVisibility = () => {
-      setIsVisible(window.pageYOffset > 50);
-    };
+  //   const toggleVisibility = () => {
+  //     setIsVisible(window.pageYOffset > 50);
+  //   };
 
-    useEffect(() => {
-      window.addEventListener("scroll", toggleVisibility);
-      return () => window.removeEventListener("scroll", toggleVisibility);
-    }, []);
+  //   useEffect(() => {
+  //     window.addEventListener("scroll", toggleVisibility);
+  //     return () => window.removeEventListener("scroll", toggleVisibility);
+  //   }, []);
 
-    return (
-      <div className="scroll-to-top">
-        {isVisible && (
-          <button onClick={scrollToTop}>
-            <i>Click to top</i>
-          </button>
-        )}
-      </div>
-    );
-  }
+  //   return (
+  //     <div className="scroll-to-top">
+  //       {isVisible && (
+  //         <button onClick={scrollToTop}>
+  //           <i>Click to top</i>
+  //         </button>
+  //       )}
+  //     </div>
+  //   );
+  // }
 
   // useEffect(() => {
   //   const script = document.createElement("script");
@@ -182,8 +182,8 @@ function App() {
           </Routes>
         </Router>
       </CartProvider>
-      <ScrollToTopButton />
-      <div id="google_translate_element"></div>
+      {/* <ScrollToTopButton /> */}
+      {/* <div id="google_translate_element"></div> */}
     </>
   );
 }
