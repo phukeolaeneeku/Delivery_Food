@@ -46,42 +46,42 @@ const Signup2 = () => {
   const SignUp = () => {
     if (!data.email) {
       MySwal.fire({
-        text: "이메일을 작성해주세요!",
+        text: "Please enter your email!",
         icon: "question",
       });
       return;
     }
     if (!data.code) {
       MySwal.fire({
-        text: "코드를 채워주세요!",
+        text: "Please fill in the code!",
         icon: "question",
       });
       return;
     }
     if (!data.password) {
       MySwal.fire({
-        text: "비밀번호를 입력해주세요!",
+        text: "Please enter your password!",
         icon: "question",
       });
       return;
     }
     if (!data.password2) {
       MySwal.fire({
-        text: "확인 비밀번호를 입력해주세요!",
+        text: "Please enter your confirmation password!",
         icon: "question",
       });
       return;
     }
     if (data.password != data.password2) {
       MySwal.fire({
-        text: "비밀번호가 일치하지 않습니다!",
+        text: "Password does not match!",
         icon: "question",
       });
       return;
     }
     if (data.password.length <= 7 || data.password2.length <= 7) {
       MySwal.fire({
-        text: "비밀번호는 8자 이상이어야 합니다!",
+        text: "Your password must be at least 8 characters long!",
         icon: "question",
       });
       return;
@@ -161,16 +161,17 @@ const Signup2 = () => {
   return (
     <>
       <Header />
+      <div className="header"></div>
       <div className="container_form_user">
         <form>
 
           {user_tyep == "1" ? (
-            <h2 className="box_container_login_text">사용자 등록</h2>
+            <h2 className="box_container_login_text">User registration</h2>
           ) : (
             <h2>Seller registration</h2>
           )}
           <p>사용자 등록을 진행 중입니다!</p>
-          <label htmlFor="email">이메일</label>
+          <label htmlFor="email">Email</label>
           <div className="container_form_user2">
             <input
               type="email"
@@ -178,7 +179,7 @@ const Signup2 = () => {
               id="email"
               onChange={onChange}
               value={data.email}
-              placeholder="이메일을 입력해주세요..."
+              placeholder="Please enter your email..."
               required
             />
             {minute > 0 || second > 0 ? (
@@ -216,18 +217,18 @@ const Signup2 = () => {
                 id="email_send_btn"
                 className="verification"
               >
-                확인하다
+                Verify
               </div>
             )}
           </div>
-          <label htmlFor="code">코드 확인</label>
+          <label htmlFor="code">Verify code</label>
           <input
             type="text"
             name="code"
             id="code"
             onChange={onChange}
             value={data.code}
-            placeholder="인증번호를 입력해주세요..."
+            placeholder="Please enter your authentication number..."
             required
           />
           {/* {user_tyep == "1" && (
@@ -240,23 +241,23 @@ const Signup2 = () => {
               required
             />
           )} */}
-          <label htmlFor="password">비밀번호</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             name="password"
             onChange={onChange}
             value={data.password}
-            placeholder="비밀번호를 입력해주세요..."
+            placeholder="Please enter your password..."
             required
           />
-          <label htmlFor="password2">비밀번호 확인</label>
+          <label htmlFor="password2">Completed password</label>
           <input
             type="password"
             name="password2"
             id="password2"
             onChange={onChange}
             value={data.password2}
-            placeholder="확인 비밀번호를 입력해주세요..."
+            placeholder="Please enter your confirmation password.."
             required
           />
           {user_tyep == "2" && (
@@ -323,11 +324,11 @@ const Signup2 = () => {
             <p className="error-text">Passwords do not match.</p>
           )} */}
           <button type="button" onClick={SignUp}>
-          등록하다
+          Register
           </button>
           <div className="forgot_password">
-          이미 계정이 있나요?{" "}
-            <Link to="/loginuser">로그인</Link>
+          Already have an account?{" "}
+            <Link to="/loginuser">Login</Link>
           </div>
         </form>
         {/* {errorText.length > 0 && <div>{errorText}</div>} */}

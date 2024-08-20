@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import "./header.css";
 import { HiOutlineBuildingStorefront } from "react-icons/hi2";
 import { FaMagnifyingGlass, FaCartShopping, FaRegUser } from "react-icons/fa6";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import Logo1 from "../../img/Logo1.png";
 import axios from "axios";
 import { AiOutlineDashboard } from "react-icons/ai";
@@ -19,8 +19,14 @@ const Header = ({ set_category_name }) => {
   const [search, setSearch] = useState(new URLSearchParams(window.location.search).get("search") || "");
   const [isLoading, setIsLoading] = useState(true);
   const googleTranslateRef = useRef(null);
+  const { hotelName, room_number, address } = useParams();
 
   useEffect(() => {
+
+    if (hotelName && room_number && address) {
+      return;
+    }
+
     if (token) {
       const checkToken = async () => {
         try {
@@ -43,7 +49,7 @@ const Header = ({ set_category_name }) => {
       };
       checkToken();
     }
-  }, [token, navigate]);
+  }, [token, navigate, hotelName, room_number, address]);
 
   useEffect(() => {
     const fetchStoreInfo = async () => {
@@ -90,6 +96,7 @@ const Header = ({ set_category_name }) => {
 
   return (
     <section id="header">
+      <div className="header"></div>
       <div className="navbar">
         <div className="headWithBox">
           <div className="headMenu">
@@ -120,17 +127,21 @@ const Header = ({ set_category_name }) => {
             <div className="boxLiMenu">
               <div className="linkLi">
                 <Link
-                  to="/"
+                  to={(hotelName && room_number && address)
+                    ? `/hotel/${hotelName}/room_number/${room_number}/address/${address}`
+                    : `/`}
                   onClick={handleProductsAll}
                   className={location.pathname === "/" ? "link active" : "link"}
                 >
                   Home
                 </Link>
                 <Link to="https://open.kakao.com/o/gUkkzsIg" className="link">
-                Kakaotalk
+                  Kakaotalk
                 </Link>
                 <Link
-                  to="/order"
+                  to={(hotelName && room_number && address)
+                    ? `/hotel/${hotelName}/room_number/${room_number}/address/${address}/order`
+                    : `/order`}
                   className={location.pathname === "/order" ? "link active" : "link"}
                 >
                   Orders
@@ -168,14 +179,18 @@ const Header = ({ set_category_name }) => {
                     <CiViewTable className="head_colorrCart" />
                   </Link>
                 </div> */}
+                
                 <div className="linkLi">
                   <Link
-                    to="/cart"
+                    to={(hotelName && room_number && address)
+                      ? `/hotel/${hotelName}/room_number/${room_number}/address/${address}/cart`
+                      : `/cart`}
                     className={location.pathname === "/cart" ? "link active" : "link"}
                   >
                     <FaCartShopping className="head_colorrCart" />
                   </Link>
                 </div>
+
                 <div className="linkLi">
                   <Link
                     to="/more"
@@ -184,6 +199,7 @@ const Header = ({ set_category_name }) => {
                     <FaRegUser className="head_colorrCart" />
                   </Link>
                 </div>
+
                 {user.is_admin && (
                   <div className="userAndstore">
                     <Link to="/dashboard">
@@ -191,6 +207,7 @@ const Header = ({ set_category_name }) => {
                     </Link>
                   </div>
                 )}
+
               </div>
             ) : (
               <div className="right_ofHeadBox">
@@ -200,7 +217,11 @@ const Header = ({ set_category_name }) => {
                   </Link>
                 </div>
                 <div className="linkLi">
-                  <Link to="/loginuser" className="Box_icon_login_BiLogIn">
+                  <Link to={(hotelName && room_number && address)
+                      ? `/hotel/${hotelName}/room_number/${room_number}/address/${address}`
+                      : `/loginuser`} 
+                  className="Box_icon_login_BiLogIn"
+                  >
                     로그인
                     <BiLogIn id="icon_BiLogIn" />
                   </Link>

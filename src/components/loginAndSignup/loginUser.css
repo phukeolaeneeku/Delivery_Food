@@ -57,6 +57,7 @@
   display: grid;
   text-align: center;
   justify-content: center;
+  margin-top: 2rem;
 }
 
 .container_login_form {

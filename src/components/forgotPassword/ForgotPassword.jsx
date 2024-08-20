@@ -133,6 +133,7 @@ const ForgotPassword = () => {
   return (
     <>
       <Header />
+      <div className="header"></div>
       <div className="container_form_forgot">
         <form onSubmit={handleSubmit}>
           

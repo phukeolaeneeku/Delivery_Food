@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./order.css";
 import Header from "../header/Header";
 import Menu from "../menuFooter/Menu";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import axios from "axios";
 import { RotatingLines } from "react-loader-spinner";
@@ -19,6 +19,8 @@ const Order = () => {
   const [show_all_order, set_show_all_order] = useState(false);
   const [category, set_category] = useState(1);
   const [products_list, set_products_list] = useState([]);
+
+  const { hotelName, room_number, address } = useParams();
 
   useEffect(() => {
     let config = {
@@ -54,6 +56,11 @@ const Order = () => {
   }
 
   useEffect(() => {
+
+    if (hotelName && room_number && address) {
+      return;
+    }
+
     let data = JSON.stringify({
       token: token,
     });
@@ -84,7 +91,7 @@ const Order = () => {
         navigate("/loginuser");
         return;
       });
-  }, [token]);
+  }, [token, hotelName, room_number, address]);
 
   useEffect(() => {
     let data = JSON.stringify({

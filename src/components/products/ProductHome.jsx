@@ -1,7 +1,7 @@
 import "./productHome.css";
 import productImage from "../../img/productImage.png";
 import { useState, useEffect, useMemo } from "react";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useNavigate, Link, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import { HiOutlineBuildingStorefront } from "react-icons/hi2";
 import { FaMagnifyingGlass, FaCartShopping, FaRegUser } from "react-icons/fa6";
@@ -27,6 +27,8 @@ const ProductHome = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
   const totalPages = Math.ceil(goods_list.length / itemsPerPage);
+
+  const { hotelName, room_number, address } = useParams();
 
   // console.log("category_name:", category_name);
 
@@ -242,7 +244,11 @@ const ProductHome = () => {
               (i, index) =>
                 i.category && (
                   <div className="box-product" key={index}>
-                    <Link to={`/goods/${i.id}`}>
+                    <Link to={
+                        (hotelName && room_number && address)
+                          ? `/hotel/${hotelName}/room_number/${room_number}/address/${address}/goods/${i.id}`
+                          : `/goods/${i.id}`
+                      }>
                       <div className="img">
                         <img src={i.images} alt={i.name} />
                       </div>

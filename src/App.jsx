@@ -135,6 +135,7 @@ function App() {
             />
             <Route path="/" element={<Home />} />
             <Route path="/goods/:goods_id" element={<ProductDetails />} />
+            <Route path="/hotel/:hotelName/room_number/:room_number/address/:address/goods/:goods_id" element={<ProductDetails />} />
             <Route
               path="/hotel/:hotelName/room_number/:room_number/address/:address/cart"
               element={<Cart />}
@@ -148,6 +149,7 @@ function App() {
             />
             <Route path="/order" element={<Order />} />
             <Route path="/bill/:bill_id" element={<Bill />} />
+            <Route path="/hotel/:hotelName/room_number/:room_number/address/:address/bill/:bill_id" element={<Bill />} />
             <Route path="/table" element={<Table />} />
 
             {/* --------- Admin ---------- */}

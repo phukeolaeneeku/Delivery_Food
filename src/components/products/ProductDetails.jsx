@@ -10,6 +10,7 @@ import { RotatingLines } from "react-loader-spinner";
 import axios from "axios";
 
 function ProductDetails() {
+  const { hotelName, room_number, address } = useParams();
   const token = localStorage.getItem("token");
   const user = localStorage.getItem("user");
   const [store_id, set_store_id] = useState([]);
@@ -113,6 +114,10 @@ function ProductDetails() {
   const [order, setOrder] = useState([]);
 
   useEffect(() => {
+    if (hotelName && room_number && address) {
+      return;
+    }
+
     let data = JSON.stringify({
       token: token,
     });
@@ -143,7 +148,7 @@ function ProductDetails() {
         navigate("/loginuser");
         return;
       });
-  }, [token]);
+  }, [token, hotelName, room_number, address]);
 
   useEffect(() => {
     const config = {
@@ -556,7 +561,13 @@ function ProductDetails() {
                 (i, index) =>
                   i.category !== "Food" && (
                     <div className="box-product" key={index}>
-                      <Link to={"/goods/" + i.id}>
+                      <Link
+                        to={
+                          hotelName && room_number && address
+                            ? `/hotel/${hotelName}/room_number/${room_number}/address/${address}/goods/${i.id}`
+                            : `/goods/${i.id}`
+                        }
+                      >
                         <div className="img">
                           <img src={i.images} alt="image" />
                         </div>

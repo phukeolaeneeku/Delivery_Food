@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Header from "../header/Header";
 import Menu from "../menuFooter/Menu";
 import productImage from "../../img/productImage.png";
@@ -30,6 +30,8 @@ const Cart = () => {
   const [exchangeRate, setExchangeRate] = useState(1);
   const [exchangeRates, setExchangeRates] = useState(1);
   const [currencies, setCurrencies] = useState([]);
+
+  const { hotelName, room_number, address } = useParams();
 
   useEffect(() => {
     // Fetch the list of currencies and exchange rates from an API
@@ -266,6 +268,11 @@ const Cart = () => {
   }
 
   useEffect(() => {
+
+    if (hotelName && room_number && address) {
+      return;
+    }
+
     let data = JSON.stringify({
       token: token,
     });
@@ -296,7 +303,7 @@ const Cart = () => {
         navigate("/loginuser");
         return;
       });
-  }, [token]);
+  }, [token, hotelName, room_number, address]);
 
   // console.log("Cart:", cart); // Add this line to debug
 
@@ -470,7 +477,9 @@ const Cart = () => {
                 (i, index) =>
                   i.category !== "Food" && (
                     <div className="box-product" key={index}>
-                      <Link to={"/goods/" + i.id}>
+                      <Link to={(hotelName && room_number && address)
+                          ? `/hotel/${hotelName}/room_number/${room_number}/address/${address}/goods/${i.id}`
+                          : `/goods/${i.id}`}>
                         <div className="img">
                           <img src={i.images} alt="image" />
                         </div>
@@ -483,7 +492,6 @@ const Cart = () => {
                         <ul className="txtOFproduct2">
                           <li className="name">{i.name}</li>
                           <li className="price">$ {i.format_price}</li>
-                          {/* <li className="desc">{i.description}</li> */}
                         </ul>
                       </Link>
                     </div>

@@ -2,7 +2,7 @@ import { FiPlus, FiCopy } from "react-icons/fi";
 import "./payment.css";
 import Menu from "../menuFooter/Menu";
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Header from "../header/Header";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -25,90 +25,92 @@ const Payment = ({ orders, order_from, onPay }) => {
   const [copied, setCopied] = useState(false);
   const MySwal = withReactContent(Swal);
   const [paymentMethod, setPaymentMethod] = useState("");
-  const usdToKrw = 15.0;
-  const usdToKIP = 25000;
+  const { hotelName, room_number, address } = useParams();
 
-   ////////////////
+  const adr = hotelName + room_number + address;
 
-   const [amount, setAmount] = useState(1);
-   const [amountKIP, setAmountKIP] = useState(1);
-   const [fromCurrency, setFromCurrency] = useState("USD");
-   const [toCurrency, setToCurrency] = useState("KRW");
-   const [toCurrencyKIP, setToCurrencyKIP] = useState("LAK");
-   const [exchangeRate, setExchangeRate] = useState(1);
-   const [exchangeRates, setExchangeRates] = useState(1);
-   const [currencies, setCurrencies] = useState([]);
- 
-   useEffect(() => {
-     // Fetch the list of currencies and exchange rates from an API
-     const getCurrencies = async () => {
-       try {
-         const response = await fetch(
-           "https://api.exchangerate-api.com/v4/latest/USD"
-         );
-         const data = await response.json();
-         const uniqueCurrencies = Array.from(
-           new Set([data.base, ...Object.keys(data.rates)])
-         );
-         setCurrencies(uniqueCurrencies);
-         setExchangeRate(data.rates[toCurrency]);
-         setExchangeRates(data.rates[toCurrencyKIP]);
-       } catch (error) {
-         console.error("Error fetching the currencies:", error);
-       }
-     };
- 
-     getCurrencies();
-   }, []);
- 
-   useEffect(() => {
-     const getExchangeRate = async () => {
-       if (fromCurrency !== toCurrency) {
-         try {
-           const response = await fetch(
-             `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
-           );
-           const data = await response.json();
-           setExchangeRate(data.rates[toCurrency]);
-         } catch (error) {
-           console.error("Error fetching the exchange rate:", error);
-         }
-       }
-     };
- 
-     getExchangeRate();
-   }, [fromCurrency, toCurrency]);
- 
- 
-   useEffect(() => {
-     const getExchangeRates = async () => {
-       if (fromCurrency !== toCurrencyKIP) {
-         try {
-           const response = await fetch(
-             `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
-           );
-           const data = await response.json();
-           setExchangeRates(data.rates[toCurrencyKIP]);
-         } catch (error) {
-           console.error("Error fetching the exchange rate:", error);
-         }
-       }
-     };
- 
-     getExchangeRates();
-   }, [fromCurrency, toCurrencyKIP]);
- 
-   const convertCurrency = () => {
-     return (amount * exchangeRate).toFixed(2);
-   };
-   const convertCurrencyKIP = () => {
-     return (amountKIP * exchangeRates).toFixed(2);
-   };
-   ///////////////////
+  ////////////////
+
+  const [amount, setAmount] = useState(1);
+  const [amountKIP, setAmountKIP] = useState(1);
+  const [fromCurrency, setFromCurrency] = useState("USD");
+  const [toCurrency, setToCurrency] = useState("KRW");
+  const [toCurrencyKIP, setToCurrencyKIP] = useState("LAK");
+  const [exchangeRate, setExchangeRate] = useState(1);
+  const [exchangeRates, setExchangeRates] = useState(1);
+  const [currencies, setCurrencies] = useState([]);
+
+  useEffect(() => {
+    // Fetch the list of currencies and exchange rates from an API
+    const getCurrencies = async () => {
+      try {
+        const response = await fetch(
+          "https://api.exchangerate-api.com/v4/latest/USD"
+        );
+        const data = await response.json();
+        const uniqueCurrencies = Array.from(
+          new Set([data.base, ...Object.keys(data.rates)])
+        );
+        setCurrencies(uniqueCurrencies);
+        setExchangeRate(data.rates[toCurrency]);
+        setExchangeRates(data.rates[toCurrencyKIP]);
+      } catch (error) {
+        console.error("Error fetching the currencies:", error);
+      }
+    };
+
+    getCurrencies();
+  }, []);
+
+  useEffect(() => {
+    const getExchangeRate = async () => {
+      if (fromCurrency !== toCurrency) {
+        try {
+          const response = await fetch(
+            `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
+          );
+          const data = await response.json();
+          setExchangeRate(data.rates[toCurrency]);
+        } catch (error) {
+          console.error("Error fetching the exchange rate:", error);
+        }
+      }
+    };
+
+    getExchangeRate();
+  }, [fromCurrency, toCurrency]);
+
+  useEffect(() => {
+    const getExchangeRates = async () => {
+      if (fromCurrency !== toCurrencyKIP) {
+        try {
+          const response = await fetch(
+            `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
+          );
+          const data = await response.json();
+          setExchangeRates(data.rates[toCurrencyKIP]);
+        } catch (error) {
+          console.error("Error fetching the exchange rate:", error);
+        }
+      }
+    };
+
+    getExchangeRates();
+  }, [fromCurrency, toCurrencyKIP]);
+
+  const convertCurrency = () => {
+    return (amount * exchangeRate).toFixed(2);
+  };
+  const convertCurrencyKIP = () => {
+    return (amountKIP * exchangeRates).toFixed(2);
+  };
+  ///////////////////
 
   var user_id = null;
   if (localStorage.getItem("user")) {
     user_id = JSON.parse(window.localStorage.getItem("user")).user_id;
+  } else {
+    user_id = adr;
   }
   var totalPrice = 0;
 
@@ -124,6 +126,10 @@ const Payment = ({ orders, order_from, onPay }) => {
   }, [orders]); // Update state whenever orders change
 
   useEffect(() => {
+    if (hotelName && room_number && address) {
+      return;
+    }
+
     let data = JSON.stringify({
       token: token,
     });
@@ -152,7 +158,7 @@ const Payment = ({ orders, order_from, onPay }) => {
         console.log(error);
         navigate("/loginuser");
       });
-  }, [token, navigate]);
+  }, [token, navigate, hotelName, room_number, address]);
 
   useEffect(() => {
     if (store_id.length > 0) {
@@ -352,7 +358,7 @@ const Payment = ({ orders, order_from, onPay }) => {
                       )} */}
 
                       <p>
-                      Price: $
+                        Price: $
                         {parseFloat(item.price).toLocaleString("en-US", {
                           minimumFractionDigits: 0,
                           maximumFractionDigits: 0,
@@ -360,7 +366,7 @@ const Payment = ({ orders, order_from, onPay }) => {
                         })}
                       </p>
                       <p>
-                      Quantity:{" "}
+                        Quantity:{" "}
                         {parseFloat(item.quantity).toLocaleString("en-US", {
                           minimumFractionDigits: 0,
                           maximumFractionDigits: 0,
@@ -368,7 +374,9 @@ const Payment = ({ orders, order_from, onPay }) => {
                         })}
                       </p>
                       {item.size != 0 ? (
-                        <p className="box_txtFor_PC">Type of water: {item.size}</p>
+                        <p className="box_txtFor_PC">
+                          Type of water: {item.size}
+                        </p>
                       ) : (
                         <p></p>
                       )}
@@ -392,12 +400,14 @@ const Payment = ({ orders, order_from, onPay }) => {
                     </div>
                   </div>
                   {item.size != 0 ? (
-                    <p className="box_txtFor_Mobile">Type of water: {item.size}</p>
+                    <p className="box_txtFor_Mobile">
+                      Type of water: {item.size}
+                    </p>
                   ) : (
                     <p></p>
                   )}
                   <div className="txt_textarea_description_Mobiles">
-                  Additional requests:
+                    Additional requests:
                   </div>
 
                   <textarea
@@ -419,8 +429,6 @@ const Payment = ({ orders, order_from, onPay }) => {
                 </div>
               ))}
             </div>
-
-            
           ))}
           <div className="box_address">
             <h4>Address:</h4>
@@ -449,7 +457,8 @@ const Payment = ({ orders, order_from, onPay }) => {
 
               <div className="box">
                 <label htmlFor="category">
-                For remittance, enter your bank account name, and for cash payment, enter “cash.”
+                  For remittance, enter your bank account name, and for cash
+                  payment, enter “cash.”
                 </label>
                 <select
                   name="category"
@@ -469,10 +478,12 @@ const Payment = ({ orders, order_from, onPay }) => {
             {paymentMethod === "KIP" ? (
               <div className="box_address_input">
                 <p className="box_containner_totals">
-                Total price:
+                  Total price:
                   <span>
                     {" "}
-                    {parseFloat(totalPrice * convertCurrencyKIP()).toLocaleString("en-US", {
+                    {parseFloat(
+                      totalPrice * convertCurrencyKIP()
+                    ).toLocaleString("en-US", {
                       minimumFractionDigits: 0,
                       maximumFractionDigits: 0,
                       useGrouping: true,
@@ -485,7 +496,7 @@ const Payment = ({ orders, order_from, onPay }) => {
               <div className="box_address_input">
                 <div className="box">
                   <label htmlFor="name">
-                  Please send the remittance to the name of the orderer:
+                    Please send the remittance to the name of the orderer:
                   </label>
                   <input
                     type="text"
@@ -496,7 +507,9 @@ const Payment = ({ orders, order_from, onPay }) => {
                   />
                 </div>
 
-                <p className="box_transfer_p_line">Depositor Lee Chang-seop Shinhan Bank</p>
+                <p className="box_transfer_p_line">
+                  Depositor Lee Chang-seop Shinhan Bank
+                </p>
                 <div className="boxaccount_number">
                   <div className="boxaccount_number_p">
                     <p>Account number:</p>
@@ -509,15 +522,18 @@ const Payment = ({ orders, order_from, onPay }) => {
                 </div>
 
                 <p className="box_containner_totals">
-                Total price:
+                  Total price:
                   <span>
                     {" "}
                     ₩{" "}
-                    {parseFloat(totalPrice * convertCurrency()).toLocaleString("en-US", {
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 0,
-                      useGrouping: true,
-                    })}
+                    {parseFloat(totalPrice * convertCurrency()).toLocaleString(
+                      "en-US",
+                      {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                        useGrouping: true,
+                      }
+                    )}
                   </span>
                 </p>
               </div>
@@ -535,7 +551,7 @@ const Payment = ({ orders, order_from, onPay }) => {
             {paymentMethod !== "KIP" && paymentMethod !== "TransferKRW" && (
               <>
                 <p className="box_containner_total">
-                Total price:
+                  Total price:
                   <span>
                     {" "}
                     $
@@ -549,10 +565,10 @@ const Payment = ({ orders, order_from, onPay }) => {
               </>
             )}
           </div>
-         
+
           <div></div>
           <Link onClick={handlePay} className="save">
-          Check
+            Check
           </Link>
         </div>
       </div>

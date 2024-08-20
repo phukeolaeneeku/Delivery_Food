@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
 const LoginUser = () => {
-  const login_en = "로그인";
+  const login_en = "Login";
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -30,14 +30,14 @@ const LoginUser = () => {
   const Login = (e) => {
     if (!email) {
       MySwal.fire({
-        text: "이메일을 작성해주세요!",
+        text: "Please enter your email!",
         icon: "question",
       });
       return;
     }
     if (!pass) {
       MySwal.fire({
-        text: "비밀번호를 입력해주세요!",
+        text: "Please enter your password!",
         icon: "question",
       });
       return;
@@ -86,7 +86,7 @@ const LoginUser = () => {
         // console.error(error.response.data.message);
         MySwal.fire({
           // text: `${error.response.data.message}`,
-          text: "잘못된 비밀번호입니다.",
+          text: "Invalid password.",
           icon: "question",
         });
 
@@ -98,7 +98,7 @@ const LoginUser = () => {
           navigate("/loginuser", { replace: true });
           MySwal.fire({
             // text: `${error.response.data.message} `,
-            text: "이메일이 존재하지 않습니다.",
+            text: "Email does not exist.",
             icon: "question",
           });
         }
@@ -108,6 +108,7 @@ const LoginUser = () => {
   return (
     <>
       <Header />
+      <div className="header"></div>
       <div className="login_footer">
         <form className="box_container_login2">
           <div className="cover">
@@ -119,23 +120,23 @@ const LoginUser = () => {
 
             <h2 className="box_container_login_text">{login_en}</h2>
             <p className="box_pleaselogin">
-              서비스를 이용하시려면 로그인을 해주세요!
+            Please log in to use the service!
             </p>
             <div className="input">
-              <label>이메일</label>
+              <label>Email</label>
               <input
                 className="input_form"
                 type="email"
-                placeholder="이메일을 입력해주세요..."
+                placeholder="Please enter your email..."
                 required
                 value={email}
                 onChange={handleEmail}
               />
-              <label>비밀번호</label>
+              <label>Password</label>
               <input
                 className="input_form"
                 type="password"
-                placeholder="비밀번호를 입력하세요..."
+                placeholder="Please enter your password..."
                 required
                 value={pass}
                 onChange={handlePass}
@@ -149,22 +150,22 @@ const LoginUser = () => {
           )} */}
 
             <div className="forgot_password">
-              비밀번호를 잊으셨나요?{" "}
+            Forgot your password?{" "}
               <Link to={"/forgotPassword"} className="findpassword">
-                비밀번호 찾기
+              Find password
               </Link>
             </div>
 
             <div className="loginbtn_login">
               <Link type="submit" className="login_btn" onClick={Login}>
-                로그인
+                Login
               </Link>
             </div>
             <div className="googlebtn_btn">
               <p className="box_dont">
-                이번이 처음이신가요?
+              Is this your first time?
                 <Link to={"/signup2"} className="loginmoreLink">
-                  회원가입
+                join the membership
                 </Link>
               </p>
             </div>
