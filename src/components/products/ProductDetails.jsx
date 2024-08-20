@@ -31,8 +31,6 @@ function ProductDetails() {
   const [activeIndex, setActiveIndex] = useState([]);
   const [activeIndices, setActiveIndices] = useState([]);
 
-
-
   const extractSizeNames = (data) => {
     if (data && data.sizes) {
       const sizeNames = data.sizes.map((size) => size.name);
@@ -68,7 +66,7 @@ function ProductDetails() {
 
   // console.log(sizes);
 
-  const [size, set_size] = useState('');
+  const [size, set_size] = useState("");
   const [color, set_color] = useState(0);
   const [quantity, set_quantity] = useState(1);
 
@@ -79,16 +77,16 @@ function ProductDetails() {
   const [showAllReviews, setShowAllReviews] = useState(false);
 
   useEffect(() => {
-    set_size('');
+    set_size("");
   }, [product_id]);
 
   const handleSizeClick = (index) => {
-    setActiveIndices(prevIndices => {
+    setActiveIndices((prevIndices) => {
       let newIndices;
 
       if (prevIndices.includes(index)) {
         // If the index is already selected, remove it
-        newIndices = prevIndices.filter(i => i !== index);
+        newIndices = prevIndices.filter((i) => i !== index);
       } else if (prevIndices.length < 2) {
         // If fewer than 2 indices are active, add the new index
         newIndices = [...prevIndices, index];
@@ -98,18 +96,14 @@ function ProductDetails() {
       }
 
       // Format the sizes as a comma-separated string
-      const formattedSizes = newIndices.map(i => sizes[i]).join(', ');
+      const formattedSizes = newIndices.map((i) => sizes[i]).join(", ");
 
       // Update the state with the comma-separated sizes
       set_size(formattedSizes);
-      
 
       return newIndices;
     });
   };
-  
-
-
 
   var user_id = null;
   if (localStorage.getItem("user")) {
@@ -266,7 +260,7 @@ function ProductDetails() {
     }
 
     MySwal.fire({
-      text: "This product has been added to cart.",
+      text: "이 상품이 장바구니에 추가되었습니다.",
       icon: "success",
     });
   };
@@ -362,11 +356,24 @@ function ProductDetails() {
                     </div>
                     <div className="txtContentproduct">
                       <h1 className="txt_nameP"> {product.name}</h1>
-                      <p className="money_txt">Price: ${product.format_price}</p>
-                      <p className="money_txt">Quantity: {product.quantity}</p>
-                      {/* <p className="txt_description">{product.description}</p>
+                      <div className="container_txt">
+                        {" "}
+                        가격: ${product.format_price}
+                      </div>
+                      <div className="container_txt">
+                        {" "}
+                        수량: {product.quantity}
+                      </div>
 
-                      <div className="star">
+                      {product.description === "not" ? (
+                        <p></p>
+                      ) : (
+                        <div className="container_txt">메뉴가 설정되었습니다: {product.description}</div>
+                      )}
+
+                      {/* <div>Delivery:</div> */}
+
+                      {/* <div className="star">
                         <div
                           className="on"
                           style={{ width: `${StarAVG(product.star_avg)}%` }}
@@ -423,7 +430,7 @@ function ProductDetails() {
                       <div className="size_product_type_water">
                         {product.sizes.length !== 0 ? (
                           <p className="txt_choose_typeOFwater">
-                            You can choose 2 types of water:
+                            음료 두가지를 추가 적으로 선택하 실 수 있습니다.
                           </p>
                         ) : (
                           <p></p>
@@ -440,9 +447,12 @@ function ProductDetails() {
                                 }
                                 onClick={() => handleSizeClick(index)}
                                 style={{
-                                  backgroundColor: activeIndices.includes(index) ? '#FF4F16' : 'white',
-                                  color: activeIndices.includes(index) ? 'white' : 'black',
-                                  
+                                  backgroundColor: activeIndices.includes(index)
+                                    ? "#FF4F16"
+                                    : "white",
+                                  color: activeIndices.includes(index)
+                                    ? "white"
+                                    : "black",
                                 }}
                               >
                                 {size}
@@ -475,7 +485,7 @@ function ProductDetails() {
                           }}
                         >
                           {/* <Link className="echbtn btnBut" to={"/payment"}> */}
-                          Buy Now
+                          지금 구매
                         </Link>
                         <Link
                           className="echbtn btnAdd"
@@ -483,7 +493,7 @@ function ProductDetails() {
                             addToCart(product, color, size, quantity)
                           }
                         >
-                          Add To Cart
+                          장바구니에 추가
                         </Link>
                       </div>
                     </div>
@@ -507,16 +517,18 @@ function ProductDetails() {
               )}
 
               <div className="review-list">
-                <h2 className="review-list-title">All Reviews</h2>
+                <h2 className="review-list-title">모든 리뷰</h2>
                 {displayedReviews.length === 0 ? (
-                  <p className="no-reviews-message">No reviews available</p>
+                  <p className="no-reviews-message">
+                    사용 가능한 리뷰가 없습니다.
+                  </p>
                 ) : (
                   <ul className="reviews">
                     {displayedReviews.map((review) => (
                       <li key={review.id} className="review-item">
-                        <h2 className="rating">
+                        <h1 className="rating">
                           {review.user.nickname || "null"}:
-                        </h2>
+                        </h1>
                         <p className="comment">{review.comment || "null"}</p>
                         {/* Display other review details as needed */}
                       </li>
@@ -534,8 +546,7 @@ function ProductDetails() {
               </div>
             </div>
             <h2 className="box_betavinOfob asd2">
-              <span className="spennofStyle"> </span>
-              More products
+              <span className="spennofStyle"> </span>더 많은 제품
             </h2>
             <div className="product-area">
               {products_list.map(

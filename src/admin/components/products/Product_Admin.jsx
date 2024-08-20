@@ -35,7 +35,7 @@ const Product_Admin = () => {
   const [currentSize, setCurrentSize] = useState("");
   const [currentColor, setCurrentColor] = useState("");
 
-  console.log("goods_list....", goods_list)
+  // console.log("goods_list....", goods_list)
 
   const MySwal = withReactContent(Swal);
   // console.log(categories)
@@ -425,23 +425,24 @@ const Product_Admin = () => {
   /////////////////////handleDelete Category ////////
   const handleDeleteCategory = (id) => {
     let config = {
-      method: 'delete',
+      method: "delete",
       maxBodyLength: Infinity,
       url: import.meta.env.VITE_API + `/store/categories/${id}`,
-      headers: { }
+      headers: {},
     };
-    
-    axios.request(config)
-    .then((response) => {
-      console.log(JSON.stringify(response.data));
-      MySwal.fire({
-        text: "Successful delete the category.",
-        icon: "success",
+
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        MySwal.fire({
+          text: "Successful delete the category.",
+          icon: "success",
+        });
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
   };
 
   // Submit button
@@ -618,6 +619,34 @@ const Product_Admin = () => {
       .catch((error) => console.error(error));
   };
 
+  const ChangeProductDesc = () => {
+    const formdata = new FormData();
+    formdata.append("description", data);
+
+    const requestOptions = {
+      method: "PATCH",
+      body: formdata,
+      redirect: "follow",
+    };
+
+    fetch(
+      import.meta.env.VITE_API + `/store/product/update/${id}`,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        setConfirmationDesc(false);
+        set_data(null);
+        set_id(null);
+
+        MySwal.fire({
+          text: "Product the menu is set has been change.",
+          icon: "success",
+        });
+      })
+      .catch((error) => console.error(error));
+  };
   const ChangeProductCategory = () => {
     const formdata = new FormData();
     formdata.append("category", data);
@@ -828,7 +857,10 @@ const Product_Admin = () => {
                     <div className="img">
                       <img src={category.image} alt="img" />
                     </div>
-                    <div className="deleteBox_productconotents"  onClick={() => handleDeleteCategory(category.id)}>
+                    <div
+                      className="deleteBox_productconotents"
+                      onClick={() => handleDeleteCategory(category.id)}
+                    >
                       <AiOutlineDelete />
                     </div>
                     <div
@@ -944,7 +976,7 @@ const Product_Admin = () => {
           <div id="container_product_admin">
             <div className="productHead_content">
               <h1 className="htxthead">
-                <span className="spennofStyle"></span>ALL Product
+                <span className="spennofStyle"></span>All Product
               </h1>
             </div>
             <div className="contentImageProducts">
@@ -1075,6 +1107,13 @@ const Product_Admin = () => {
                     </div>
                     <div
                       className="box_icon_MdOutlineEdit"
+                      onClick={() => openConfirmationDesc(product.id)}
+                    >
+                      <li>Set or not: {product.description}</li>
+                      <MdOutlineEdit id="icon_edit" />
+                    </div>
+                    <div
+                      className="box_icon_MdOutlineEdit"
                       onClick={() => openConfirmationPopupCategory(product.id)}
                     >
                       <li>Category: {product.category}</li>
@@ -1087,6 +1126,46 @@ const Product_Admin = () => {
                       <li>Quantity: {product.quantity}</li>
                       <MdOutlineEdit id="icon_edit" />
                     </div>
+
+                    {isConfirmationDesc && (
+                      <div className="background_addproductpopup_box">
+                        <div className="hover_addproductpopup_box">
+                          <div className="box_input">
+                            <p>Edit the menu is set</p>
+                            <div className="box2">
+                              <select
+                                name="category"
+                                className="product_category_filter"
+                                value={data}
+                                onChange={(e) => set_data(e.target.value)}
+                              >
+                                <option className="inputproduct" value="">
+                                  Select set or not
+                                </option>
+                                <option value="set">Set</option>
+                                <option value="not">Not</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div className="btn_foasdf">
+                            <button
+                              className="btn_cancel btn_addproducttxt_popup"
+                              onClick={closeConfirmationDesc}
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              className="btn_confirm btn_addproducttxt_popup"
+                              onClick={() => {
+                                ChangeProductDesc();
+                              }}
+                            >
+                              Update
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
 
                     {isConfirmationPopupOpenCategory && (
                       <div className="background_addproductpopup_box">
@@ -1130,6 +1209,7 @@ const Product_Admin = () => {
                         </div>
                       </div>
                     )}
+
                     {isConfirmationPopupOpenPrice && (
                       <div className="background_addproductpopup_box">
                         <div className="hover_addproductpopup_box">

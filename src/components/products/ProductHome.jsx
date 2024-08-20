@@ -233,12 +233,12 @@ const ProductHome = () => {
       <div className="product">
         <div className="productHead_content">
           <h1 className="htxthead">
-            <span className="spennofStyle"></span>Product
+            <span className="spennofStyle"></span>제품
           </h1>
         </div>
-        {currentGoods.length > 0 ? (
+        {goods_list.length > 0 ? (
           <div className="product-area">
-            {currentGoods.map(
+            {goods_list.map(
               (i, index) =>
                 i.category && (
                   <div className="box-product" key={index}>
@@ -277,7 +277,7 @@ const ProductHome = () => {
           </div>
         )}
         {/* Render pagination */}
-        <div className="pagination" style={{ textAlign: "center" }}>
+        {/* <div className="pagination" style={{ textAlign: "center" }}>
           <button
             style={{
               padding: "10px 20px",
@@ -311,7 +311,7 @@ const ProductHome = () => {
           >
             Next
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
