@@ -37,7 +37,7 @@ function PaymentStore() {
     axios
       .request(config)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.result != "success") {
           localStorage.clear();
 
@@ -71,7 +71,7 @@ function PaymentStore() {
     axios
       .request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
         setDataPayment(response.data);
       })
       .catch((error) => {
@@ -79,7 +79,7 @@ function PaymentStore() {
       });
   }, [store_id]);
 
-  console.log(dataPayment);
+  // console.log(dataPayment);
 
   return (
     <>

@@ -2,19 +2,14 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./loginUser.css";
-import { MdArrowBack } from "react-icons/md";
-// import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
-// import { GoogleOAuthProvider } from '@react-oauth/google';
 import axios from "axios";
 import Header from "../header/Header";
 import Menu from "../menuFooter/Menu";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
-
 const LoginUser = () => {
-  const login_en = "Login";
+  const login_en = "로그인";
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -35,14 +30,14 @@ const LoginUser = () => {
   const Login = (e) => {
     if (!email) {
       MySwal.fire({
-        text: "Please fill the email!",
+        text: "이메일을 작성해주세요!",
         icon: "question",
       });
       return;
     }
     if (!pass) {
       MySwal.fire({
-        text: "Please fill the password!",
+        text: "비밀번호를 입력해주세요!",
         icon: "question",
       });
       return;
@@ -90,7 +85,8 @@ const LoginUser = () => {
       .catch((error) => {
         // console.error(error.response.data.message);
         MySwal.fire({
-          text: `${error.response.data.message}`,
+          // text: `${error.response.data.message}`,
+          text: "잘못된 비밀번호입니다.",
           icon: "question",
         });
 
@@ -101,27 +97,12 @@ const LoginUser = () => {
           });
           navigate("/loginuser", { replace: true });
           MySwal.fire({
-            text: `${error.response.data.message} `,
+            // text: `${error.response.data.message} `,
+            text: "이메일이 존재하지 않습니다.",
             icon: "question",
           });
         }
       });
-  };
-
-  const [authUrl, setAuthUrl] = useState("");
-
-  const handleGoogleLogin = async () => {
-    try {
-      const response = await axios.post(
-        import.meta.env.VITE_API + "/user/social/url/",
-        {
-          code: "your_code_here", // Replace 'your_code_here' with the actual code
-        }
-      );
-      setAuthUrl(response.data.url);
-    } catch (error) {
-      console.error("Error fetching Google auth URL:", error);
-    }
   };
 
   return (
@@ -137,22 +118,24 @@ const LoginUser = () => {
             </div> */}
 
             <h2 className="box_container_login_text">{login_en}</h2>
-            <p className="box_pleaselogin">Please Log in to use the service!</p>
+            <p className="box_pleaselogin">
+              서비스를 이용하시려면 로그인을 해주세요!
+            </p>
             <div className="input">
-              <label>Email</label>
+              <label>이메일</label>
               <input
                 className="input_form"
                 type="email"
-                placeholder="Enter your email"
+                placeholder="이메일을 입력해주세요..."
                 required
                 value={email}
                 onChange={handleEmail}
               />
-              <label>Password</label>
+              <label>비밀번호</label>
               <input
                 className="input_form"
                 type="password"
-                placeholder="Enter your password"
+                placeholder="비밀번호를 입력하세요..."
                 required
                 value={pass}
                 onChange={handlePass}
@@ -166,25 +149,24 @@ const LoginUser = () => {
           )} */}
 
             <div className="forgot_password">
-              Forgot your password?{" "}
+              비밀번호를 잊으셨나요?{" "}
               <Link to={"/forgotPassword"} className="findpassword">
-                Find password
+                비밀번호 찾기
               </Link>
             </div>
 
             <div className="loginbtn_login">
               <Link type="submit" className="login_btn" onClick={Login}>
-                Login
+                로그인
               </Link>
             </div>
             <div className="googlebtn_btn">
               <p className="box_dont">
-                Is this your first time?
+                이번이 처음이신가요?
                 <Link to={"/signup2"} className="loginmoreLink">
-                  Join the membership
+                  회원가입
                 </Link>
               </p>
-              
             </div>
           </div>
         </form>

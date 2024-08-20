@@ -20,6 +20,83 @@ const Cart = () => {
   const [category, set_category] = useState(1);
   const [products_list, set_products_list] = useState([]);
 
+  ////////////////
+
+  const [amount, setAmount] = useState(1);
+  const [amountKIP, setAmountKIP] = useState(1);
+  const [fromCurrency, setFromCurrency] = useState("USD");
+  const [toCurrency, setToCurrency] = useState("KRW");
+  const [toCurrencyKIP, setToCurrencyKIP] = useState("LAK");
+  const [exchangeRate, setExchangeRate] = useState(1);
+  const [exchangeRates, setExchangeRates] = useState(1);
+  const [currencies, setCurrencies] = useState([]);
+
+  useEffect(() => {
+    // Fetch the list of currencies and exchange rates from an API
+    const getCurrencies = async () => {
+      try {
+        const response = await fetch(
+          "https://api.exchangerate-api.com/v4/latest/USD"
+        );
+        const data = await response.json();
+        const uniqueCurrencies = Array.from(
+          new Set([data.base, ...Object.keys(data.rates)])
+        );
+        setCurrencies(uniqueCurrencies);
+        setExchangeRate(data.rates[toCurrency]);
+        setExchangeRates(data.rates[toCurrencyKIP]);
+      } catch (error) {
+        console.error("Error fetching the currencies:", error);
+      }
+    };
+
+    getCurrencies();
+  }, []);
+
+  useEffect(() => {
+    const getExchangeRate = async () => {
+      if (fromCurrency !== toCurrency) {
+        try {
+          const response = await fetch(
+            `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
+          );
+          const data = await response.json();
+          setExchangeRate(data.rates[toCurrency]);
+        } catch (error) {
+          console.error("Error fetching the exchange rate:", error);
+        }
+      }
+    };
+
+    getExchangeRate();
+  }, [fromCurrency, toCurrency]);
+
+
+  useEffect(() => {
+    const getExchangeRates = async () => {
+      if (fromCurrency !== toCurrencyKIP) {
+        try {
+          const response = await fetch(
+            `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
+          );
+          const data = await response.json();
+          setExchangeRates(data.rates[toCurrencyKIP]);
+        } catch (error) {
+          console.error("Error fetching the exchange rate:", error);
+        }
+      }
+    };
+
+    getExchangeRates();
+  }, [fromCurrency, toCurrencyKIP]);
+
+  const convertCurrency = () => {
+    return (amount * exchangeRate).toFixed(2);
+  };
+  const convertCurrencyKIP = () => {
+    return (amountKIP * exchangeRates).toFixed(2);
+  };
+  ///////////////////
 
   useEffect(() => {
     let config = {
@@ -167,19 +244,18 @@ const Cart = () => {
     );
   };
 
-  const usdToKrw = 15.0;
+
   const getTotalPriceForStoreKRW = (store_name) => {
     const storeItems = cart.filter((item) => item.store_name === store_name);
     return storeItems.reduce(
-      (total, item) => total + item.price * (item.quantity || 0) * usdToKrw,
+      (total, item) => total + item.price * (item.quantity || 0) * convertCurrency(),
       0
     );
   };
-  const usdToLAK = 25000;
-  const getTotalPriceForStoreLAK = (store_name) => {
+  const getTotalPriceForStoreKIP = (store_name) => {
     const storeItems = cart.filter((item) => item.store_name === store_name);
     return storeItems.reduce(
-      (total, item) => total + item.price * (item.quantity || 0) * usdToLAK,
+      (total, item) => total + item.price * (item.quantity || 0) * convertCurrencyKIP(),
       0
     );
   };
@@ -234,7 +310,6 @@ const Cart = () => {
   //   set_show_payment(true);
   // };
 
-
   return (
     <>
       {show_payment ? (
@@ -259,9 +334,9 @@ const Cart = () => {
                               <div className="box_item_image">
                                 <img src={item.images} alt="" />
                                 <div className="box_item_text">
-                                  <p>name: {item.name}</p>
+                                  <p>제품명: {item.name}</p>
                                   <p>
-                                    price{": "} $
+                                    가격{": "} $
                                     {parseFloat(item.price).toLocaleString(
                                       "en-US",
                                       {
@@ -286,7 +361,7 @@ const Cart = () => {
                                     <p>Type of menu: {item.color}</p>
                                   )} */}
                                   {item.size != 0 && (
-                                    <p>Type of water: {item.size}</p>
+                                    <p>물의 종류: {item.size}</p>
                                   )}
                                 </div>
                                 <div className="box_icon_order">
@@ -342,19 +417,26 @@ const Cart = () => {
                     </div>
                     <div className="box_item_total">
                       <div className="cart_Total_box">
-                        <h2>Cart Total</h2>
+                        <h1>장바구니 합계</h1>
                         <div className="box_item_total_text">
-                          <p>Quantity:</p>
-                          <p>{getTotalItemForStore(store)} Items</p>
+                          <p>수량:</p>
+                          <p>{getTotalItemForStore(store)} 품목</p>
                         </div>
                         <hr />
                         <div className="box_item_total_text">
-                          <p className="txt_Total">Total: </p>
+                          <p className="txt_Total">합계 USD: </p>
                           <p>$ {getTotalPriceForStore(store).toFixed(2)}</p>
                         </div>
+
                         <div className="box_item_total_text">
-                          <p className="txt_Total">Total: </p>
+                          <p className="txt_Total">합계 KRW: </p>
                           <p>₩ {getTotalPriceForStoreKRW(store).toFixed(2)}</p>
+                        </div>
+                        <div className="box_item_total_text">
+                          <p className="txt_Total">합계 KIP: </p>
+                          <p>
+                            {getTotalPriceForStoreKIP(store).toFixed(2)} KIP
+                          </p>
                         </div>
                         <div className="btn">
                           <button
@@ -363,7 +445,7 @@ const Cart = () => {
                             }}
                             className="checkout_btn"
                           >
-                            Checkout
+                            점검
                           </button>
                         </div>
                       </div>
@@ -379,8 +461,7 @@ const Cart = () => {
             <br />
             <br />
             <h2 className="box_betavinOfob asd2">
-              <span className="spennofStyle" />
-              Shopping
+              <span className="spennofStyle" />더 많은 제품
             </h2>
             <div className="product-area">
               {products_list.map(

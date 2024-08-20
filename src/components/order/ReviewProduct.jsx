@@ -160,7 +160,7 @@ function ReviewProduct(id) {
       .request(config)
       .then((response) => {
         MySwal.fire({
-          text: "Successful review.",
+          text: "성공적인 검토.",
           icon: "success",
         });
         window.location.reload(false);
@@ -194,9 +194,9 @@ function ReviewProduct(id) {
               </React.Fragment>
 
               <div className="txtContentproduct">
-                <h1 className="txt_nameP">Name: {product.name}</h1>
+                <h1 className="txt_nameP">제품명: {product.name}</h1>
                 <p className="money_txt">
-                  Price:{" "}$
+                  가격: $
                   {parseFloat(product.price).toLocaleString("en-US", {
                     minimumFractionDigits: 0,
                     maximumFractionDigits: 0,
@@ -211,18 +211,18 @@ function ReviewProduct(id) {
 
                 {review.length != "" ? (
                   <div className="box_comments">
-                    <h1>Already commented.</h1> <br />
+                    <h1>이미 댓글을 달았습니다.</h1> <br />
                     <div className="txt_review">
-                      <p>Comment: {review.comment}</p>
-                      <p>Rating: {review.rating}</p>
+                      <p>논평: {review.comment}</p>
+                      <p>평가: {review.rating}</p>
                       <p>
-                        Date: {new Date(review.created_at).toLocaleString()}
+                        날짜: {new Date(review.created_at).toLocaleString()}
                       </p>
                     </div>
                   </div>
                 ) : (
                   <div className="box_leave_review">
-                    <h1>Leave a Review</h1>
+                    <h1>리뷰를 남겨주세요</h1>
                     <div className="box_container_start">
                       {[...Array(5)].map((_, index) => (
                         <span
@@ -248,12 +248,12 @@ function ReviewProduct(id) {
                         cols="50"
                         value={comment}
                         onChange={handleCommentChange}
-                        placeholder="Write your review here..."
+                        placeholder="여기에 리뷰를 작성하세요..."
                         className="container_textarea"
                       />
                       <br />
                       <button type="submit" className="btn_review">
-                        Submit
+                        제출하다
                       </button>
                     </form>
                   </div>

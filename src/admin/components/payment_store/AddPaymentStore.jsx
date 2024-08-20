@@ -92,8 +92,8 @@ const AddPaymentStore = () => {
       });
   });
 
-  console.log(store_id);
-  console.log(is_has_bank_account);
+  // console.log(store_id);
+  // console.log(is_has_bank_account);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

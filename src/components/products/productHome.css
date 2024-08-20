@@ -278,7 +278,7 @@ a {
         grid-template-columns: 1fr 1fr;
         gap: 1rem;
         justify-content: center;
-        margin-top: 2rem;
+        margin-top: 5rem;
     }
     
     .box-product{

@@ -18,6 +18,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { CiViewTable } from "react-icons/ci";
 import { CiSquareInfo } from "react-icons/ci";
+import { MdCurrencyExchange } from "react-icons/md";
 
 const AdminMenu = () => {
   const token = localStorage.getItem("token");
@@ -178,18 +179,14 @@ const AdminMenu = () => {
             </NavLink>
             {is_admin === true && (
               <>
-                {/* <NavLink to="/store-admin" className="link">
-                  <HiOutlineBuildingStorefront />
-                  <p>Stores</p>
-                </NavLink> */}
                 <NavLink to="/users" className="link">
                   <BiUser />
                   <div>Users</div>
                 </NavLink>
-                {/* <NavLink to="/admins" className="link">
-                  <LiaUserCogSolid />
-                  <p>Admins</p>
-                </NavLink> */}
+                <NavLink to="/currency" className="link">
+                  <MdCurrencyExchange />
+                  <div>Currency</div>
+                </NavLink>
               </>
             )}
             <NavLink to="/payment-store" className="link">

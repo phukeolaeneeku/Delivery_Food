@@ -61,27 +61,45 @@ const ForgotPassword = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!data.email) {
-      alert("Please fill the email!");
+      MySwal.fire({
+        text: "이메일을 작성해주세요!",
+        icon: "question",
+      });
       return;
     }
     if (!data.code) {
-      alert("Please fill the Verification number from your email!");
+      MySwal.fire({
+        text: "이메일에 있는 인증번호를 입력해주세요!",
+        icon: "question",
+      });
       return;
     }
     if (!data.password) {
-      alert("Please fill the password!");
+      MySwal.fire({
+        text: "비밀번호를 입력해주세요!",
+        icon: "question",
+      });
       return;
     }
     if (!data.password2) {
-      alert("Please fill the confirm password!");
+      MySwal.fire({
+        text: "확인 비밀번호를 입력해주세요!",
+        icon: "question",
+      });
       return;
     }
     if (data.password != data.password2) {
-      alert("Password do not match!");
+      MySwal.fire({
+        text: "비밀번호가 일치하지 않습니다!",
+        icon: "question",
+      });
       return;
     }
     if (data.password.length <= 7 || data.password2.length <= 7) {
-      alert("Password must be at least 8 characters!");
+      MySwal.fire({
+        text: "비밀번호는 8자 이상이어야 합니다!",
+        icon: "question",
+      });
       return;
     }
 
@@ -91,7 +109,7 @@ const ForgotPassword = () => {
         console.log(response.data);
         // alert("Your password has been changed.");
         MySwal.fire({
-          text: "Your password has been changed.",
+          text: "귀하의 비밀번호가 변경되었습니다.",
           icon: "success",
         });
         navigate("/loginuser");
@@ -102,7 +120,7 @@ const ForgotPassword = () => {
         if (error.response.data.message == "Email does not exist.") {
           // alert("Email does not exist. Please register first!");
           MySwal.fire({
-            text: "Email does not exist. Please register first!",
+            text: "이메일이 존재하지 않습니다. 먼저 등록해주세요!",
             icon: "question",
           });
           navigate("/signup2", { replace: true });
@@ -118,15 +136,14 @@ const ForgotPassword = () => {
       <div className="container_form_forgot">
         <form onSubmit={handleSubmit}>
           
-          <h2 className="box_container_login_text">Find password</h2>
-          <p>Please change your password after verifying your email!</p>
+          <h2 className="box_container_login_text">비밀번호 찾기</h2>
+          <p>이메일 인증 후 비밀번호를 변경해주세요!</p>
           {/* <div className="box_infor">Enter basic information</div> */}
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">이메일</label>
           <div className="container_form_forgot2">
             <input
               type="email"
-              placeholder="Email"
-              required
+              placeholder="이메일을 입력해주세요..."
               id="email"
               name="email"
               value={email}
@@ -168,43 +185,40 @@ const ForgotPassword = () => {
                 id="email_send_btn"
                 className="verification"
               >
-                Verify
+                확인하다
               </div>
             )}
           </div>
-          <label htmlFor="code">Verification number</label>
+          <label htmlFor="code">코드 확인</label>
           <input
             type="text"
             id="code"
-            placeholder="Verification number"
-            required
+            placeholder="인증번호를 입력해주세요..."
             name="code"
             value={code}
             onChange={onChange}
           />
-          <label htmlFor="password">New passwords</label>
+          <label htmlFor="password">새 비밀번호</label>
           <input
             type="password"
             id="password"
             autoComplete="new-password"
-            placeholder="New passwords"
-            required
+            placeholder="새 비밀번호를 입력하세요..."
             value={password}
             onChange={onChange}
             name="password"
           />
-          <label htmlFor="password2">Confirm password</label>
+          <label htmlFor="password2">비밀번호 확인</label>
           <input
             type="password"
             id="password2"
             autoComplete="new-password"
-            placeholder="Confirm password"
-            required
+            placeholder="확인 비밀번호를 입력해주세요..."
             value={password2}
             onChange={onChange}
             name="password2"
           />
-          <button type="submit">Confirmation</button>
+          <button type="submit">확인</button>
         </form>
         {errorText.length > 0 && (
           <div id="error_msg" className="error mt20">

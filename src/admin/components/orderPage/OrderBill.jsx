@@ -9,6 +9,7 @@ import imageicon from "../../../img/imageicon.jpg";
 import { CiCamera } from "react-icons/ci";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { FiPrinter } from "react-icons/fi";
 
 const OrderBill = () => {
   const token = localStorage.getItem("token");
@@ -21,12 +22,198 @@ const OrderBill = () => {
   const [order_bill, set_order_bill] = useState(null);
   const MySwal = withReactContent(Swal);
   const usdToKrw = 15.0;
+  const usdToKIP = 25000;
+
+  ////////////////
+
+  const [amount, setAmount] = useState(1);
+  const [amountKIP, setAmountKIP] = useState(1);
+  const [fromCurrency, setFromCurrency] = useState("USD");
+  const [toCurrency, setToCurrency] = useState("KRW");
+  const [toCurrencyKIP, setToCurrencyKIP] = useState("LAK");
+  const [exchangeRate, setExchangeRate] = useState(1);
+  const [exchangeRates, setExchangeRates] = useState(1);
+  const [currencies, setCurrencies] = useState([]);
+
+  useEffect(() => {
+    // Fetch the list of currencies and exchange rates from an API
+    const getCurrencies = async () => {
+      try {
+        const response = await fetch(
+          "https://api.exchangerate-api.com/v4/latest/USD"
+        );
+        const data = await response.json();
+        const uniqueCurrencies = Array.from(
+          new Set([data.base, ...Object.keys(data.rates)])
+        );
+        setCurrencies(uniqueCurrencies);
+        setExchangeRate(data.rates[toCurrency]);
+        setExchangeRates(data.rates[toCurrencyKIP]);
+      } catch (error) {
+        console.error("Error fetching the currencies:", error);
+      }
+    };
+
+    getCurrencies();
+  }, []);
+
+  useEffect(() => {
+    const getExchangeRate = async () => {
+      if (fromCurrency !== toCurrency) {
+        try {
+          const response = await fetch(
+            `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
+          );
+          const data = await response.json();
+          setExchangeRate(data.rates[toCurrency]);
+        } catch (error) {
+          console.error("Error fetching the exchange rate:", error);
+        }
+      }
+    };
+
+    getExchangeRate();
+  }, [fromCurrency, toCurrency]);
+
+  useEffect(() => {
+    const getExchangeRates = async () => {
+      if (fromCurrency !== toCurrencyKIP) {
+        try {
+          const response = await fetch(
+            `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
+          );
+          const data = await response.json();
+          setExchangeRates(data.rates[toCurrencyKIP]);
+        } catch (error) {
+          console.error("Error fetching the exchange rate:", error);
+        }
+      }
+    };
+
+    getExchangeRates();
+  }, [fromCurrency, toCurrencyKIP]);
+
+  const convertCurrency = () => {
+    return (amount * exchangeRate).toFixed(2);
+  };
+  const convertCurrencyKIP = () => {
+    return (amountKIP * exchangeRates).toFixed(2);
+  };
+  ///////////////////
 
   const goBack = () => {
     window.history.back();
   };
 
   const navigate = useNavigate();
+
+  const handlePrintBill = () => {
+    const billElement = document.querySelector(".abill-detial");
+    const printWindow = window.open("", "", "height=500px,width=500px");
+    printWindow.document.write(`
+      <html>
+        <head>
+          <style>
+            @media print {
+              @page {
+                size: 58mm 210mm;
+                margin: 0;
+              }
+              body {
+                width: 58mm;
+                margin: 0;
+                font-size: 10px;
+                font-family: Arial, sans-serif;
+              }
+              .abill-detial {
+                padding: 15px 10px 10px 10px;
+                text-align: start;
+              }
+              .guopoidHead {
+                width: 100%;
+                text-align: start;
+                border-bottom: #4444 solid 1px;
+                grid-template-columns: 1fr;
+              }
+              .billGopBox {
+                display: grid;
+                width: 100%;
+                margin: auto;
+                border-bottom: #4444 solid 1px;
+              }
+              .box_table {
+                width: 100%;
+              }
+              .txtHeader {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                margin: 0.5rem 0;
+              }
+              .Header {
+                width: 100%;
+                text-align: center;
+                font-size: 18px;
+                font-weight: 600;
+                margin-bottom: 5px;
+              }
+              .Header_review{
+                display: none;
+              }
+              .Delivered_review{
+                display: none;
+              }
+              .txt_Des {
+                width: 100%;
+                text-align: center;
+              }
+              .titlePrice {
+                padding: 0;
+                margin-top: -1.2rem;
+                display: flex;
+                text-align: center;
+                justify-content: space-between;
+              }
+              .place-on {
+                text-align: start;
+              }
+              .Delivered_review{
+                display: none;
+
+              }
+              .txtHeader .Header{
+                font-size: 12px;
+              }
+              .titlePrice h4{
+                font-size: 12px;
+                font-weight: 100;
+              }
+              .Header{
+                padding: 10px 0;
+                border-bottom: #4444 solid 1px;
+              }
+              .box_totleAdd_container{
+                border-bottom: #4444 solid 1px;
+              }
+              .container_Order_Bill{
+                display: none;
+              }
+              .aplace_form_button{
+                display: none;
+              }
+
+            }
+          </style>
+        </head>
+        <body>
+          ${billElement.outerHTML}
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+    printWindow.close();
+  };
 
   useEffect(() => {
     let data = JSON.stringify({
@@ -162,8 +349,8 @@ const OrderBill = () => {
       });
   };
 
-  console.log("china_url ", china_url);
-  console.log("lao_url ", lao_url);
+  // console.log("china_url ", china_url);
+  // console.log("lao_url ", lao_url);
 
   const ChangeChinaURL = (e) => {
     e.preventDefault();
@@ -253,32 +440,6 @@ const OrderBill = () => {
       .catch((error) => console.error(error));
   };
 
-  ///Choose image handleImageBill
-  const [mainImageBill, setMainImagBill] = useState(null);
-  const [isPopupImageBill, setPopupImageBill] = useState(false);
-
-  const togglePopupImageBill = () => {
-    setPopupImageBill(true);
-  };
-
-  const togglePopupCancelImageBill = () => {
-    setPopupImageBill(false);
-  };
-
-  const handleImageBill = (e) => {
-    const file = e.target.files[0];
-    set_order_bill(file);
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        setMainImagBill([file]);
-      };
-
-      reader.readAsDataURL(file);
-    }
-  };
-
   // console.log("order bill: ", order_bill);
   // console.log("mainImageBill: ", mainImageBill);
   return (
@@ -291,79 +452,100 @@ const OrderBill = () => {
               <FaAngleLeft id="box_icon_Back" />
               <div>Back</div>
             </button>
-            <h2>Orders</h2>
-            <div></div>
-          </div>
-          <div className="aguopoidHead">
-            <div className="aidf">
-              <p>OrderID: {order_list.id}</p>
-              <p>User: {name || email}</p>
+            <div className="box_containner_FiPrinter">
+              <FiPrinter id="FiPrinter" onClick={handlePrintBill} />
             </div>
           </div>
-          <hr />
-          <div className="abillGopBox">
+
+          <div className="guopoidHead">
+            <p>주문 ID: {order_list.id}</p>
+            <p>사용자: {name || email}</p>
+          </div>
+
+          <div className="billGopBox">
             <div className="box_table">
               <div className="txtHeader">
-                <div className="Header">Product Name</div>
-                <div className="Header">Price</div>
-                <div className="Header">Amount</div>
-                <div className="Header">water</div>
+                <div className="Header">제품명</div>
+                <div className="Header">가격</div>
+                <div className="Header">양</div>
+                <div className="Header">물</div>
               </div>
+
               {order_list.items &&
                 order_list.items.map((item) => (
                   <div className="txtHeader" key={item.id}>
-                      <div className="txt_Des">{item.product.name}</div>
-                      <div className="txt_Des">
-                        $
-                        {parseFloat(item.price).toLocaleString("en-US", {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0,
-                          useGrouping: true,
-                        })}
-                      </div>
-                      <div className="txt_Des">{item.quantity}</div>
-                      <div className="txt_Des">{item.size}</div>
+                    <div className="txt_Des">{item.product.name}</div>
+                    <div className="txt_Des">
+                      $
+                      {parseFloat(item.price).toLocaleString("en-US", {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                        useGrouping: true,
+                      })}
+                    </div>
+                    <div className="txt_Des">{item.quantity}</div>
+                    <div className="txt_Des">{item.size}</div>
                   </div>
                 ))}
             </div>
           </div>
-          <hr />
-          <div className="box_container_total_txt">
-            <div className="box_container_sudToKrw">
-              <div className="atitlePriceUSD">
-                <h3>TotalUSD :</h3>
-                <h3>$ {order_list.total_prices}</h3>
-              </div>
-              <div className="atitlePriceKRW">
-                <h3>TotalKRW :</h3>
-                <h3>₩ {order_list.total_prices * usdToKrw}</h3>
-              </div>
+
+          <div className="box_totleAdd_container">
+            <p className="box_more_details">
+              자세한 내용: {order_list.province}
+            </p>
+
+            <div className="titlePrice">
+              <h4>합계 USD :</h4>
+              <p>$ {order_list.total_prices}</p>
             </div>
 
-            <div className="aplace-on">
-              <div className="container_aplace">
-                <div className="box_places">
-                  <p>
-                    Payment date:{" "}
-                    {new Date(order_list.created_at).toLocaleString()}
-                  </p>
-                  <p>Payment method: {order_list.account_name}</p>
-                  <p>Contact number: +856 {order_list.tel}</p>
-                  <p>Address for delivery: {order_list.district}</p>
-                  <p>Status: {order_list.status}</p>
-                </div>
+            <div className="titlePrice">
+              <h4>T합계 KRW:</h4>
+              <p>
+                ₩
+                {order_list.total_prices && convertCurrency()
+                  ? (
+                      order_list.total_prices * convertCurrency()
+                    ).toLocaleString()
+                  : "0"}
+              </p>
+            </div>
+
+            <div className="titlePrice">
+              <h4>합계 KIP :</h4>
+              <p>{order_list.total_prices * convertCurrencyKIP() ? (
+                      order_list.total_prices * convertCurrencyKIP()
+                    ).toLocaleString()
+                  : "0"} KIP</p>
+            </div>
+          </div>
+
+          <div className="aplace-on">
+            <div className="box_place">
+              <div className="place-on">
+                <p className="box_more_details">
+                  자세한 내용: {order_list.province}
+                </p>
+                <p>
+                  결제일: {new Date(order_list.created_at).toLocaleString()}
+                </p>
+                <p>결제수단: {order_list.account_name}</p>
+                <p>연락처: +856 {order_list.tel}</p>
+                <p>배송받을 주소: {order_list.district}</p>
+                <p>지위: {order_list.status}</p>
               </div>
-              <div className="status btn">
-                {order_list.status !== "Delivered" && (
-                  <button
-                    type="submit"
-                    className="aplace_form_button "
-                    onClick={ConfirmOrder}
-                  >
-                    Confirm
-                  </button>
-                )}
-              </div>
+            </div>
+            <div className="status btn">
+              {order_list.status !== "Delivered" && (
+                <button
+                  type="submit"
+                  className="aplace_form_button "
+                  onClick={ConfirmOrder}
+                >
+                  Confirm
+                </button>
+              )}
             </div>
           </div>
         </div>

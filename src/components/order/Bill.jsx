@@ -17,10 +17,88 @@ const Bill = () => {
   const [showReview, setShowReview] = useState(false);
   const [product_id, setProductId] = useState(null);
   const usdToKrw = 15.0;
+  const usdToKIP = 25000;
   const navigate = useNavigate();
 
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+
+  ////////////////
+
+  const [amount, setAmount] = useState(1);
+  const [amountKIP, setAmountKIP] = useState(1);
+  const [fromCurrency, setFromCurrency] = useState("USD");
+  const [toCurrency, setToCurrency] = useState("KRW");
+  const [toCurrencyKIP, setToCurrencyKIP] = useState("LAK");
+  const [exchangeRate, setExchangeRate] = useState(1);
+  const [exchangeRates, setExchangeRates] = useState(1);
+  const [currencies, setCurrencies] = useState([]);
+
+  useEffect(() => {
+    // Fetch the list of currencies and exchange rates from an API
+    const getCurrencies = async () => {
+      try {
+        const response = await fetch(
+          "https://api.exchangerate-api.com/v4/latest/USD"
+        );
+        const data = await response.json();
+        const uniqueCurrencies = Array.from(
+          new Set([data.base, ...Object.keys(data.rates)])
+        );
+        setCurrencies(uniqueCurrencies);
+        setExchangeRate(data.rates[toCurrency]);
+        setExchangeRates(data.rates[toCurrencyKIP]);
+      } catch (error) {
+        console.error("Error fetching the currencies:", error);
+      }
+    };
+
+    getCurrencies();
+  }, []);
+
+  useEffect(() => {
+    const getExchangeRate = async () => {
+      if (fromCurrency !== toCurrency) {
+        try {
+          const response = await fetch(
+            `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
+          );
+          const data = await response.json();
+          setExchangeRate(data.rates[toCurrency]);
+        } catch (error) {
+          console.error("Error fetching the exchange rate:", error);
+        }
+      }
+    };
+
+    getExchangeRate();
+  }, [fromCurrency, toCurrency]);
+
+  useEffect(() => {
+    const getExchangeRates = async () => {
+      if (fromCurrency !== toCurrencyKIP) {
+        try {
+          const response = await fetch(
+            `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
+          );
+          const data = await response.json();
+          setExchangeRates(data.rates[toCurrencyKIP]);
+        } catch (error) {
+          console.error("Error fetching the exchange rate:", error);
+        }
+      }
+    };
+
+    getExchangeRates();
+  }, [fromCurrency, toCurrencyKIP]);
+
+  const convertCurrency = () => {
+    return (amount * exchangeRate).toFixed(2);
+  };
+  const convertCurrencyKIP = () => {
+    return (amountKIP * exchangeRates).toFixed(2);
+  };
+  ///////////////////
 
   useEffect(() => {
     const checkToken = async () => {
@@ -94,21 +172,13 @@ const Bill = () => {
       );
 
       console.log("Review submitted:", response.data);
-      alert("Review submitted successfully.");
+      alert("리뷰가 성공적으로 제출되었습니다.");
       setRating(0);
       setComment("");
       setShowReview(false); // Close the review form after submission
     } catch (error) {
       console.error("Error submitting review:", error);
     }
-  };
-  const handlePrintBill = () => {
-    const billElement = document.querySelector(".bill-detial");
-    const printWindow = window.open("", "", "height=500px,width=500px");
-    printWindow.document.write(billElement.outerHTML);
-    printWindow.document.close();
-    printWindow.print();
-    printWindow.close();
   };
 
   if (!order_list) {
@@ -149,27 +219,21 @@ const Bill = () => {
         <>
           <Header />
           <div className="bill">
-            <div className="box_containner_FiPrinter">
-              <FiPrinter id="FiPrinter" onClick={handlePrintBill} />
-            </div>
-
             <div className="bill-detial">
               <div className="guopoidHead">
-                <div className="box_containner_txt">
-                  <p>Order ID: {order_list.id}</p>
-                  <p>
-                    Date: {new Date(order_list.created_at).toLocaleString()}
-                  </p>
-                </div>
+                <p>주문 ID: {order_list.id}</p>
+                <p>날짜: {new Date(order_list.created_at).toLocaleString()}</p>
               </div>
               <div className="billGopBox">
                 <div className="box_table">
                   <div className="txtHeader">
-                    <div className="Header">Product</div>
-                    <div className="Header">Price</div>
-                    <div className="Header">Amount</div>
-                    <div className="Header">Water</div>
-                    {order_list.status === "Delivered" && <div className="Header">Review</div>}
+                    <div className="Header">제품명</div>
+                    <div className="Header">가격</div>
+                    <div className="Header">양</div>
+                    <div className="Header">물</div>
+                    {order_list.status === "Delivered" && (
+                      <div className="Header_review">리뷰</div>
+                    )}
                   </div>
                   <div>
                     {order_list.items?.map((item, index) => (
@@ -185,12 +249,12 @@ const Bill = () => {
                         <div className="txt_Des">{item.quantity}</div>
                         <div className="txt_Des">{item.size}</div>
                         {order_list.status === "Delivered" && (
-                          <div className="Header">
+                          <div className="Header_review">
                             <button
                               className="Delivered_review"
                               onClick={() => handleReview(item.product.id)}
                             >
-                              Review
+                              리뷰
                             </button>
                           </div>
                         )}
@@ -199,38 +263,53 @@ const Bill = () => {
                   </div>
                 </div>
               </div>
-              <p className="box_more_details">
-                More details: {order_list.province}
-              </p>
-              <div className="titlePrice">
-                <h4>Total USD:</h4>
-                <p>
-                  $
-                  {totalPrice.toLocaleString("en-US", {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0,
-                    useGrouping: true,
-                  })}
+
+              <div className="box_totleAdd_container">
+                <p className="box_more_details">
+                  자세한 내용: {order_list.province}
                 </p>
-              </div>
-              <div className="titlePrice">
-                <h4>Total KRW:</h4>
-                <p>
-                  ₩
-                  {(totalPrice * usdToKrw).toLocaleString("en-US", {
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0,
-                    useGrouping: true,
-                  })}
-                </p>
+                <div className="titlePrice">
+                  <h4>합계 USD:</h4>
+                  <p>
+                    ${" "}
+                    {totalPrice.toLocaleString("en-US", {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                      useGrouping: true,
+                    })}
+                  </p>
+                </div>
+
+                <div className="titlePrice">
+                  <h4>합계 KRW:</h4>
+                  <p>
+                    ₩{" "}
+                    {(totalPrice * convertCurrency()).toLocaleString("en-US", {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                      useGrouping: true,
+                    })}
+                  </p>
+                </div>
+                <div className="titlePrice">
+                  <h4>합계 KIP:</h4>
+                  <p>
+                    {(totalPrice * convertCurrencyKIP()).toLocaleString("en-US", {
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                      useGrouping: true,
+                    })}{" "}
+                    KIP
+                  </p>
+                </div>
               </div>
 
               <div className="box_place">
                 <div className="place-on">
-                  <p>Payment method: {order_list.account_name}</p>
-                  <p>Contact number: +856{order_list.tel}</p>
-                  <p>Address for delivery: {order_list.district}</p>
-                  <p>Status: {order_list.status}</p>
+                  <p>결제수단: {order_list.account_name}</p>
+                  <p>연락처: +856{order_list.tel}</p>
+                  <p>배송받을 주소: {order_list.district}</p>
+                  <p>지위: {order_list.status}</p>
                 </div>
               </div>
             </div>
