@@ -14,6 +14,7 @@ import axios from "axios";
 
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { BsFillNutFill } from "react-icons/bs";
 
 const AddProduct = () => {
   const token = localStorage.getItem("token");
@@ -27,6 +28,14 @@ const AddProduct = () => {
 
   // console.log("storage.store_id.....", storage.store_id)
 
+  const vv = "not";
+  var cc = null;
+  if (vv == "set") {
+    cc = 2;
+  } else {
+    cc = 0;
+  }
+
   const [products, setProducts] = useState([
     {
       name: "",
@@ -35,7 +44,7 @@ const AddProduct = () => {
       category: "",
       quantity: "",
       sizes: [],
-      colors: [0],
+      colors: [""],
       images: [],
       imagePreview: "",
     },
@@ -114,6 +123,14 @@ const AddProduct = () => {
     updatedProducts[index].description = value;
     setProducts(updatedProducts);
   };
+
+  const handleColorSelection = (e, index) => {
+    const value = e.target.value;
+    const updatedProducts = [...products];
+    updatedProducts[index].colors = value === "set" ? ["set"] : ["not"];
+    setProducts(updatedProducts);
+  };
+
   const handleProductCategory = (e, index) => {
     const value = e.target.value;
     const updatedProducts = [...products];
@@ -162,7 +179,7 @@ const AddProduct = () => {
         category: "",
         quantity: "",
         sizes: [],
-        colors: [0],
+        colors: [""],
         images: [],
         imagePreview: "",
       },
@@ -332,15 +349,23 @@ const AddProduct = () => {
                       </div>
 
                       <div className="box">
+                        <input
+                          type="text"
+                          placeholder="Description..."
+                          value={product.description}
+                          onChange={(e) => handleProductDescription(e, index)}
+                          required
+                        />
+                      </div>
+
+                      <div className="box">
                         <select
                           name="category"
                           className="product_category"
-                          onChange={(e) => handleProductDescription(e, index)}
+                          onChange={(e) => handleColorSelection(e, index)}
                           required
                         >
-                          <option className="inputproduct" value="1">
-                            Select set or not
-                          </option>
+                          <option value="">Select set or not</option>
                           <option value="set">Set</option>
                           <option value="not">Not</option>
                         </select>

@@ -27,6 +27,8 @@ function ProductDetails() {
   const [price, set_price] = useState(null);
   const MySwal = withReactContent(Swal);
 
+  console.log("product,,,,", product);
+
   //Active sizes
   const [sizes, setSizes] = useState([]);
   const [activeIndex, setActiveIndex] = useState([]);
@@ -335,8 +337,8 @@ function ProductDetails() {
             images: product.images,
             quantity: quantity,
             price: price,
-            // color: color,
-            // size: size,
+            color: color,
+            size: size,
           },
         ],
       },
@@ -371,13 +373,22 @@ function ProductDetails() {
                         Quantity: {product.quantity}
                       </div>
 
-                      {product.description === "not" ? (
+                      {/* {product.colors[0]?.name === "not" ? (
                         <p></p>
                       ) : (
-                        <div className="container_txt">
-                          The menu is set: {product.description}
-                        </div>
-                      )}
+                        <>
+                          <div className="container_txt">
+                            <p>
+                              The menu is set:{" "}
+                              {product.colors.map((color) => color.name + " ")}
+                            </p>
+                          </div>
+                        </>
+                      )} */}
+
+                      <div className="container_txt">
+                        <p>Description: {product.description}</p>
+                      </div>
 
                       {/* <div>Delivery:</div> */}
 

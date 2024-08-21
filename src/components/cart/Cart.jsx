@@ -166,7 +166,7 @@ const Cart = () => {
   //   }
   // };
 
-  const removeFromCart = (id, store_name, color, size) => {
+  const removeFromCart = (id, store_name, color, size, description) => {
     setCart(
       cart.filter(
         (item) =>
@@ -174,13 +174,14 @@ const Cart = () => {
             item.id === id &&
             item.store_name === store_name &&
             item.color === color &&
+            item.description === description &&
             item.size === size
           )
       )
     );
   };
 
-  const updateQuantity = (id, store_name, color, size, quantity) => {
+  const updateQuantity = (id, store_name, color, size, quantity, description) => {
     if (quantity <= 0) {
       removeFromCart(id, store_name, color, size);
     } else {
@@ -189,6 +190,7 @@ const Cart = () => {
           item.id === id &&
           item.store_name === store_name &&
           item.color === color &&
+          item.description === description &&
           item.size === size
             ? { ...item, quantity }
             : item
@@ -256,7 +258,7 @@ const Cart = () => {
   const getTotalPriceForStoreKIP = (store_name) => {
     const storeItems = cart.filter((item) => item.store_name === store_name);
     return storeItems.reduce(
-      (total, item) =>
+      (total, item) => 
         total + item.price * (item.quantity || 0) * convertCurrencyKIP(),
       0
     );
@@ -342,8 +344,8 @@ const Cart = () => {
                               <div className="box_item_image">
                                 <img src={item.images} alt="" />
                                 <div className="box_item_text">
-                                  <p>Product name: {item.name}</p>
-                                  <p>
+                                  <div>Product name: {item.name}</div>
+                                  <div>
                                     price{": "} $
                                     {parseFloat(item.price).toLocaleString(
                                       "en-US",
@@ -353,7 +355,7 @@ const Cart = () => {
                                         useGrouping: true,
                                       }
                                     )}
-                                  </p>
+                                  </div>
                                   {/* {item.color != 0 ? (
                                     <p>Type of menu: {item.color}</p>
                                   ) : (
@@ -368,8 +370,9 @@ const Cart = () => {
                                   {/* {item.color !== 0 && (
                                     <p>Type of menu: {item.color}</p>
                                   )} */}
+                                  <div>Description: {item.description}</div>
                                   {item.size != 0 && (
-                                    <p>Type of water: {item.size}</p>
+                                    <div>Type of water: {item.size}</div>
                                   )}
                                 </div>
                                 <div className="box_icon_order">

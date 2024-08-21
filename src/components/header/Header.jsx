@@ -167,7 +167,7 @@ const Header = ({ set_category_name }) => {
               </div>
             </form>
 
-            <div ref={googleTranslateRef}></div>
+            <div ref={googleTranslateRef} className="google_translateRef"></div>
 
             {user ? (
               <div className="right_ofHeadBox">

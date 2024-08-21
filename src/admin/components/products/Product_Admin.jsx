@@ -1109,7 +1109,7 @@ const Product_Admin = () => {
                       className="box_icon_MdOutlineEdit"
                       onClick={() => openConfirmationDesc(product.id)}
                     >
-                      <li>Set or not: {product.description}</li>
+                      <li>Description: {product.description}</li>
                       <MdOutlineEdit id="icon_edit" />
                     </div>
                     <div
@@ -1129,42 +1129,37 @@ const Product_Admin = () => {
 
                     {isConfirmationDesc && (
                       <div className="background_addproductpopup_box">
-                        <div className="hover_addproductpopup_box">
-                          <div className="box_input">
-                            <p>Edit the menu is set</p>
-                            <div className="box2">
-                              <select
-                                name="category"
-                                className="product_category_filter"
-                                value={data}
-                                onChange={(e) => set_data(e.target.value)}
-                              >
-                                <option className="inputproduct" value="">
-                                  Select set or not
-                                </option>
-                                <option value="set">Set</option>
-                                <option value="not">Not</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div className="btn_foasdf">
-                            <button
-                              className="btn_cancel btn_addproducttxt_popup"
-                              onClick={closeConfirmationDesc}
-                            >
-                              Cancel
-                            </button>
-                            <button
-                              className="btn_confirm btn_addproducttxt_popup"
-                              onClick={() => {
-                                ChangeProductDesc();
-                              }}
-                            >
-                              Update
-                            </button>
-                          </div>
+                      <div className="hover_addproductpopup_box">
+                        <div className="box_input">
+                          <p>Edit product Desc</p>
+                          <input
+                            type="text"
+                            placeholder="Desc..."
+                            className="input_of_txtAddproduct"
+                            value={data}
+                            onChange={(e) => {
+                              set_data(e.target.value);
+                            }}
+                          />
+                        </div>
+                        <div className="btn_foasdf">
+                          <button
+                            className="btn_cancel btn_addproducttxt_popup"
+                            onClick={closeConfirmationDesc}
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            className="btn_confirm btn_addproducttxt_popup"
+                            onClick={() => {
+                              ChangeProductDesc();
+                            }}
+                          >
+                            Update
+                          </button>
                         </div>
                       </div>
+                    </div>
                     )}
 
                     {isConfirmationPopupOpenCategory && (
@@ -1279,14 +1274,14 @@ const Product_Admin = () => {
                       </div>
                     )}
 
-                    {/* <div
+                    <div
                       className="box_icon_MdOutlineEdit"
                       onClick={() =>
                         openConfirmationColor(product.id, product.colors)
                       }
                     >
                       <li>
-                        Type of menu:{" "}
+                      The menu is set:{" "}
                         {product.colors.map((color) => color.name + " ")}
                       </li>
                       <MdOutlineEdit id="icon_edit" />
@@ -1351,7 +1346,7 @@ const Product_Admin = () => {
                           </div>
                         </div>
                       </div>
-                    )} */}
+                    )}
 
                     <div
                       className="box_icon_MdOutlineEdit"

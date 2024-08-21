@@ -109,8 +109,6 @@ const Payment = ({ orders, order_from, onPay }) => {
   var user_id = null;
   if (localStorage.getItem("user")) {
     user_id = JSON.parse(window.localStorage.getItem("user")).user_id;
-  } else {
-    user_id = adr;
   }
   var totalPrice = 0;
 
@@ -373,6 +371,7 @@ const Payment = ({ orders, order_from, onPay }) => {
                           useGrouping: true,
                         })}
                       </p>
+                      <p className="box_txtFor_PC">Description: {item.description}</p>
                       {item.size != 0 ? (
                         <p className="box_txtFor_PC">
                           Type of water: {item.size}
@@ -399,6 +398,8 @@ const Payment = ({ orders, order_from, onPay }) => {
                       <p hidden>{(totalPrice += item.price * item.quantity)}</p>
                     </div>
                   </div>
+
+                  <p className="txt_textarea_description_Mobiles">Description: {item.description}</p>
                   {item.size != 0 ? (
                     <p className="box_txtFor_Mobile">
                       Type of water: {item.size}
