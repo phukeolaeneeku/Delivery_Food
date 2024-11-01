@@ -11,6 +11,8 @@ const Currency = () => {
   const [exchangeRate, setExchangeRate] = useState(1);
   const [exchangeRates, setExchangeRates] = useState(1);
   const [currencies, setCurrencies] = useState([]);
+  const currenciesKRW = 0;
+  const currenciesKIP = 0;
 
   useEffect(() => {
     // Fetch the list of currencies and exchange rates from an API
@@ -42,7 +44,7 @@ const Currency = () => {
             `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
           );
           const data = await response.json();
-          setExchangeRate(data.rates[toCurrency]);
+          setExchangeRate(data.rates[toCurrency] + currenciesKRW);
         } catch (error) {
           console.error("Error fetching the exchange rate:", error);
         }
@@ -61,7 +63,7 @@ const Currency = () => {
             `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`
           );
           const data = await response.json();
-          setExchangeRates(data.rates[toCurrencyKIP]);
+          setExchangeRates(data.rates[toCurrencyKIP] + currenciesKIP);
         } catch (error) {
           console.error("Error fetching the exchange rate:", error);
         }
@@ -93,7 +95,7 @@ const Currency = () => {
               onChange={(e) => setAmount(e.target.value)}
             />
             <select
-              className="box_select"
+              className="input_number"
               value={fromCurrency}
               onChange={(e) => setFromCurrency(e.target.value)}
             >
@@ -105,7 +107,7 @@ const Currency = () => {
             </select>
             <span className="span"> to </span>
             <select
-              className="box_select"
+              className="input_number"
               value={toCurrency}
               onChange={(e) => setToCurrency(e.target.value)}
             >
@@ -125,7 +127,7 @@ const Currency = () => {
               onChange={(e) => setAmountKIP(e.target.value)}
             />
             <select
-              className="box_select"
+              className="input_number"
               value={fromCurrency}
               onChange={(e) => setFromCurrency(e.target.value)}
             >
@@ -137,7 +139,7 @@ const Currency = () => {
             </select>
             <span className="span"> to </span>
             <select
-              className="box_select"
+              className="input_number"
               value={toCurrencyKIP}
               onChange={(e) => setToCurrencyKIP(e.target.value)}
             >

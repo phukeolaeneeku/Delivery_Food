@@ -1,17 +1,13 @@
 import "./adminMenu.css";
 import { IoDocumentText, IoLogOutOutline } from "react-icons/io5";
 import { BiUser } from "react-icons/bi";
-import { HiOutlineBuildingStorefront } from "react-icons/hi2";
-import { LiaUserCogSolid } from "react-icons/lia";
 import { RxDashboard } from "react-icons/rx";
-import { MdOutlineSell } from "react-icons/md";
-import Logo1 from "../../../img/Logo1.png";
 import { NavLink } from "react-router-dom";
-import user from "../../../img/user.png";
+import user from "../../../images/user.png";
 import { CiCamera } from "react-icons/ci";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import imageicon from "../../../img/imageicon.jpg";
+import imageicon from "../../../images/imageicon.jpg";
 import axios from "axios";
 import { CiBank } from "react-icons/ci";
 import Swal from "sweetalert2";
@@ -19,6 +15,7 @@ import withReactContent from "sweetalert2-react-content";
 import { CiViewTable } from "react-icons/ci";
 import { CiSquareInfo } from "react-icons/ci";
 import { MdCurrencyExchange } from "react-icons/md";
+import { FaBars } from "react-icons/fa";
 
 const AdminMenu = () => {
   const token = localStorage.getItem("token");
@@ -28,7 +25,6 @@ const AdminMenu = () => {
   if (localStorage.getItem("user")) {
     store_id = JSON.parse(window.localStorage.getItem("user")).store_id;
   }
-
   var is_admin = false;
   if (localStorage.getItem("user")) {
     is_admin = JSON.parse(window.localStorage.getItem("user")).is_admin;
@@ -37,17 +33,48 @@ const AdminMenu = () => {
   const [image, set_image] = useState(null);
   const [mainImageLogo, setMainImagLogo] = useState(null);
   const MySwal = withReactContent(Swal);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   // Choose logo image
   const [isPopupImageLogo, setPopupImageLogo] = useState(false);
-
   const togglePopupImageLogo = () => {
     setPopupImageLogo(true);
   };
-
   const togglePopupCancelImageLogo = () => {
     setPopupImageLogo(false);
   };
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMenuToggling, setIsMenuToggling] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMenuToggling(true);
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+    setTimeout(() => setIsMenuToggling(false), 100);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        isMobileMenuOpen &&
+        !isMenuToggling &&
+        !event.target.closest(".left") &&
+        !event.target.closest(".mobile-menu-toggle")
+      ) {
+        closeMobileMenu();
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [isMobileMenuOpen, isMenuToggling]);
 
   useEffect(() => {
     let data = JSON.stringify({
@@ -72,14 +99,14 @@ const AdminMenu = () => {
         if (response.data.result != "success") {
           localStorage.clear();
 
-          navigate("/loginuser");
+          navigate("/login");
           return;
         }
       })
       .catch((error) => {
         localStorage.clear();
         console.log(error);
-        navigate("/loginuser");
+        navigate("/login");
         return;
       });
   }, [token]);
@@ -95,7 +122,6 @@ const AdminMenu = () => {
     axios
       .request(config)
       .then((response) => {
-        // console.log(JSON.stringify(response.data));
         set_logo(response.data[0].logo);
       })
       .catch((error) => {
@@ -117,8 +143,6 @@ const AdminMenu = () => {
       reader.readAsDataURL(file);
     }
   };
-
-  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -147,7 +171,10 @@ const AdminMenu = () => {
       redirect: "follow",
     };
 
-    fetch(import.meta.env.VITE_API + `/store/web-info/create_update`, requestOptions)
+    fetch(
+      import.meta.env.VITE_API + `/store/web-info/create_update`,
+      requestOptions
+    )
       .then((response) => response.text())
       .then((result) => {
         console.log(result);
@@ -160,14 +187,12 @@ const AdminMenu = () => {
         window.location.reload(false);
       })
       .catch((error) => console.error(error));
-
-    
   };
 
   return (
     <>
       <section id="dashboard">
-        <div className="left">
+        <div className={`left ${isMobileMenuOpen ? "mobile-open" : ""}`}>
           <div className="menu">
             <NavLink to="/dashboard" className="link">
               <RxDashboard />
@@ -189,7 +214,7 @@ const AdminMenu = () => {
                 </NavLink>
               </>
             )}
-            <NavLink to="/payment-store" className="link">
+            <NavLink to="/bank-account" className="link">
               <CiBank />
               <div>Bank</div>
             </NavLink>
@@ -197,7 +222,7 @@ const AdminMenu = () => {
               <CiSquareInfo />
               <div>Info</div>
             </NavLink>
-            <NavLink to="/table-hotel" className="link">
+            <NavLink to="/hotel" className="link">
               <CiViewTable />
               <div>Hotels</div>
             </NavLink>
@@ -206,95 +231,94 @@ const AdminMenu = () => {
               <IoLogOutOutline />
               <div>Log Out</div>
             </div>
-            {showConfirmation && (
-              <div className="background_addproductpopup_box">
-                <div className="hover_addproductpopup_box">
-                  <div className="box_logout">
-                    <p>Are you sure you want to log out?</p>
+          </div>
+        </div>
+        {showConfirmation && (
+          <div className="background_addproductpopup_box">
+            <div className="hover_addproductpopup_boxs">
+              <div className="box_logout">
+                <p>Are you sure you want to log out?</p>
+              </div>
+              <div className="btn_foasdf">
+                <button
+                  className="btn_cancel btn_addproducttxt_popup"
+                  onClick={handleCancelLogout}
+                >
+                  No
+                </button>
+                <button
+                  className="btn_confirm btn_addproducttxt_popup"
+                  onClick={handleConfirmLogout}
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+        <div className="right">
+          <button className="mobile-menu-toggle" onClick={toggleMobileMenu}>
+            <FaBars />
+          </button>
+          <div className="box_popupImage_logo">
+            <NavLink to="/" className="container_logo">
+              <img src={logo} alt="" />
+            </NavLink>
+            {is_admin === true && (
+              <div className="popup_image_logo" onClick={togglePopupImageLogo}>
+                <CiCamera id="box_icon_camera" />
+              </div>
+            )}
+
+            {isPopupImageLogo && (
+              <form
+                className="background_addproductpopup_box"
+                onSubmit={ChangeLogo}
+              >
+                <div className="hover_addproductpopup_box_image">
+                  <div className="box_input_image">
+                    <p>Edit Logo image</p>
+                    <label className="popup_Border_Boximagae">
+                      {mainImageLogo && mainImageLogo.length > 0 ? (
+                        <img
+                          src={URL.createObjectURL(mainImageLogo[0])}
+                          alt="category"
+                        />
+                      ) : (
+                        <img src={imageicon} alt="category" />
+                      )}
+                      <input
+                        type="file"
+                        id="img"
+                        onChange={handleImageLogo}
+                        required
+                      />
+                      <p className="box_choose_image">Choose img</p>
+                    </label>
                   </div>
                   <div className="btn_foasdf">
                     <button
                       className="btn_cancel btn_addproducttxt_popup"
-                      onClick={handleCancelLogout}
+                      onClick={togglePopupCancelImageLogo}
                     >
-                      No
+                      Cancel
                     </button>
                     <button
                       className="btn_confirm btn_addproducttxt_popup"
-                      onClick={handleConfirmLogout}
+                      type="submit"
                     >
-                      Yes
+                      Update
                     </button>
                   </div>
                 </div>
-              </div>
+              </form>
             )}
           </div>
-
-          <div className="right">
-            <div className="box_popupImage_logo">
-              <NavLink to="/" className="logo">
-                <img src={logo} alt="" />
-              </NavLink>
-              {is_admin === true && (
-                <div
-                  className="popup_image_logo"
-                  onClick={togglePopupImageLogo}
-                >
-                  <CiCamera id="box_icon_camera" />
-                </div>
-              )}
-
-              {isPopupImageLogo && (
-                <form
-                  className="background_addproductpopup_box"
-                  onSubmit={ChangeLogo}
-                >
-                  <div className="hover_addproductpopup_box_image">
-                    <div className="box_input_image">
-                      <p>Edit Logo image</p>
-                      <label className="popup_Border_Boximagae">
-                        {mainImageLogo && mainImageLogo.length > 0 ? (
-                          <img
-                            src={URL.createObjectURL(mainImageLogo[0])}
-                            alt="category"
-                          />
-                        ) : (
-                          <img src={imageicon} alt="category" />
-                        )}
-                        <input
-                          type="file"
-                          id="img"
-                          onChange={handleImageLogo}
-                          required
-                        />
-                        <p className="box_choose_image">Choose img</p>
-                      </label>
-                    </div>
-                    <div className="btn_foasdf">
-                      <button
-                        className="btn_cancel btn_addproducttxt_popup"
-                        onClick={togglePopupCancelImageLogo}
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        className="btn_confirm btn_addproducttxt_popup"
-                        type="submit"
-                      >
-                        Update
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              )}
-            </div>
-            <div className="boximage_admin">
-              <NavLink to="/account-admin" className="userAdminImage">
-                <div>{storage.email}</div>
-                <img src={storage.image || user} alt="admin profile" />
-              </NavLink>
-            </div>
+          <div className="boximage_admin">
+            <NavLink to="#" className="userAdminImage">
+              <div>{storage.email}</div>
+              <img src={storage.image || user} alt="admin profile" />
+            </NavLink>
           </div>
         </div>
       </section>
